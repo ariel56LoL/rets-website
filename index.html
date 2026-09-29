@@ -1,556 +1,1124 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>RETS — Navegador de SimetriOS</title>
-
-  <style>
-    :root {
-      --rets-bg: #080b0d;
-      --rets-panel: #101418;
-      --rets-panel-2: #151a1f;
-      --rets-border: #263238;
-      --rets-text: #f2f5f6;
-      --rets-muted: #89959b;
-      --rets-accent: #72d5d2;
-      --rets-accent-dark: #3c9999;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(114, 213, 210, 0.08), transparent 35%),
-        var(--rets-bg);
-      color: var(--rets-text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Fondo con triángulos RETS */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.045;
-
-      background-image:
-        linear-gradient(60deg, transparent 47%, var(--rets-accent) 48%, transparent 50%),
-        linear-gradient(-60deg, transparent 47%, var(--rets-accent) 48%, transparent 50%);
-
-      background-size: 120px 105px;
-      mask-image: linear-gradient(to bottom, black, transparent);
-    }
-
-    /* NAVBAR */
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 72px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 7%;
-
-      background: rgba(8, 11, 13, 0.82);
-      backdrop-filter: blur(16px);
-
-      border-bottom: 1px solid rgba(114, 213, 210, 0.12);
-      z-index: 100;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      color: var(--rets-text);
-      text-decoration: none;
-      font-size: 21px;
-      font-weight: 700;
-      letter-spacing: 4px;
-    }
-
-    /* Logo triangular */
-    .logo {
-      position: relative;
-      width: 31px;
-      height: 27px;
-
-      border-left: 4px solid var(--rets-accent);
-      border-right: 4px solid var(--rets-accent);
-      border-bottom: 4px solid var(--rets-accent);
-
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-      transform: rotate(0deg);
-    }
-
-    .logo::after {
-      content: "";
-      position: absolute;
-      left: 7px;
-      top: 7px;
-
-      width: 10px;
-      height: 9px;
-
-      background: var(--rets-accent);
-
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--rets-muted);
-      text-decoration: none;
-      font-size: 14px;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--rets-accent);
-    }
-
-    .nav-button {
-      border: 1px solid var(--rets-accent-dark);
-      color: var(--rets-accent) !important;
-      padding: 10px 18px;
-      border-radius: 8px;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 100vh;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-      padding: 130px 20px 90px;
-
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 850px;
-    }
-
-    .hero-logo {
-      width: 100px;
-      height: 88px;
-
-      margin: 0 auto 35px;
-
-      position: relative;
-
-      border-left: 8px solid var(--rets-accent);
-      border-right: 8px solid var(--rets-accent);
-      border-bottom: 8px solid var(--rets-accent);
-
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-
-      filter: drop-shadow(0 0 18px rgba(114, 213, 210, 0.12));
-    }
-
-    .hero-logo::after {
-      content: "";
-
-      position: absolute;
-
-      left: 27px;
-      top: 24px;
-
-      width: 40px;
-      height: 35px;
-
-      background: var(--rets-accent);
-
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    }
-
-    .hero h1 {
-      font-size: clamp(65px, 10vw, 120px);
-      letter-spacing: 18px;
-      margin-left: 18px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: var(--rets-muted);
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .hero-description {
-      max-width: 600px;
-      margin: auto;
-
-      color: #aab4b9;
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    .buttons {
-      margin-top: 38px;
-
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .button {
-      padding: 14px 26px;
-      border-radius: 9px;
-
-      text-decoration: none;
-      font-weight: 600;
-
-      transition: 0.2s;
-    }
-
-    .primary {
-      background: var(--rets-accent);
-      color: #071011;
-    }
-
-    .primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(114, 213, 210, 0.15);
-    }
-
-    .secondary {
-      border: 1px solid var(--rets-border);
-      color: var(--rets-text);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .secondary:hover {
-      border-color: var(--rets-accent-dark);
-    }
-
-    /* SECCIONES */
-
-    section {
-      position: relative;
-      padding: 100px 7%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 55px;
-    }
-
-    .section-title h2 {
-      font-size: 36px;
-      margin-bottom: 12px;
-    }
-
-    .section-title p {
-      color: var(--rets-muted);
-    }
-
-    /* FEATURES */
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .card {
-      background: rgba(16, 20, 24, 0.8);
-
-      border: 1px solid var(--rets-border);
-      border-radius: 15px;
-
-      padding: 28px;
-
-      transition: 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(114, 213, 210, 0.5);
-    }
-
-    .card-icon {
-      color: var(--rets-accent);
-      font-size: 25px;
-      margin-bottom: 18px;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--rets-muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    /* PLATAFORMAS */
-
-    .platforms {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .platform {
-      padding: 14px 24px;
-
-      background: var(--rets-panel);
-      border: 1px solid var(--rets-border);
-      border-radius: 9px;
-
-      color: var(--rets-muted);
-    }
-
-    /* FOOTER */
-
-    footer {
-      padding: 45px 7%;
-      border-top: 1px solid var(--rets-border);
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      color: var(--rets-muted);
-      font-size: 13px;
-    }
-
-    footer strong {
-      color: var(--rets-accent);
-    }
-
-    @media (max-width: 700px) {
-
-      nav {
-        padding: 0 20px;
-      }
-
-      .nav-links a:not(.nav-button) {
-        display: none;
-      }
-
-      .hero h1 {
-        font-size: 55px;
-        letter-spacing: 10px;
-      }
-
-      section {
-        padding: 75px 20px;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RETS — Navegador de SimetriOS</title>
+    <meta name="description" content="RETS — un navegador rápido, inteligente y personalizable.">
+
+    <style>
+        :root {
+            --bg: #05090b;
+            --bg2: #081114;
+            --panel: rgba(10, 20, 23, 0.78);
+            --text: #f1f7f7;
+            --muted: #8b9a9d;
+            --cyan: #69d6d5;
+            --cyan-bright: #8ffafa;
+            --border: rgba(105, 214, 213, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           FONDO RETS
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+
+            background:
+                linear-gradient(30deg, transparent 48%, rgba(105,214,213,.045) 49%, transparent 50%) 0 0 / 90px 155px,
+                linear-gradient(150deg, transparent 48%, rgba(105,214,213,.045) 49%, transparent 50%) 0 0 / 90px 155px,
+                linear-gradient(30deg, transparent 48%, rgba(105,214,213,.025) 49%, transparent 50%) 45px 78px / 90px 155px,
+                linear-gradient(150deg, transparent 48%, rgba(105,214,213,.025) 49%, transparent 50%) 45px 78px / 90px 155px;
+
+            opacity: .75;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+
+            background:
+                radial-gradient(circle at 50% 15%, rgba(72, 210, 210, .10), transparent 30%),
+                linear-gradient(to bottom, transparent 65%, #05090b 100%);
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            background: rgba(5, 9, 11, .78);
+            border-bottom: 1px solid rgba(105,214,213,.10);
+        }
+
+        nav {
+            width: min(1150px, 92%);
+            height: 72px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: white;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 5px;
+            font-size: 20px;
+        }
+
+        .brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #9ca9ab;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan-bright);
+        }
+
+        .download-nav {
+            padding: 11px 20px;
+            border: 1px solid var(--cyan);
+            border-radius: 9px;
+
+            color: var(--cyan-bright) !important;
+
+            transition: .25s;
+        }
+
+        .download-nav:hover {
+            background: var(--cyan);
+            color: #061011 !important;
+            box-shadow: 0 0 25px rgba(105,214,213,.25);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+            padding: 130px 20px 80px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: min(330px, 65vw);
+            margin-bottom: 25px;
+
+            filter:
+                drop-shadow(0 0 15px rgba(105,214,213,.35))
+                drop-shadow(0 0 50px rgba(105,214,213,.12));
+
+            animation:
+                logoEnter 1.4s ease forwards,
+                logoFloat 5s ease-in-out 1.4s infinite;
+        }
+
+        @keyframes logoEnter {
+            from {
+                opacity: 0;
+                transform: scale(.55) translateY(25px);
+                filter: blur(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter:
+                    drop-shadow(0 0 15px rgba(105,214,213,.35))
+                    drop-shadow(0 0 50px rgba(105,214,213,.12));
+            }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 9vw, 105px);
+            letter-spacing: 16px;
+            margin-left: 16px;
+            font-weight: 800;
+
+            animation: fadeUp 1s ease .3s both;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: clamp(17px, 2vw, 23px);
+            margin-top: 8px;
+
+            animation: fadeUp 1s ease .5s both;
+        }
+
+        .hero-description {
+            max-width: 720px;
+            margin-top: 24px;
+
+            color: #9aa8aa;
+            line-height: 1.8;
+            font-size: 17px;
+
+            animation: fadeUp 1s ease .7s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 36px;
+
+            animation: fadeUp 1s ease .9s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px 25px;
+            border-radius: 10px;
+
+            text-decoration: none;
+            font-weight: 700;
+
+            transition: .3s;
+        }
+
+        .btn-primary {
+            background: var(--cyan);
+            color: #061011;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(105,214,213,.3);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(105,214,213,.35);
+            color: #d9e6e6;
+            background: rgba(10,20,23,.45);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: var(--cyan);
+        }
+
+        .scroll-indicator {
+            margin-top: 70px;
+            color: #526265;
+            font-size: 12px;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: .35;
+            }
+        }
+
+        /* =========================
+           SECCIONES
+        ========================= */
+
+        section {
+            width: min(1100px, 90%);
+            margin: auto;
+            padding: 110px 0;
+        }
+
+        .section-label {
+            color: var(--cyan);
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: clamp(35px, 5vw, 58px);
+            margin-bottom: 20px;
+        }
+
+        .section-text {
+            max-width: 700px;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* =========================
+           REVEAL
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px);
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           QUE ES RETS
+        ========================= */
+
+        .about-box {
+            margin-top: 40px;
+
+            padding: 35px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(105,214,213,.07),
+                rgba(255,255,255,.015)
+            );
+
+            box-shadow: 0 20px 70px rgba(0,0,0,.25);
+        }
+
+        .about-box strong {
+            color: white;
+        }
+
+        /* =========================
+           FUNCIONES
+        ========================= */
+
+        .feature-grid {
+            margin-top: 50px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature {
+            min-height: 220px;
+
+            padding: 28px;
+
+            border: 1px solid var(--border);
+            border-radius: 17px;
+
+            background: rgba(7,15,17,.75);
+
+            transition: .35s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+            border-color: rgba(105,214,213,.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,.3);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PLATAFORMAS
+        ========================= */
+
+        .platforms {
+            margin-top: 45px;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .platform {
+            padding: 28px 18px;
+
+            text-align: center;
+
+            border: 1px solid var(--border);
+            border-radius: 15px;
+
+            background: rgba(7,15,17,.7);
+
+            transition: .3s;
+        }
+
+        .platform:hover {
+            border-color: var(--cyan);
+            transform: translateY(-5px);
+        }
+
+        .platform-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .platform span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        /* =========================
+           DESCARGAS
+        ========================= */
+
+        .download-panel {
+            margin-top: 45px;
+
+            display: grid;
+            gap: 12px;
+        }
+
+        .download-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 22px 25px;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: rgba(7,15,17,.8);
+
+            transition: .3s;
+        }
+
+        .download-card:hover {
+            border-color: rgba(105,214,213,.6);
+            transform: translateX(5px);
+        }
+
+        .download-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .download-icon {
+            font-size: 25px;
+        }
+
+        .download-info strong {
+            display: block;
+        }
+
+        .download-info span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .download-btn {
+            padding: 9px 17px;
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+
+            color: var(--cyan-bright);
+            text-decoration: none;
+            font-size: 13px;
+
+            transition: .25s;
+        }
+
+        .download-btn:hover {
+            background: var(--cyan);
+            color: #061011;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            margin-top: 50px;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            padding: 28px;
+
+            background: #030607;
+
+            font-family: "Courier New", monospace;
+            color: #93dedd;
+
+            box-shadow:
+                inset 0 0 40px rgba(105,214,213,.025),
+                0 20px 60px rgba(0,0,0,.3);
+        }
+
+        .status-title {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .status-line {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 8px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,.035);
+        }
+
+        .online {
+            color: #73e7b0;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid rgba(105,214,213,.1);
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            background: rgba(2,5,6,.8);
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        footer h2 {
+            letter-spacing: 7px;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #718083;
+            font-size: 13px;
+        }
+
+        .credits {
+            margin-top: 25px;
+            color: #536063;
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links a:not(.download-nav) {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                letter-spacing: 9px;
+                margin-left: 9px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: min(320px, 90%);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .download-card {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .brand {
+                font-size: 16px;
+                letter-spacing: 3px;
+            }
+
+            .brand img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .download-nav {
+                padding: 9px 13px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .platforms {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .download-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .status-line {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <nav>
-    <a href="#" class="brand">
-      <span class="logo"></span>
-      RETS
-    </a>
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
-    <div class="nav-links">
-      <a href="#features">Funciones</a>
-      <a href="#platforms">Plataformas</a>
-      <a href="#about">RETS</a>
-      <a href="#download" class="nav-button">Descargar</a>
-    </div>
-  </nav>
+    <header>
+        <nav>
+
+            <a href="#inicio" class="brand">
+                <img src="assets/rets-logo.png" alt="RETS">
+                RETS
+            </a>
+
+            <div class="nav-links">
+                <a href="#funciones">Funciones</a>
+                <a href="#plataformas">Plataformas</a>
+                <a href="#descargas" class="download-nav">Descargar</a>
+            </div>
+
+        </nav>
+    </header>
 
 
-  <main>
+    <!-- =========================
+         HERO
+    ========================== -->
 
-    <section class="hero">
+    <main>
 
-      <div class="hero-content">
+        <div class="hero" id="inicio">
 
-        <div class="hero-logo"></div>
+            <img
+                src="assets/rets-logo.png"
+                alt="Logo oficial de RETS"
+                class="hero-logo"
+            >
 
-        <h1>RETS</h1>
+            <h1>RETS</h1>
 
-        <p class="subtitle">
-          Navegador de SimetriOS
-        </p>
+            <div class="subtitle">
+                Navegador de SimetriOS
+            </div>
 
-        <p class="hero-description">
-          Más que navegar.
-          Un navegador diseñado para convertir la web
-          en un espacio más inteligente, personal y útil.
-        </p>
+            <p class="hero-description">
+                Más que navegar. Un navegador diseñado para convertir
+                la web en un espacio más rápido, inteligente, personal
+                y útil.
+            </p>
 
-        <div class="buttons">
-          <a href="#download" class="button primary">
-            Descargar RETS
-          </a>
+            <div class="hero-buttons">
+                <a href="#descargas" class="btn btn-primary">
+                    Descargar RETS
+                </a>
 
-          <a href="#features" class="button secondary">
-            Explorar RETS
-          </a>
+                <a href="#funciones" class="btn btn-secondary">
+                    Explorar RETS
+                </a>
+            </div>
+
+            <div class="scroll-indicator">
+                ↓ &nbsp; DESCUBRE RETS
+            </div>
+
         </div>
 
-      </div>
 
-    </section>
+        <!-- =========================
+             QUE ES RETS
+        ========================== -->
+
+        <section class="reveal">
+
+            <div class="section-label">
+                01 // RETS
+            </div>
+
+            <h2 class="section-title">
+                Una nueva forma de navegar.
+            </h2>
+
+            <p class="section-text">
+                RETS nace como un navegador pensado para ofrecer una
+                experiencia moderna sin olvidar algo importante:
+                el rendimiento.
+            </p>
+
+            <div class="about-box">
+                <strong>¿Por qué RETS?</strong>
+
+                <p class="section-text" style="margin-top:15px;">
+                    Una interfaz limpia, herramientas integradas,
+                    funciones inteligentes y una experiencia diseñada
+                    para adaptarse a distintos dispositivos.
+                </p>
+            </div>
+
+        </section>
 
 
-    <section id="features">
+        <!-- =========================
+             FUNCIONES
+        ========================== -->
 
-      <div class="section-title">
-        <h2>Más que un navegador</h2>
+        <section id="funciones" class="reveal">
+
+            <div class="section-label">
+                02 // FUNCIONES
+            </div>
+
+            <h2 class="section-title">
+                Todo en un solo lugar.
+            </h2>
+
+            <p class="section-text">
+                RETS reúne herramientas para que navegar sea algo más
+                que abrir páginas.
+            </p>
+
+
+            <div class="feature-grid">
+
+                <div class="feature">
+                    <div class="feature-icon">👁️</div>
+                    <h3>RETS Vision</h3>
+                    <p>
+                        Analiza contenido visual directamente desde
+                        el navegador y convierte imágenes en información
+                        útil.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Command Center</h3>
+                    <p>
+                        Accede rápidamente a herramientas y acciones
+                        mediante comandos sencillos.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Private Session</h3>
+                    <p>
+                        Una sesión diseñada para mantener separados
+                        tus datos de navegación de tu sesión normal.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🗄️</div>
+                    <h3>RETS Vault</h3>
+                    <p>
+                        Un espacio pensado para gestionar archivos
+                        privados dentro de la experiencia RETS.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Nox AI</h3>
+                    <p>
+                        Asistencia inteligente integrada en el
+                        ecosistema de RETS.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Interfaz RETS</h3>
+                    <p>
+                        Una interfaz moderna, ligera y adaptable a
+                        distintos tamaños de pantalla.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PLATAFORMAS
+        ========================== -->
+
+        <section id="plataformas" class="reveal">
+
+            <div class="section-label">
+                03 // PLATAFORMAS
+            </div>
+
+            <h2 class="section-title">
+                RETS donde lo necesites.
+            </h2>
+
+            <p class="section-text">
+                El objetivo es llevar la experiencia RETS a diferentes
+                dispositivos y sistemas.
+            </p>
+
+            <div class="platforms">
+
+                <div class="platform">
+                    <div class="platform-icon">🪟</div>
+                    <strong>Windows</strong>
+                    <span>Desktop</span>
+                </div>
+
+                <div class="platform">
+                    <div class="platform-icon"></div>
+                    <strong>macOS</strong>
+                    <span>Desktop</span>
+                </div>
+
+                <div class="platform">
+                    <div class="platform-icon">💻</div>
+                    <strong>ChromeOS</strong>
+                    <span>Chromebook</span>
+                </div>
+
+                <div class="platform">
+                    <div class="platform-icon">📱</div>
+                    <strong>Android</strong>
+                    <span>Mobile</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DESCARGAS
+        ========================== -->
+
+        <section id="descargas" class="reveal">
+
+            <div class="section-label">
+                04 // DESCARGAS
+            </div>
+
+            <h2 class="section-title">
+                Lleva RETS contigo.
+            </h2>
+
+            <p class="section-text">
+                Selecciona tu plataforma para encontrar la versión
+                correspondiente de RETS.
+            </p>
+
+
+            <div class="download-panel">
+
+                <div class="download-card">
+
+                    <div class="download-info">
+                        <div class="download-icon">🪟</div>
+
+                        <div>
+                            <strong>RETS para Windows</strong>
+                            <span>Versión Desktop</span>
+                        </div>
+                    </div>
+
+                    <!-- Cambiar # por el enlace del instalador -->
+                    <a href="#" class="download-btn">
+                        Próximamente
+                    </a>
+
+                </div>
+
+
+                <div class="download-card">
+
+                    <div class="download-info">
+                        <div class="download-icon"></div>
+
+                        <div>
+                            <strong>RETS para macOS</strong>
+                            <span>Versión Desktop</span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="download-btn">
+                        Próximamente
+                    </a>
+
+                </div>
+
+
+                <div class="download-card">
+
+                    <div class="download-info">
+                        <div class="download-icon">💻</div>
+
+                        <div>
+                            <strong>RETS para ChromeOS</strong>
+                            <span>Versión Chromebook</span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="download-btn">
+                        Próximamente
+                    </a>
+
+                </div>
+
+
+                <div class="download-card">
+
+                    <div class="download-info">
+                        <div class="download-icon">📱</div>
+
+                        <div>
+                            <strong>RETS para Android</strong>
+                            <span>Versión Mobile</span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="download-btn">
+                        Próximamente
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SYSTEM STATUS
+        ========================== -->
+
+        <section class="reveal">
+
+            <div class="section-label">
+                05 // SYSTEM
+            </div>
+
+            <h2 class="section-title">
+                RETS // SYSTEM STATUS
+            </h2>
+
+            <div class="status">
+
+                <div class="status-title">
+                    > RETS SYSTEM MONITOR
+                </div>
+
+                <div class="status-line">
+                    <span>CORE</span>
+                    <span class="online">ONLINE</span>
+                </div>
+
+                <div class="status-line">
+                    <span>VISION</span>
+                    <span class="online">READY</span>
+                </div>
+
+                <div class="status-line">
+                    <span>NOX</span>
+                    <span class="online">READY</span>
+                </div>
+
+                <div class="status-line">
+                    <span>PRIVATE SESSION</span>
+                    <span class="online">READY</span>
+                </div>
+
+                <div class="status-line">
+                    <span>RETS WEBSITE</span>
+                    <span class="online">ONLINE</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <img
+            src="assets/rets-logo.png"
+            alt="RETS"
+            class="footer-logo"
+        >
+
+        <h2>RETS</h2>
 
         <p>
-          Herramientas creadas alrededor de la forma en que realmente utilizas Internet.
-        </p>
-      </div>
-
-
-      <div class="features">
-
-        <div class="card">
-          <div class="card-icon">◈</div>
-          <h3>RETS Vision</h3>
-          <p>
-            Comprende lo que aparece en tu pantalla y convierte
-            imágenes e información visual en algo útil.
-          </p>
-        </div>
-
-
-        <div class="card">
-          <div class="card-icon">◇</div>
-          <h3>Nox</h3>
-          <p>
-            Un asistente pensado para ayudarte dentro de RETS
-            y facilitar tareas sin interrumpir tu navegación.
-          </p>
-        </div>
-
-
-        <div class="card">
-          <div class="card-icon">⌘</div>
-          <h3>RETS HUD</h3>
-          <p>
-            Un centro de comandos rápido para controlar
-            las herramientas del navegador.
-          </p>
-        </div>
-
-
-        <div class="card">
-          <div class="card-icon">▣</div>
-          <h3>RETS Vault</h3>
-          <p>
-            Un espacio dedicado para gestionar archivos
-            de forma más privada dentro del navegador.
-          </p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section id="platforms">
-
-      <div class="section-title">
-        <h2>RETS en todas partes</h2>
-
-        <p>
-          Una experiencia pensada para diferentes dispositivos.
-        </p>
-      </div>
-
-
-      <div class="platforms">
-
-        <div class="platform">Windows</div>
-        <div class="platform">macOS</div>
-        <div class="platform">ChromeOS</div>
-        <div class="platform">Android</div>
-        <div class="platform">iOS</div>
-
-      </div>
-
-    </section>
-
-
-    <section id="download">
-
-      <div class="section-title">
-
-        <h2>El comienzo</h2>
-
-        <p>
-          RETS todavía está creciendo.
-          Esta página será el punto de encuentro para sus futuras versiones.
+            Navegador de SimetriOS
         </p>
 
-        <div class="buttons">
-
-          <a href="#" class="button primary">
-            Próximamente
-          </a>
-
+        <div class="credits">
+            Proyecto RETS · 2026
         </div>
 
-      </div>
-
-    </section>
-
-  </main>
+    </footer>
 
 
-  <footer id="about">
+    <!-- =========================
+         ANIMACIONES AL HACER SCROLL
+    ========================== -->
 
-    <div>
-      <strong>▲ RETS</strong>
-      · Navegador de SimetriOS
-    </div>
+    <script>
 
-    <div>
-      © 2026 RETS
-    </div>
+        const elements = document.querySelectorAll(".reveal");
 
-  </footer>
+        const observer = new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        elements.forEach((element) => {
+            observer.observe(element);
+        });
+
+    </script>
 
 </body>
 </html>
