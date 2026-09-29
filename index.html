@@ -1,1177 +1,1198 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>RETS — Navegador de SimetriOS</title>
-
-    <style>
-        /* =========================================================
-           RETS WEBSITE
-           Sitio oficial de RETS
-        ========================================================= */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #05090c;
-            color: #f2f7f8;
-            overflow-x: hidden;
-        }
-
-        /* =========================================================
-           FONDO DE TRIÁNGULOS
-        ========================================================= */
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-
-            background-color: #05090c;
-
-            background-image:
-                linear-gradient(30deg, #0b2024 12%, transparent 12.5%, transparent 87%, #0b2024 87.5%, #0b2024),
-                linear-gradient(150deg, #0b2024 12%, transparent 12.5%, transparent 87%, #0b2024 87.5%, #0b2024),
-                linear-gradient(30deg, #0b2024 12%, transparent 12.5%, transparent 87%, #0b2024 87.5%, #0b2024),
-                linear-gradient(150deg, #0b2024 12%, transparent 12.5%, transparent 87%, #0b2024 87.5%, #0b2024);
-
-            background-size: 180px 105px;
-            background-position:
-                0 0,
-                0 0,
-                90px 52px,
-                90px 52px;
-
-            opacity: 0.42;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(40, 220, 220, 0.08),
-                    transparent 45%
-                );
-        }
-
-        /* =========================================================
-           BARRA SUPERIOR
-        ========================================================= */
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-
-            height: 74px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 7%;
-
-            background: rgba(4, 8, 11, 0.88);
-            backdrop-filter: blur(14px);
-
-            border-bottom: 1px solid rgba(111, 220, 220, 0.12);
-
-            z-index: 1000;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            text-decoration: none;
-            color: white;
-
-            font-size: 21px;
-            font-weight: 800;
-            letter-spacing: 5px;
-        }
-
-        .brand img {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        nav a {
-            color: #aebabc;
-            text-decoration: none;
-            font-size: 14px;
-
-            transition: 0.25s;
-        }
-
-        nav a:hover {
-            color: #6ee7e7;
-        }
-
-        .nav-download {
-            padding: 11px 19px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RETS — Navegador de SimetriOS</title>
+
+<style>
+/* =========================================================
+   RETS — SITIO OFICIAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #05090b;
+    color: #f2f7f7;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   FONDO DE TRIÁNGULOS
+   ========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+
+    background:
+        linear-gradient(30deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
+        linear-gradient(150deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
+        linear-gradient(30deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
+        linear-gradient(150deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114);
+
+    background-size: 90px 156px;
+    background-position:
+        0 0,
+        0 0,
+        45px 78px,
+        45px 78px;
+
+    opacity: 0.75;
+}
+
+/* Brillo ambiental */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(71, 230, 230, 0.13),
+            transparent 32%
+        ),
+        linear-gradient(
+            to bottom,
+            transparent 65%,
+            #05090b 100%
+        );
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    background: rgba(3, 8, 10, 0.88);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(111, 224, 224, 0.08);
+
+    z-index: 1000;
+
+    animation: headerAppear 0.8s ease forwards;
+}
 
-            border: 1px solid #35cfd0;
-            border-radius: 9px;
+.logo-small {
+    display: flex;
+    align-items: center;
+    gap: 13px;
 
-            color: #6ee7e7;
-        }
+    color: white;
+    text-decoration: none;
 
-        .nav-download:hover {
-            background: #35cfd0;
-            color: #031012;
-        }
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: 8px;
 
-        /* =========================================================
-           ANIMACIONES
-        ========================================================= */
+    transition: 0.3s ease;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(35px);
-            }
+.logo-small:hover {
+    color: #70e5e5;
+    text-shadow: 0 0 18px rgba(91, 231, 231, 0.5);
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.logo-small img {
+    width: 27px;
+    height: 27px;
+    object-fit: contain;
+}
 
-        @keyframes logoAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.7);
-                filter: drop-shadow(0 0 0 transparent);
-            }
+/* Navegación */
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-                filter: drop-shadow(0 0 30px rgba(44, 238, 238, 0.45));
-            }
-        }
+nav {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+}
 
-        @keyframes floating {
-            0%, 100% {
-                transform: translateY(0);
-            }
+nav a {
+    position: relative;
 
-            50% {
-                transform: translateY(-10px);
-            }
-        }
+    color: #a9b2b5;
+    text-decoration: none;
 
-        /* =========================================================
-           HERO
-        ========================================================= */
+    font-size: 14px;
 
-        .hero {
-            min-height: 100vh;
+    transition: 0.3s ease;
+}
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+nav a::after {
+    content: "";
+    position: absolute;
 
-            text-align: center;
+    left: 50%;
+    bottom: -8px;
 
-            padding: 110px 20px 80px;
-        }
+    width: 0;
+    height: 1px;
 
-        .hero-logo {
-            width: 250px;
-            height: 250px;
+    background: #67dddd;
 
-            object-fit: contain;
+    transform: translateX(-50%);
+    transition: 0.3s ease;
+}
 
-            margin-bottom: 20px;
+nav a:hover {
+    color: white;
+}
 
-            animation:
-                logoAppear 1.2s ease forwards,
-                floating 5s ease-in-out 1.2s infinite;
-        }
+nav a:hover::after {
+    width: 100%;
+}
 
-        .hero h1 {
-            font-size: clamp(70px, 12vw, 150px);
-            letter-spacing: 22px;
-            margin-left: 22px;
+/* Botón descargar */
 
-            font-weight: 800;
+.download-btn {
+    padding: 11px 22px;
 
-            animation: appear 1s ease 0.4s both;
-        }
+    border: 1px solid #58d7d7;
+    border-radius: 8px;
 
-        .hero h2 {
-            margin-top: 5px;
+    color: #78e8e8;
+    text-decoration: none;
 
-            color: #63dddd;
+    transition: 0.3s ease;
+}
 
-            font-size: clamp(22px, 3vw, 34px);
-            font-weight: 500;
+.download-btn:hover {
+    color: #061011;
+    background: #68dddd;
 
-            animation: appear 1s ease 0.6s both;
-        }
+    box-shadow:
+        0 0 20px rgba(104, 221, 221, 0.25),
+        inset 0 0 10px rgba(255,255,255,0.15);
+}
 
-        .hero p {
-            max-width: 720px;
+/* =========================================================
+   SECCIONES
+   ========================================================= */
 
-            margin-top: 25px;
+section {
+    position: relative;
+    min-height: 100vh;
 
-            color: #9daeb2;
+    padding: 130px 8% 100px;
 
-            font-size: 17px;
-            line-height: 1.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-            animation: appear 1s ease 0.8s both;
-        }
+    text-align: center;
+}
 
-        .buttons {
-            display: flex;
-            gap: 15px;
+/* =========================================================
+   HERO
+   ========================================================= */
 
-            margin-top: 35px;
+.hero {
+    padding-top: 140px;
+}
 
-            animation: appear 1s ease 1s both;
-        }
+.hero-logo {
+    width: 190px;
+    max-width: 40vw;
 
-        .button {
-            padding: 15px 28px;
+    margin-bottom: 35px;
 
-            border-radius: 10px;
+    filter:
+        drop-shadow(0 0 10px rgba(70, 235, 235, 0.75))
+        drop-shadow(0 0 28px rgba(70, 235, 235, 0.35));
 
-            text-decoration: none;
+    animation:
+        logoAppear 1.2s ease forwards,
+        logoFloat 5s ease-in-out 1.3s infinite;
+}
 
-            font-weight: bold;
+.hero-title {
+    font-size: clamp(80px, 12vw, 150px);
+    line-height: 0.9;
 
-            transition:
-                transform 0.25s,
-                background 0.25s,
-                box-shadow 0.25s;
-        }
+    font-weight: 800;
+    letter-spacing: 12px;
 
-        .button-primary {
-            background: #63d8d8;
-            color: #041012;
-        }
+    color: #f5f8f8;
 
-        .button-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 35px rgba(64, 225, 225, 0.25);
-        }
+    text-shadow:
+        0 0 12px rgba(255,255,255,0.08);
 
-        .button-secondary {
-            border: 1px solid #245f63;
-            color: #d9eeee;
-            background: rgba(5, 15, 17, 0.5);
-        }
+    animation: titleAppear 1s ease 0.35s both;
+}
 
-        .button-secondary:hover {
-            transform: translateY(-3px);
-            border-color: #63d8d8;
-        }
+.hero-subtitle {
+    margin-top: 30px;
 
-        .scroll-text {
-            margin-top: 70px;
+    font-size: 25px;
+    color: #67dddd;
 
-            color: #4e6568;
+    animation: fadeUp 1s ease 0.65s both;
+}
 
-            font-size: 11px;
-            letter-spacing: 5px;
-        }
+.hero-description {
+    max-width: 760px;
 
-        /* =========================================================
-           SECCIONES
-        ========================================================= */
+    margin-top: 25px;
 
-        section {
-            width: min(1100px, 90%);
+    color: #aab5b8;
+    font-size: 17px;
+    line-height: 1.8;
 
-            margin: 0 auto;
+    animation: fadeUp 1s ease 0.85s both;
+}
 
-            padding: 120px 0;
-        }
+/* Botones */
 
-        .section-title {
-            text-align: center;
+.hero-buttons {
+    display: flex;
+    gap: 15px;
 
-            margin-bottom: 55px;
-        }
+    margin-top: 42px;
 
-        .section-title span {
-            color: #62dede;
+    animation: fadeUp 1s ease 1s both;
+}
 
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
+.btn {
+    padding: 15px 28px;
 
-        .section-title h2 {
-            margin-top: 12px;
+    border-radius: 9px;
 
-            font-size: clamp(35px, 5vw, 55px);
-        }
+    font-weight: bold;
+    text-decoration: none;
 
-        .section-title p {
-            max-width: 650px;
+    transition: 0.3s ease;
+}
 
-            margin: 15px auto 0;
+.btn-primary {
+    color: #041012;
+    background: #69dddd;
+}
 
-            color: #91a3a6;
-            line-height: 1.7;
-        }
+.btn-primary:hover {
+    transform: translateY(-3px);
 
-        /* =========================================================
-           QUÉ ES RETS
-        ========================================================= */
+    box-shadow:
+        0 0 25px rgba(105, 221, 221, 0.35);
+}
 
-        .about-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+.btn-secondary {
+    color: white;
 
-            gap: 35px;
+    border: 1px solid rgba(105, 221, 221, 0.35);
+}
 
-            padding: 40px;
+.btn-secondary:hover {
+    background: rgba(105, 221, 221, 0.08);
 
-            background: rgba(8, 17, 20, 0.72);
+    border-color: #69dddd;
 
-            border: 1px solid rgba(91, 213, 213, 0.13);
+    transform: translateY(-3px);
+}
 
-            border-radius: 20px;
+/* Indicador */
 
-            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.2);
-        }
+.scroll-indicator {
+    position: absolute;
 
-        .about-box h3 {
-            color: #65dddd;
-            margin-bottom: 15px;
-            font-size: 25px;
-        }
+    bottom: 28px;
 
-        .about-box p {
-            color: #a7b5b8;
-            line-height: 1.8;
-        }
+    color: #536064;
 
-        /* =========================================================
-           FUNCIONES
-        ========================================================= */
+    font-size: 11px;
+    letter-spacing: 5px;
 
-        .features {
-            display: grid;
+    animation:
+        fadeUp 1s ease 1.3s both,
+        pulse 2.5s ease-in-out infinite;
+}
 
-            grid-template-columns:
-                repeat(3, 1fr);
+/* =========================================================
+   TÍTULOS DE SECCIÓN
+   ========================================================= */
 
-            gap: 18px;
-        }
+.section-label {
+    color: #63dddd;
 
-        .feature {
-            padding: 28px;
+    font-size: 12px;
+    letter-spacing: 5px;
 
-            min-height: 190px;
+    margin-bottom: 15px;
+}
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(15, 31, 35, 0.9),
-                    rgba(6, 13, 16, 0.85)
-                );
+.section-title {
+    font-size: clamp(38px, 5vw, 65px);
 
-            border: 1px solid rgba(90, 212, 212, 0.13);
+    margin-bottom: 20px;
 
-            border-radius: 17px;
+    color: white;
+}
 
-            transition:
-                transform 0.3s,
-                border-color 0.3s,
-                box-shadow 0.3s;
-        }
+.section-description {
+    max-width: 700px;
 
-        .feature:hover {
-            transform: translateY(-7px);
+    color: #9ba7aa;
 
-            border-color: rgba(99, 221, 221, 0.5);
+    line-height: 1.8;
+}
 
-            box-shadow:
-                0 15px 45px rgba(20, 180, 180, 0.08);
-        }
+/* =========================================================
+   CARDS DE FUNCIONES
+   ========================================================= */
 
-        .feature-icon {
-            font-size: 30px;
+.features {
+    display: grid;
 
-            margin-bottom: 18px;
-        }
+    grid-template-columns:
+        repeat(3, minmax(220px, 1fr));
 
-        .feature h3 {
-            margin-bottom: 10px;
+    gap: 20px;
 
-            font-size: 19px;
-        }
+    width: 100%;
+    max-width: 1050px;
 
-        .feature p {
-            color: #8fa1a5;
+    margin-top: 55px;
+}
 
-            line-height: 1.6;
+.card {
+    position: relative;
 
-            font-size: 14px;
-        }
+    padding: 30px;
 
-        /* =========================================================
-           PLATAFORMAS
-        ========================================================= */
+    text-align: left;
 
-        .platforms {
-            display: grid;
+    background: rgba(9, 17, 20, 0.78);
 
-            grid-template-columns:
-                repeat(3, 1fr);
+    border: 1px solid rgba(111, 224, 224, 0.1);
 
-            gap: 20px;
-        }
+    border-radius: 14px;
 
-        .platform {
-            padding: 35px;
+    overflow: hidden;
 
-            text-align: center;
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
 
-            background: rgba(8, 17, 20, 0.8);
+.card::before {
+    content: "";
 
-            border: 1px solid rgba(90, 212, 212, 0.13);
+    position: absolute;
 
-            border-radius: 18px;
-        }
+    top: 0;
+    left: -100%;
 
-        .platform-icon {
-            font-size: 45px;
+    width: 100%;
+    height: 1px;
 
-            margin-bottom: 15px;
-        }
+    background: #69dddd;
 
-        .platform h3 {
-            margin-bottom: 8px;
-        }
+    transition: 0.5s ease;
+}
 
-        .platform p {
-            color: #84979b;
-            font-size: 14px;
-        }
+.card:hover {
+    transform: translateY(-8px);
 
-        /* =========================================================
-           DESCARGAS
-        ========================================================= */
+    border-color: rgba(105, 221, 221, 0.35);
 
-        .download-box {
-            padding: 55px 35px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
 
-            text-align: center;
+.card:hover::before {
+    left: 100%;
+}
 
-            border-radius: 22px;
+.card-icon {
+    width: 45px;
+    height: 45px;
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(51, 215, 215, 0.09),
-                    transparent 65%
-                ),
-                rgba(7, 17, 20, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            border: 1px solid rgba(94, 218, 218, 0.2);
-        }
+    margin-bottom: 20px;
 
-        .download-box h3 {
-            font-size: 30px;
-            margin-bottom: 12px;
-        }
+    border: 1px solid rgba(105,221,221,0.3);
+    border-radius: 10px;
 
-        .download-box p {
-            color: #8fa1a5;
-            margin-bottom: 30px;
-        }
+    color: #6fe1e1;
 
-        .download-buttons {
-            display: flex;
+    font-size: 20px;
+}
 
-            justify-content: center;
+.card h3 {
+    margin-bottom: 12px;
 
-            flex-wrap: wrap;
+    color: white;
+    font-size: 20px;
+}
 
-            gap: 14px;
-        }
+.card p {
+    color: #899598;
 
-        .download-button {
-            min-width: 190px;
+    font-size: 14px;
+    line-height: 1.7;
+}
 
-            padding: 16px 22px;
+/* =========================================================
+   PLATAFORMAS
+   ========================================================= */
 
-            border-radius: 10px;
+.platforms {
+    width: 100%;
+    max-width: 1000px;
 
-            border: 1px solid #235f62;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 
-            background: #0b181b;
+    gap: 18px;
 
-            color: white;
+    margin-top: 50px;
+}
 
-            text-decoration: none;
+.platform {
+    padding: 28px;
 
-            transition: 0.25s;
-        }
+    background: rgba(8,15,18,0.75);
 
-        .download-button:hover {
-            border-color: #63dddd;
+    border: 1px solid rgba(105,221,221,0.1);
+    border-radius: 12px;
 
-            transform: translateY(-3px);
+    transition: 0.35s ease;
+}
 
-            background: #102427;
-        }
+.platform:hover {
+    transform: translateY(-5px);
 
-        .download-button small {
-            display: block;
+    border-color: rgba(105,221,221,0.4);
+}
 
-            margin-top: 5px;
+.platform h3 {
+    margin-bottom: 8px;
+}
 
-            color: #6d8589;
+.platform p {
+    color: #899598;
+    font-size: 14px;
+}
 
-            font-size: 11px;
-        }
+/* =========================================================
+   DESCARGAS
+   ========================================================= */
 
-        /* =========================================================
-           CRÉDITOS
-        ========================================================= */
+.downloads {
+    width: 100%;
+    max-width: 850px;
 
-        .credits {
-            text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 
-            padding: 50px 30px;
+    gap: 20px;
 
-            background: rgba(7, 15, 18, 0.75);
+    margin-top: 50px;
+}
 
-            border: 1px solid rgba(90, 212, 212, 0.12);
+.download-card {
+    padding: 30px;
 
-            border-radius: 20px;
-        }
+    text-align: left;
 
-        .credits h3 {
-            font-size: 28px;
+    background: rgba(8,15,18,0.82);
 
-            margin-bottom: 15px;
-        }
+    border: 1px solid rgba(105,221,221,0.12);
 
-        .credits p {
-            color: #8fa1a5;
+    border-radius: 14px;
 
-            line-height: 1.8;
-        }
+    transition: 0.35s ease;
+}
 
-        .credits strong {
-            color: #63dddd;
-        }
+.download-card:hover {
+    border-color: rgba(105,221,221,0.4);
 
-        /* =========================================================
-           EXTRA
-        ========================================================= */
+    transform: translateY(-5px);
+}
 
-        .extra {
-            text-align: center;
-        }
+.download-card h3 {
+    margin-bottom: 8px;
+}
 
-        .extra-card {
-            display: inline-block;
+.download-card p {
+    color: #8f9a9d;
 
-            max-width: 700px;
+    margin-bottom: 20px;
 
-            padding: 40px;
+    font-size: 14px;
+}
 
-            background: rgba(8, 18, 21, 0.75);
+.download-link {
+    display: inline-block;
 
-            border: 1px solid rgba(99, 221, 221, 0.12);
+    padding: 10px 18px;
 
-            border-radius: 20px;
-        }
+    border-radius: 7px;
 
-        .extra-card h3 {
-            color: #63dddd;
+    background: #69dddd;
+    color: #041012;
 
-            margin-bottom: 15px;
-        }
+    text-decoration: none;
 
-        .extra-card p {
-            color: #91a3a6;
+    font-size: 14px;
+    font-weight: bold;
 
-            line-height: 1.8;
-        }
+    transition: 0.3s ease;
+}
 
-        /* =========================================================
-           FOOTER
-        ========================================================= */
+.download-link:hover {
+    box-shadow: 0 0 18px rgba(105,221,221,0.25);
+}
 
-        footer {
-            padding: 45px 20px;
+/* =========================================================
+   CRÉDITOS / EXTRA
+   ========================================================= */
 
-            text-align: center;
+.credits-box {
+    max-width: 750px;
 
-            border-top: 1px solid rgba(91, 213, 213, 0.1);
+    padding: 40px;
 
-            color: #607276;
+    margin-top: 45px;
 
-            font-size: 13px;
-        }
+    background: rgba(8,15,18,0.7);
 
-        footer .footer-logo {
-            width: 45px;
-            height: 45px;
+    border: 1px solid rgba(105,221,221,0.1);
 
-            object-fit: contain;
+    border-radius: 15px;
+}
 
-            margin-bottom: 10px;
-        }
+.credits-box p {
+    color: #929ea1;
 
-        /* =========================================================
-           RESPONSIVE
-        ========================================================= */
+    line-height: 1.8;
+}
 
-        @media (max-width: 850px) {
+.extra {
+    margin-top: 25px;
 
-            header {
-                padding: 0 4%;
-            }
+    color: #69dddd;
 
-            nav {
-                gap: 12px;
-            }
+    font-size: 14px;
+}
 
-            nav a:not(.nav-download) {
-                display: none;
-            }
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-            .about-box {
-                grid-template-columns: 1fr;
-            }
+footer {
+    padding: 35px 8%;
 
-            .features {
-                grid-template-columns: 1fr 1fr;
-            }
+    text-align: center;
 
-            .platforms {
-                grid-template-columns: 1fr;
-            }
+    border-top: 1px solid rgba(105,221,221,0.08);
 
-            .hero-logo {
-                width: 190px;
-                height: 190px;
-            }
-        }
+    color: #596467;
 
-        @media (max-width: 550px) {
+    font-size: 13px;
+}
 
-            .hero h1 {
-                font-size: 55px;
-                letter-spacing: 10px;
-                margin-left: 10px;
-            }
+footer span {
+    color: #69dddd;
+}
 
-            .features {
-                grid-template-columns: 1fr;
-            }
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
 
-            .buttons {
-                flex-direction: column;
-                width: 100%;
-                max-width: 300px;
-            }
+@keyframes headerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 
-            .button {
-                text-align: center;
-            }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-            section {
-                padding: 80px 0;
-            }
-        }
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.65) translateY(25px);
+    }
 
-    </style>
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes titleAppear {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+        letter-spacing: 25px;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 12px;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* =========================================================
+   ANIMACIÓN AL HACER SCROLL
+   ========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform: translateY(35px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 0 5%;
+    }
+
+    nav {
+        gap: 15px;
+    }
+
+    nav a:not(.download-btn) {
+        display: none;
+    }
+
+    .hero-title {
+        letter-spacing: 7px;
+    }
+
+    .features,
+    .platforms,
+    .downloads {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =========================================================
-         NAVBAR
-    ========================================================== -->
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
-    <header>
+<header>
 
-        <a href="#inicio" class="brand">
-            <img src="image.png" alt="RETS">
-            <span>RETS</span>
+    <a href="#inicio" class="logo-small">
+        <img src="image.png" alt="RETS">
+        <span>RETS</span>
+    </a>
+
+    <nav>
+        <a href="#funciones">Funciones</a>
+        <a href="#plataformas">Plataformas</a>
+        <a href="#descargar" class="download-btn">Descargar</a>
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="hero" id="inicio">
+
+    <img
+        src="image.png"
+        alt="Logo oficial de RETS"
+        class="hero-logo"
+    >
+
+    <h1 class="hero-title">RETS</h1>
+
+    <h2 class="hero-subtitle">
+        Navegador de SimetriOS
+    </h2>
+
+    <p class="hero-description">
+        Más que navegar. Un navegador diseñado para convertir
+        la web en un espacio más rápido, inteligente,
+        personal y útil.
+    </p>
+
+    <div class="hero-buttons">
+
+        <a href="#descargar" class="btn btn-primary">
+            Descargar RETS
         </a>
 
-        <nav>
-            <a href="#funciones">Funciones</a>
-            <a href="#plataformas">Plataformas</a>
-            <a href="#descargas" class="nav-download">Descargar</a>
-        </nav>
+        <a href="#funciones" class="btn btn-secondary">
+            Explorar RETS
+        </a>
 
-    </header>
+    </div>
 
+    <div class="scroll-indicator">
+        ↓ &nbsp; DESCUBRE RETS
+    </div>
 
-    <!-- =========================================================
-         PORTADA
-    ========================================================== -->
+</section>
 
-    <main>
 
-        <section class="hero" id="inicio">
+<!-- =====================================================
+     FUNCIONES
+     ===================================================== -->
 
-            <img
-                src="image.png"
-                alt="Logo oficial de RETS"
-                class="hero-logo"
-            >
+<section id="funciones">
 
-            <h1>RETS</h1>
+    <div class="reveal">
 
-            <h2>Navegador de SimetriOS</h2>
+        <div class="section-label">
+            EL NAVEGADOR
+        </div>
 
-            <p>
-                Más que navegar.
-                Un navegador diseñado para convertir la web
-                en un espacio más rápido, inteligente,
-                personal y útil.
-            </p>
+        <h2 class="section-title">
+            Todo en un solo lugar.
+        </h2>
 
-            <div class="buttons">
-
-                <a
-                    href="#descargas"
-                    class="button button-primary"
-                >
-                    Descargar RETS
-                </a>
-
-                <a
-                    href="#funciones"
-                    class="button button-secondary"
-                >
-                    Explorar RETS
-                </a>
-
-            </div>
-
-            <div class="scroll-text">
-                ↓ &nbsp; DESCUBRE RETS
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             QUÉ ES RETS
-        ====================================================== -->
-
-        <section id="about">
-
-            <div class="section-title">
-
-                <span>CONOCE RETS</span>
-
-                <h2>¿Qué es RETS?</h2>
-
-                <p>
-                    Una nueva forma de experimentar la web,
-                    creada pensando en velocidad, simplicidad
-                    y herramientas útiles.
-                </p>
-
-            </div>
-
-
-            <div class="about-box">
-
-                <div>
-
-                    <h3>Un navegador diferente</h3>
-
-                    <p>
-                        RETS es un navegador desarrollado
-                        alrededor de la idea de ofrecer una
-                        experiencia moderna sin dejar de lado
-                        los equipos con recursos limitados.
-                    </p>
-
-                </div>
-
-                <div>
-
-                    <h3>Tu espacio en la web</h3>
-
-                    <p>
-                        Herramientas integradas, accesos rápidos,
-                        inteligencia artificial y una interfaz
-                        diseñada para que todo esté donde lo
-                        necesitas.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             FUNCIONES
-        ====================================================== -->
-
-        <section id="funciones">
-
-            <div class="section-title">
-
-                <span>CARACTERÍSTICAS</span>
-
-                <h2>¿Qué puede hacer RETS?</h2>
-
-                <p>
-                    Algunas de las herramientas que forman
-                    parte de la experiencia RETS.
-                </p>
-
-            </div>
-
-
-            <div class="features">
-
-                <article class="feature">
-
-                    <div class="feature-icon">◈</div>
-
-                    <h3>RETS Vision</h3>
-
-                    <p>
-                        Analiza una parte de tu pantalla
-                        utilizando inteligencia artificial
-                        para ayudarte a comprender lo que ves.
-                    </p>
-
-                </article>
-
-
-                <article class="feature">
-
-                    <div class="feature-icon">⌘</div>
-
-                    <h3>Command Center</h3>
-
-                    <p>
-                        Accede rápidamente a funciones de RETS
-                        mediante comandos sencillos.
-                    </p>
-
-                </article>
-
-
-                <article class="feature">
-
-                    <div class="feature-icon">▣</div>
-
-                    <h3>RETS Vault</h3>
-
-                    <p>
-                        Un espacio pensado para gestionar
-                        tus descargas de forma privada.
-                    </p>
-
-                </article>
-
-
-                <article class="feature">
-
-                    <div class="feature-icon">⚡</div>
-
-                    <h3>Optimizado</h3>
-
-                    <p>
-                        Diseñado para ofrecer una experiencia
-                        fluida incluso en equipos modestos.
-                    </p>
-
-                </article>
-
-
-                <article class="feature">
-
-                    <div class="feature-icon">◌</div>
-
-                    <h3>Sesión privada</h3>
-
-                    <p>
-                        Navega utilizando una sesión separada
-                        para mantener tu actividad aislada.
-                    </p>
-
-                </article>
-
-
-                <article class="feature">
-
-                    <div class="feature-icon">＋</div>
-
-                    <h3>Y mucho más</h3>
-
-                    <p>
-                        RETS continuará creciendo con nuevas
-                        herramientas y mejoras.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             PLATAFORMAS
-        ====================================================== -->
-
-        <section id="plataformas">
-
-            <div class="section-title">
-
-                <span>COMPATIBILIDAD</span>
-
-                <h2>RETS en tus dispositivos</h2>
-
-                <p>
-                    El proyecto está pensado para llevar RETS
-                    a diferentes tipos de equipos.
-                </p>
-
-            </div>
-
-
-            <div class="platforms">
-
-                <div class="platform">
-
-                    <div class="platform-icon">▣</div>
-
-                    <h3>Windows</h3>
-
-                    <p>
-                        La versión principal de RETS.
-                    </p>
-
-                </div>
-
-
-                <div class="platform">
-
-                    <div class="platform-icon">◈</div>
-
-                    <h3>Linux</h3>
-
-                    <p>
-                        Soporte previsto para sistemas Linux.
-                    </p>
-
-                </div>
-
-
-                <div class="platform">
-
-                    <div class="platform-icon">◆</div>
-
-                    <h3>Más plataformas</h3>
-
-                    <p>
-                        Nuevas versiones podrán llegar
-                        en el futuro.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             DESCARGAS
-        ====================================================== -->
-
-        <section id="descargas">
-
-            <div class="section-title">
-
-                <span>DESCARGAS</span>
-
-                <h2>Obtén RETS</h2>
-
-                <p>
-                    Elige la versión correspondiente a tu dispositivo.
-                </p>
-
-            </div>
-
-
-            <div class="download-box">
-
-                <h3>Descarga RETS</h3>
-
-                <p>
-                    Las versiones disponibles aparecerán aquí.
-                </p>
-
-
-                <div class="download-buttons">
-
-                    <!-- CAMBIA LOS href CUANDO TENGAS LOS INSTALLERS -->
-
-                    <a
-                        href="#"
-                        class="download-button"
-                    >
-                        Windows
-                        <small>Installer</small>
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="download-button"
-                    >
-                        Linux
-                        <small>Próximamente</small>
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="download-button"
-                    >
-                        Otras versiones
-                        <small>Próximamente</small>
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             CRÉDITOS
-        ====================================================== -->
-
-        <section id="creditos">
-
-            <div class="section-title">
-
-                <span>EL PROYECTO</span>
-
-                <h2>Créditos</h2>
-
-            </div>
-
-
-            <div class="credits">
-
-                <h3>RETS</h3>
-
-                <p>
-                    Proyecto creado y desarrollado por
-                    <strong>Ariel56LoL</strong>.
-                </p>
-
-                <p>
-                    Gracias a todas las personas que han
-                    probado, apoyado y aportado ideas al proyecto.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             EXTRA
-        ====================================================== -->
-
-        <section class="extra">
-
-            <div class="section-title">
-
-                <span>EXTRA</span>
-
-                <h2>El futuro de RETS</h2>
-
-            </div>
-
-
-            <div class="extra-card">
-
-                <h3>Esto apenas comienza.</h3>
-
-                <p>
-                    RETS seguirá evolucionando con nuevas
-                    funciones, mejoras de rendimiento y
-                    herramientas diseñadas para hacer de la
-                    navegación una experiencia diferente.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================================
-         FOOTER
-    ========================================================== -->
-
-    <footer>
-
-        <img
-            src="image.png"
-            alt="RETS"
-            class="footer-logo"
-        >
-
-        <p>
-            © 2026 RETS — Navegador de SimetriOS
+        <p class="section-description">
+            RETS combina navegación, herramientas y funciones
+            inteligentes en una interfaz creada para ser
+            rápida, limpia y personal.
         </p>
 
-    </footer>
+    </div>
 
+
+    <div class="features">
+
+        <div class="card reveal">
+
+            <div class="card-icon">◈</div>
+
+            <h3>RETS Vision</h3>
+
+            <p>
+                Analiza lo que aparece en tu pantalla y convierte
+                imágenes y contenido visual en información útil.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">⌘</div>
+
+            <h3>Command Center</h3>
+
+            <p>
+                Controla RETS rápidamente con comandos y acciones
+                desde un único espacio.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">▣</div>
+
+            <h3>RETS Vault</h3>
+
+            <p>
+                Un espacio pensado para mantener tus archivos
+                importantes organizados dentro del navegador.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">◌</div>
+
+            <h3>Sesión privada</h3>
+
+            <p>
+                Navega en una sesión independiente cuando
+                necesites mantener separado tu entorno.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">⚡</div>
+
+            <h3>Optimizado</h3>
+
+            <p>
+                Diseñado pensando especialmente en equipos
+                con recursos limitados.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">◉</div>
+
+            <h3>Interfaz RETS</h3>
+
+            <p>
+                Una interfaz moderna, oscura y minimalista
+                diseñada alrededor de la experiencia RETS.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PLATAFORMAS
+     ===================================================== -->
+
+<section id="plataformas">
+
+    <div class="reveal">
+
+        <div class="section-label">
+            COMPATIBILIDAD
+        </div>
+
+        <h2 class="section-title">
+            Diseñado para diferentes equipos.
+        </h2>
+
+        <p class="section-description">
+            RETS busca ofrecer una experiencia consistente
+            sin exigir demasiado hardware.
+        </p>
+
+    </div>
+
+
+    <div class="platforms">
+
+        <div class="platform reveal">
+
+            <h3>Windows</h3>
+
+            <p>
+                Experiencia principal de RETS.
+            </p>
+
+        </div>
+
+
+        <div class="platform reveal">
+
+            <h3>Equipos de bajos recursos</h3>
+
+            <p>
+                Interfaz pensada para mantener un funcionamiento
+                ligero.
+            </p>
+
+        </div>
+
+
+        <div class="platform reveal">
+
+            <h3>Más plataformas</h3>
+
+            <p>
+                Nuevas versiones y plataformas podrán llegar
+                posteriormente.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DESCARGAS
+     ===================================================== -->
+
+<section id="descargar">
+
+    <div class="reveal">
+
+        <div class="section-label">
+            DESCARGAS
+        </div>
+
+        <h2 class="section-title">
+            Consigue RETS.
+        </h2>
+
+        <p class="section-description">
+            Elige la versión correspondiente a tu dispositivo.
+        </p>
+
+    </div>
+
+
+    <div class="downloads">
+
+        <div class="download-card reveal">
+
+            <h3>RETS para Windows</h3>
+
+            <p>
+                Instalador oficial de RETS para Windows.
+            </p>
+
+            <!-- Cambia # por el enlace real cuando tengas
+                 publicado el instalador -->
+
+            <a href="#" class="download-link">
+                Próximamente
+            </a>
+
+        </div>
+
+
+        <div class="download-card reveal">
+
+            <h3>Otras plataformas</h3>
+
+            <p>
+                Más versiones de RETS estarán disponibles
+                próximamente.
+            </p>
+
+            <a href="#" class="download-link">
+                Próximamente
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CRÉDITOS
+     ===================================================== -->
+
+<section id="creditos">
+
+    <div class="reveal">
+
+        <div class="section-label">
+            RETS PROJECT
+        </div>
+
+        <h2 class="section-title">
+            Hecho para explorar.
+        </h2>
+
+        <div class="credits-box">
+
+            <p>
+                RETS es un proyecto independiente enfocado en
+                crear una experiencia de navegación diferente,
+                combinando simplicidad, herramientas inteligentes
+                y una interfaz propia.
+            </p>
+
+            <p class="extra">
+                Gracias por formar parte del proyecto RETS.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    RETS © 2026 ·
+    <span>Navegador de SimetriOS</span>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+/*
+ * Animación de aparición al hacer scroll.
+ */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const observer =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+revealElements.forEach((element) => {
+
+    observer.observe(element);
+
+});
+
+
+/*
+ * Pequeño efecto en el header al desplazarse.
+ */
+
+const header =
+    document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 30) {
+
+        header.style.background =
+            "rgba(3, 8, 10, 0.96)";
+
+        header.style.boxShadow =
+            "0 8px 30px rgba(0,0,0,0.18)";
+
+    } else {
+
+        header.style.background =
+            "rgba(3, 8, 10, 0.88)";
+
+        header.style.boxShadow =
+            "none";
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
+```
