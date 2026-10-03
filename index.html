@@ -1,28 +1,35 @@
-```html
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nexaris — RETS</title>
+    <title>Nexaris — Created for you.</title>
 
     <meta
         name="description"
-        content="RETS, el navegador de Nexaris. Rapid Exploration & Technology Suite."
+        content="Nexaris — Created for you. Discover RETS, Rapid Exploration & Technology Suite."
     >
 
     <style>
         :root {
             --bg: #05080d;
             --bg-soft: #081018;
+
             --panel: rgba(10, 18, 28, 0.72);
+            --panel-strong: rgba(10, 18, 28, 0.92);
+
             --cyan: #39e6ff;
             --cyan-soft: #7cf0ff;
+            --blue: #58a6ff;
+
             --text: #f2fbff;
             --text-soft: #99aeb9;
+
             --border: rgba(80, 220, 255, 0.16);
+
             --max-width: 1180px;
+            --radius: 22px;
         }
 
         * {
@@ -37,14 +44,17 @@
 
         body {
             min-height: 100vh;
+
             font-family:
                 Inter,
+                ui-sans-serif,
                 system-ui,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
 
+            color: var(--text);
             background:
                 radial-gradient(
                     circle at 15% 10%,
@@ -58,14 +68,15 @@
                 ),
                 var(--bg);
 
-            color: var(--text);
             overflow-x: hidden;
         }
 
         body::before {
             content: "";
+
             position: fixed;
             inset: 0;
+
             pointer-events: none;
             z-index: -1;
 
@@ -103,17 +114,22 @@
 
         header {
             position: fixed;
+
             top: 0;
             left: 0;
+
             width: 100%;
+
             z-index: 1000;
 
-            background: rgba(5, 8, 13, 0.72);
+            background:
+                rgba(5, 8, 13, 0.72);
 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
 
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom:
+                1px solid rgba(255,255,255,0.05);
         }
 
         .nav {
@@ -122,12 +138,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 24px;
         }
 
         .brand {
             display: flex;
             align-items: center;
+
             gap: 12px;
 
             font-weight: 800;
@@ -153,12 +171,15 @@
         nav {
             display: flex;
             align-items: center;
+
             gap: 28px;
         }
 
         nav a {
             color: var(--text-soft);
+
             font-size: 14px;
+
             transition: 0.25s ease;
         }
 
@@ -169,10 +190,14 @@
         .nav-button {
             padding: 10px 16px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 999px;
 
-            background: rgba(57,230,255,0.05);
+            background:
+                rgba(57,230,255,0.05);
+
             color: var(--cyan-soft);
         }
 
@@ -182,36 +207,46 @@
 
         .hero {
             min-height: 100vh;
+
             padding-top: 78px;
 
             display: flex;
             align-items: center;
-
-            position: relative;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
+
+            grid-template-columns:
+                1.05fr 0.95fr;
+
             align-items: center;
+
             gap: 60px;
         }
 
         .eyebrow {
             display: inline-flex;
             align-items: center;
+
             gap: 10px;
 
             padding: 8px 13px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 999px;
 
             color: var(--cyan-soft);
-            background: rgba(57,230,255,0.045);
+
+            background:
+                rgba(57,230,255,0.045);
 
             font-size: 12px;
+
             letter-spacing: 0.09em;
+
             text-transform: uppercase;
         }
 
@@ -230,10 +265,13 @@
         .hero h1 {
             margin-top: 24px;
 
-            font-size: clamp(52px, 8vw, 102px);
+            font-size:
+                clamp(52px, 8vw, 102px);
+
             line-height: 0.94;
 
             letter-spacing: -0.055em;
+
             font-weight: 850;
         }
 
@@ -251,8 +289,22 @@
             color: transparent;
         }
 
+        .hero-tagline {
+            margin-top: 17px;
+
+            color: var(--cyan-soft);
+
+            font-size:
+                clamp(19px, 3vw, 27px);
+
+            font-weight: 600;
+
+            letter-spacing: -0.02em;
+        }
+
         .hero-description {
-            margin-top: 26px;
+            margin-top: 25px;
+
             max-width: 610px;
 
             color: var(--text-soft);
@@ -266,27 +318,31 @@
 
             display: flex;
             flex-wrap: wrap;
+
             gap: 14px;
         }
 
         .button {
             display: inline-flex;
+
             align-items: center;
             justify-content: center;
 
             min-height: 48px;
+
             padding: 0 20px;
 
             border-radius: 14px;
 
             transition:
                 transform 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
+                background 0.25s ease,
+                border-color 0.25s ease;
         }
 
         .button-primary {
             background: var(--cyan);
+
             color: #041016;
 
             font-weight: 800;
@@ -303,9 +359,11 @@
         }
 
         .button-secondary {
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
 
-            background: rgba(255,255,255,0.025);
+            background:
+                rgba(255,255,255,0.025);
 
             color: var(--text);
         }
@@ -325,9 +383,11 @@
 
             display: flex;
             flex-wrap: wrap;
+
             gap: 22px;
 
             color: #6f8994;
+
             font-size: 13px;
         }
 
@@ -336,20 +396,21 @@
         }
 
         /* =========================
-           HERO LOGO
+           HERO VISUAL
         ========================= */
 
         .hero-visual {
             min-height: 520px;
 
+            position: relative;
+
             display: grid;
             place-items: center;
-
-            position: relative;
         }
 
         .triangle-orbit {
             width: min(460px, 82vw);
+
             aspect-ratio: 1;
 
             position: relative;
@@ -360,6 +421,7 @@
 
         .triangle {
             position: absolute;
+
             inset: 10%;
 
             clip-path:
@@ -369,7 +431,8 @@
                     4% 94%
                 );
 
-            border: 1px solid rgba(57,230,255,0.18);
+            border:
+                1px solid rgba(57,230,255,0.18);
 
             background:
                 linear-gradient(
@@ -377,22 +440,34 @@
                     rgba(57,230,255,0.08),
                     rgba(57,230,255,0.01)
                 );
+
+            animation:
+                floatTriangle 7s ease-in-out infinite;
         }
 
         .triangle-2 {
             inset: 17%;
+
             opacity: 0.72;
 
             transform: rotate(180deg);
+
+            animation:
+                floatTriangleReverse 8s ease-in-out infinite;
         }
 
         .triangle-3 {
             inset: 25%;
+
             opacity: 0.5;
+
+            animation:
+                floatTriangle 10s ease-in-out infinite reverse;
         }
 
         .orbit-circle {
             position: absolute;
+
             inset: 3%;
 
             border:
@@ -415,7 +490,8 @@
 
             border-radius: 50%;
 
-            background: var(--cyan);
+            background:
+                var(--cyan);
 
             box-shadow:
                 0 0 22px rgba(57,230,255,0.9);
@@ -427,8 +503,8 @@
         }
 
         .orbit-circle::after {
-            bottom: 15%;
             right: 11%;
+            bottom: 15%;
         }
 
         .hero-logo {
@@ -451,12 +527,15 @@
 
         .visual-caption {
             position: absolute;
+
             bottom: 16px;
 
             color: #6f8994;
 
             font-size: 11px;
+
             letter-spacing: 0.12em;
+
             text-transform: uppercase;
         }
 
@@ -476,8 +555,28 @@
             }
         }
 
+        @keyframes floatTriangle {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        @keyframes floatTriangleReverse {
+            0%, 100% {
+                transform: translateY(0) rotate(180deg);
+            }
+
+            50% {
+                transform: translateY(9px) rotate(178deg);
+            }
+        }
+
         /* =========================
-           SECTIONS
+           GENERAL SECTIONS
         ========================= */
 
         section {
@@ -486,6 +585,7 @@
 
         .section-heading {
             max-width: 760px;
+
             margin-bottom: 52px;
         }
 
@@ -493,14 +593,17 @@
             color: var(--cyan-soft);
 
             font-size: 12px;
+
             letter-spacing: 0.11em;
+
             text-transform: uppercase;
         }
 
         .section-heading h2 {
             margin-top: 12px;
 
-            font-size: clamp(34px, 5vw, 58px);
+            font-size:
+                clamp(34px, 5vw, 58px);
 
             line-height: 1.05;
 
@@ -513,6 +616,7 @@
             color: var(--text-soft);
 
             line-height: 1.75;
+
             font-size: 16px;
         }
 
@@ -549,11 +653,17 @@
                     rgba(57,230,255,0.06),
                     rgba(255,255,255,0.01)
                 );
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.03),
+                0 20px 70px rgba(0,0,0,0.2);
         }
 
         .rets-brand {
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
         }
 
@@ -583,6 +693,7 @@
             color: var(--cyan-soft);
 
             font-size: 13px;
+
             letter-spacing: 0.07em;
         }
 
@@ -592,6 +703,7 @@
             color: var(--text-soft);
 
             line-height: 1.8;
+
             font-size: 16px;
         }
 
@@ -613,20 +725,21 @@
         }
 
         .feature-card {
-            padding: 28px;
-
             min-height: 230px;
+
+            padding: 28px;
 
             border:
                 1px solid rgba(255,255,255,0.06);
 
-            border-radius: 22px;
+            border-radius: var(--radius);
 
             background: var(--panel);
 
             transition:
                 transform 0.28s ease,
-                border-color 0.28s ease;
+                border-color 0.28s ease,
+                background 0.28s ease;
         }
 
         .feature-card:hover {
@@ -634,6 +747,9 @@
 
             border-color:
                 rgba(57,230,255,0.2);
+
+            background:
+                rgba(11,22,34,0.86);
         }
 
         .feature-icon {
@@ -652,6 +768,8 @@
 
             background:
                 rgba(57,230,255,0.04);
+
+            font-size: 18px;
         }
 
         .feature-card h3 {
@@ -666,6 +784,7 @@
             color: var(--text-soft);
 
             line-height: 1.65;
+
             font-size: 14px;
         }
 
@@ -688,7 +807,7 @@
             border:
                 1px solid rgba(255,255,255,0.06);
 
-            border-radius: 22px;
+            border-radius: var(--radius);
 
             background:
                 linear-gradient(
@@ -725,6 +844,16 @@
             color: var(--cyan);
         }
 
+        .company-tagline {
+            margin-top: 8px;
+
+            color: var(--cyan-soft);
+
+            font-size: 18px;
+
+            font-weight: 600;
+        }
+
         .quote {
             margin-top: 24px;
 
@@ -736,15 +865,17 @@
             color: var(--text);
 
             font-size: 18px;
+
             line-height: 1.6;
         }
 
         /* =========================
-           TIMELINE
+           EVOLUTION
         ========================= */
 
         .timeline {
             display: grid;
+
             gap: 16px;
         }
 
@@ -773,6 +904,7 @@
             font-weight: 700;
 
             font-size: 13px;
+
             letter-spacing: 0.08em;
         }
 
@@ -786,6 +918,7 @@
             color: var(--text-soft);
 
             line-height: 1.6;
+
             font-size: 14px;
         }
 
@@ -798,10 +931,11 @@
         }
 
         .launch-card {
-            position: relative;
+            padding: 76px 30px;
+
             overflow: hidden;
 
-            padding: 76px 30px;
+            position: relative;
 
             border:
                 1px solid var(--border);
@@ -817,7 +951,28 @@
                 var(--panel);
         }
 
+        .launch-card::after {
+            content: "▲";
+
+            position: absolute;
+
+            right: -30px;
+            bottom: -85px;
+
+            font-size: 280px;
+
+            line-height: 1;
+
+            color:
+                rgba(57,230,255,0.025);
+
+            pointer-events: none;
+        }
+
         .launch-card h2 {
+            position: relative;
+            z-index: 1;
+
             font-size:
                 clamp(44px, 8vw, 88px);
 
@@ -825,6 +980,9 @@
         }
 
         .launch-date {
+            position: relative;
+            z-index: 1;
+
             margin-top: 14px;
 
             color: var(--cyan-soft);
@@ -836,6 +994,9 @@
         }
 
         .launch-text {
+            position: relative;
+            z-index: 1;
+
             margin: 18px auto 0;
 
             max-width: 580px;
@@ -846,6 +1007,9 @@
         }
 
         .launch-card .button {
+            position: relative;
+            z-index: 1;
+
             margin-top: 28px;
         }
 
@@ -863,8 +1027,9 @@
         .footer-top {
             display: flex;
 
-            justify-content: space-between;
             align-items: flex-start;
+
+            justify-content: space-between;
 
             gap: 30px;
         }
@@ -879,6 +1044,7 @@
             color: var(--text-soft);
 
             line-height: 1.65;
+
             font-size: 13px;
         }
 
@@ -894,6 +1060,12 @@
             color: var(--text-soft);
 
             font-size: 13px;
+
+            transition: 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
         }
 
         .footer-bottom {
@@ -918,7 +1090,7 @@
         }
 
         /* =========================
-           ANIMATION
+           REVEAL
         ========================= */
 
         .reveal {
@@ -945,6 +1117,10 @@
 
         @media (max-width: 900px) {
 
+            nav {
+                gap: 15px;
+            }
+
             nav a:not(.nav-button) {
                 display: none;
             }
@@ -969,6 +1145,7 @@
 
             .timeline-item {
                 grid-template-columns: 1fr;
+
                 gap: 10px;
             }
         }
@@ -1051,7 +1228,7 @@
                 </a>
 
                 <a href="#features">
-                    Funciones
+                    Functions
                 </a>
 
                 <a href="#nexaris">
@@ -1059,14 +1236,14 @@
                 </a>
 
                 <a href="#roadmap">
-                    Evolución
+                    Evolution
                 </a>
 
                 <a
                     href="#launch"
                     class="nav-button"
                 >
-                    Lanzamiento
+                    Launch
                 </a>
 
             </nav>
@@ -1101,18 +1278,19 @@
 
                     <h1>
 
-                        <span>Technology</span><br>
-
-                        beyond.
+                        <span>NEXARIS</span>
 
                     </h1>
 
+                    <div class="hero-tagline">
+                        Created for you.
+                    </div>
+
                     <p class="hero-description">
 
-                        Nexaris crea tecnología y experiencias
-                        digitales diseñadas para explorar nuevas
-                        formas de interactuar con nuestros
-                        dispositivos.
+                        Technology and digital experiences
+                        created with a simple idea:
+                        technology should adapt to people.
 
                     </p>
 
@@ -1122,14 +1300,14 @@
                             href="#rets"
                             class="button button-primary"
                         >
-                            Descubrir RETS
+                            Discover RETS
                         </a>
 
                         <a
                             href="#nexaris"
                             class="button button-secondary"
                         >
-                            Conocer Nexaris
+                            About Nexaris
                         </a>
 
                     </div>
@@ -1138,12 +1316,12 @@
 
                         <span>
                             <strong>RETS</strong>
-                            — Producto principal
+                            — Main product
                         </span>
 
                         <span>
                             <strong>2026</strong>
-                            — Nueva generación
+                            — First generation
                         </span>
 
                     </div>
@@ -1157,17 +1335,11 @@
 
                         <div class="orbit-circle"></div>
 
-                        <div
-                            class="triangle triangle-1"
-                        ></div>
+                        <div class="triangle"></div>
 
-                        <div
-                            class="triangle triangle-2"
-                        ></div>
+                        <div class="triangle triangle-2"></div>
 
-                        <div
-                            class="triangle triangle-3"
-                        ></div>
+                        <div class="triangle triangle-3"></div>
 
                         <img
                             src="image.png"
@@ -1206,13 +1378,13 @@
                     </div>
 
                     <h2>
-                        Conoce RETS.
+                        Meet RETS.
                     </h2>
 
                     <p>
-                        Un navegador creado alrededor de una idea:
-                        hacer que la tecnología se adapte mejor
-                        a quien la utiliza.
+                        A browser built around one idea:
+                        creating a more personal way to
+                        experience technology.
                     </p>
 
                 </div>
@@ -1243,12 +1415,11 @@
 
                         <p>
 
-                            <strong>RETS</strong> es el producto
-                            principal de Nexaris: un navegador con
-                            una interfaz propia, herramientas
-                            integradas y una arquitectura pensada
-                            para aprovechar mejor los recursos
-                            disponibles.
+                            <strong>RETS</strong> is the main
+                            product from Nexaris: a browser
+                            with its own interface, integrated
+                            tools and a focus on making the
+                            most of available resources.
 
                         </p>
 
@@ -1256,10 +1427,9 @@
 
                         <p>
 
-                            Más que navegar, RETS busca reunir en
-                            un solo entorno las herramientas que
-                            necesitas para explorar, trabajar
-                            y crear.
+                            More than just browsing, RETS brings
+                            useful tools together in one place
+                            for exploring, working and creating.
 
                         </p>
 
@@ -1287,14 +1457,12 @@
                     </div>
 
                     <h2>
-                        Herramientas creadas
-                        para RETS.
+                        Tools built for RETS.
                     </h2>
 
                     <p>
-                        Una colección de funciones diseñadas
-                        para integrarse directamente en el
-                        navegador.
+                        Features designed to become part of
+                        the browser itself.
                     </p>
 
                 </div>
@@ -1302,10 +1470,7 @@
 
                 <div class="feature-grid">
 
-
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ▲
@@ -1316,17 +1481,15 @@
                         </h3>
 
                         <p>
-                            Un centro de comandos para controlar
-                            diferentes funciones del navegador
-                            desde una sola interfaz.
+                            A command center designed to give
+                            you quick control over different
+                            browser functions.
                         </p>
 
                     </article>
 
 
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ◈
@@ -1337,17 +1500,15 @@
                         </h3>
 
                         <p>
-                            Captura una región de tu pantalla
-                            y permite analizarla mediante el
-                            sistema de visión de RETS.
+                            Capture a region of your screen
+                            and let RETS analyze it through
+                            its vision system.
                         </p>
 
                     </article>
 
 
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ◆
@@ -1358,17 +1519,15 @@
                         </h3>
 
                         <p>
-                            Un espacio privado pensado para
-                            proteger archivos y mantenerlos
-                            separados del almacenamiento habitual.
+                            A private space designed for
+                            protecting files separately
+                            from regular storage.
                         </p>
 
                     </article>
 
 
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ↻
@@ -1379,17 +1538,15 @@
                         </h3>
 
                         <p>
-                            Recuperación de la sesión anterior
-                            después de un cierre inesperado
-                            del navegador.
+                            Restore your previous session
+                            after an unexpected browser
+                            shutdown.
                         </p>
 
                     </article>
 
 
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ◌
@@ -1400,31 +1557,28 @@
                         </h3>
 
                         <p>
-                            Una sesión separada diseñada para
-                            reducir el almacenamiento de actividad
-                            de navegación normal.
+                            A separate browsing session designed
+                            to keep normal browsing activity
+                            more isolated.
                         </p>
 
                     </article>
 
 
-                    <article
-                        class="feature-card reveal"
-                    >
+                    <article class="feature-card reveal">
 
                         <div class="feature-icon">
                             ◫
                         </div>
 
                         <h3>
-                            Optimización
+                            Optimization
                         </h3>
 
                         <p>
-                            Una interfaz y un funcionamiento
-                            pensados para aprovechar los recursos
-                            disponibles sin depender de hardware
-                            de gama alta.
+                            An interface and architecture focused
+                            on making the most of the resources
+                            available.
                         </p>
 
                     </article>
@@ -1447,17 +1601,16 @@
                 <div class="section-heading reveal">
 
                     <div class="section-kicker">
-                        Company
+                        The project
                     </div>
 
                     <h2>
-                        Detrás de RETS
-                        está Nexaris.
+                        Meet Nexaris.
                     </h2>
 
                     <p>
-                        Una identidad para una idea que puede
-                        crecer mucho más allá de un solo producto.
+                        An independent project created around
+                        the idea of building technology differently.
                     </p>
 
                 </div>
@@ -1476,15 +1629,15 @@
                             Nexaris<span>.</span>
                         </div>
 
-                        <p>
-                            Tecnología, software y experiencias
-                            digitales construidas con una
-                            visión propia.
-                        </p>
-
-                        <div class="quote">
-                            Made to be different.
+                        <div class="company-tagline">
+                            Created for you.
                         </div>
+
+                        <p>
+                            Nexaris is an independent project
+                            focused on creating its own digital
+                            experiences and tools.
+                        </p>
 
                     </div>
 
@@ -1492,24 +1645,25 @@
                     <div class="company-panel reveal">
 
                         <h3>
-                            Una idea que continúa creciendo.
+                            It started with an idea.
                         </h3>
 
                         <p>
-                            Nexaris nace como el espacio detrás
-                            de RETS, pero la visión no termina
-                            en un navegador.
+                            Nexaris grew alongside RETS,
+                            a browser created to explore a
+                            different approach to everyday
+                            technology.
                         </p>
 
                         <p>
-                            La empresa puede convertirse con el
-                            tiempo en el hogar de nuevos productos,
-                            herramientas y tecnologías.
+                            The project continues to evolve
+                            through new ideas, experiments,
+                            tools and improvements.
                         </p>
 
                         <p>
                             <strong>
-                                RETS es el comienzo.
+                                RETS is the beginning.
                             </strong>
                         </p>
 
@@ -1523,7 +1677,7 @@
 
 
         <!-- =========================
-             EVOLUCIÓN
+             EVOLUTION
         ========================= -->
 
         <section id="roadmap">
@@ -1537,13 +1691,13 @@
                     </div>
 
                     <h2>
-                        De una idea a un producto.
+                        From an idea to a product.
                     </h2>
 
                     <p>
-                        RETS continúa evolucionando con nuevas
-                        funciones, optimización y mejoras
-                        de experiencia.
+                        RETS continues to evolve through
+                        new features, optimization and
+                        improvements.
                     </p>
 
                 </div>
@@ -1552,9 +1706,7 @@
                 <div class="timeline">
 
 
-                    <div
-                        class="timeline-item reveal"
-                    >
+                    <div class="timeline-item reveal">
 
                         <div class="timeline-date">
                             2026
@@ -1563,13 +1715,12 @@
                         <div>
 
                             <h3>
-                                El comienzo
+                                The beginning
                             </h3>
 
                             <p>
-                                RETS comenzó como una idea personal
-                                para crear un navegador propio
-                                y diferente.
+                                RETS started as an idea:
+                                creating a browser of its own.
                             </p>
 
                         </div>
@@ -1577,24 +1728,22 @@
                     </div>
 
 
-                    <div
-                        class="timeline-item reveal"
-                    >
+                    <div class="timeline-item reveal">
 
                         <div class="timeline-date">
-                            DESARROLLO
+                            DEVELOPMENT
                         </div>
 
                         <div>
 
                             <h3>
-                                Construcción del navegador
+                                Building RETS
                             </h3>
 
                             <p>
-                                Interfaz, pestañas, herramientas,
-                                almacenamiento, navegación,
-                                sonidos y nuevas funciones.
+                                Interface, tabs, tools,
+                                storage, navigation,
+                                sounds and new features.
                             </p>
 
                         </div>
@@ -1602,9 +1751,7 @@
                     </div>
 
 
-                    <div
-                        class="timeline-item reveal"
-                    >
+                    <div class="timeline-item reveal">
 
                         <div class="timeline-date">
                             TESTING
@@ -1613,13 +1760,13 @@
                         <div>
 
                             <h3>
-                                Pruebas y optimización
+                                Testing and optimization
                             </h3>
 
                             <p>
-                                Corrección de errores, pruebas en
-                                distintos equipos y preparación
-                                para la versión final.
+                                Bug fixing, device testing
+                                and preparation for the
+                                final version.
                             </p>
 
                         </div>
@@ -1627,9 +1774,7 @@
                     </div>
 
 
-                    <div
-                        class="timeline-item reveal"
-                    >
+                    <div class="timeline-item reveal">
 
                         <div class="timeline-date">
                             31.10.2026
@@ -1642,8 +1787,8 @@
                             </h3>
 
                             <p>
-                                Lanzamiento oficial de la primera
-                                versión pública de RETS.
+                                Official launch of the first
+                                public version of RETS.
                             </p>
 
                         </div>
@@ -1658,7 +1803,7 @@
 
 
         <!-- =========================
-             LANZAMIENTO
+             LAUNCH
         ========================= -->
 
         <section
@@ -1679,18 +1824,18 @@
                     </h2>
 
                     <div class="launch-date">
-                        31 OCTUBRE 2026
+                        31 OCTOBER 2026
                     </div>
 
                     <p class="launch-text">
-                        Un nuevo futuro está a punto de comenzar.
+                        A new experience is about to begin.
                     </p>
 
                     <a
                         href="#inicio"
                         class="button button-primary"
                     >
-                        Volver al inicio
+                        Back to top
                     </a>
 
                 </div>
@@ -1732,10 +1877,10 @@
                     </a>
 
                     <p>
-                        Technology beyond the expected.
+                        Created for you.
                         <br>
-                        Nexaris crea tecnología y experiencias
-                        digitales para explorar lo que viene.
+                        RETS is the first project
+                        created under Nexaris.
                     </p>
 
                 </div>
@@ -1748,7 +1893,7 @@
                     </a>
 
                     <a href="#features">
-                        Funciones
+                        Functions
                     </a>
 
                     <a href="#nexaris">
@@ -1756,11 +1901,11 @@
                     </a>
 
                     <a href="#roadmap">
-                        Evolución
+                        Evolution
                     </a>
 
                     <a href="#launch">
-                        Lanzamiento
+                        Launch
                     </a>
 
                 </div>
@@ -1785,6 +1930,10 @@
 
     </footer>
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script>
 
@@ -1815,7 +1964,6 @@
                             revealObserver.unobserve(
                                 entry.target
                             );
-
                         }
 
                     });
@@ -1868,4 +2016,3 @@
 
 </body>
 </html>
-```
