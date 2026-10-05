@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexaris — RETS Tester Program</title>
+
+    <meta
+        name="description"
+        content="RETS Tester Program — Early access to RETS before the public release."
+    >
+
+    <style>
+        :root {
+            --bg: #05080d;
+            --panel: rgba(9, 17, 27, 0.82);
+            --panel-soft: rgba(255,255,255,0.025);
+
+            --cyan: #39e6ff;
+            --cyan-soft: #8af3ff;
+
+            --text: #f2fbff;
+            --muted: #91a7b2;
+
+            --border: rgba(57,230,255,0.16);
+            --border-hover: rgba(57,230,255,0.36);
+
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 20% 10%,
+                    rgba(57,230,255,0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(75,130,255,0.06),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.015) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.015) 1px,
+                    transparent 1px
+                );
+
+            background-size: 64px 64px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .page {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            width: 100%;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.05);
+
+            background:
+                rgba(5,8,13,0.72);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .header-inner {
+            width: min(
+                1180px,
+                calc(100% - 40px)
+            );
+
+            min-height: 76px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .brand img {
+            width: 32px;
+            height: 32px;
+
+            object-fit: contain;
+
+            filter:
+                drop-shadow(
+                    0 0 12px rgba(57,230,255,0.25)
+                );
+        }
+
+        .brand span {
+            font-size: 14px;
+        }
+
+        .back-link {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            transition: 0.25s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cyan-soft);
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+
+            padding: 80px 20px;
+        }
+
+        .content {
+            width: min(
+                920px,
+                100%
+            );
+
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+
+            margin-bottom: 34px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 999px;
+
+            background:
+                rgba(57,230,255,0.04);
+
+            color: var(--cyan-soft);
+
+            font-size: 11px;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--cyan);
+
+            box-shadow:
+                0 0 12px rgba(57,230,255,0.8);
+        }
+
+        h1 {
+            margin-top: 22px;
+
+            font-size:
+                clamp(42px, 7vw, 72px);
+
+            line-height: 1;
+
+            letter-spacing: -0.055em;
+        }
+
+        h1 span {
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    var(--cyan-soft)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            margin: 18px auto 0;
+
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            font-size: 16px;
+        }
+
+        /* =========================
+           LOGIN CARD
+        ========================= */
+
+        .login-card {
+            position: relative;
+
+            width: min(
+                560px,
+                100%
+            );
+
+            margin: 0 auto;
+
+            padding: 34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,230,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.28),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .corner {
+            position: absolute;
+
+            width: 42px;
+            height: 42px;
+
+            pointer-events: none;
+
+            opacity: 0.55;
+        }
+
+        .corner::before,
+        .corner::after {
+            content: "";
+
+            position: absolute;
+
+            background: var(--cyan);
+        }
+
+        .corner::before {
+            width: 100%;
+            height: 1px;
+        }
+
+        .corner::after {
+            width: 1px;
+            height: 100%;
+        }
+
+        .corner.top-left {
+            top: 16px;
+            left: 16px;
+        }
+
+        .corner.top-left::before,
+        .corner.top-left::after {
+            top: 0;
+            left: 0;
+        }
+
+        .corner.top-right {
+            top: 16px;
+            right: 16px;
+            transform: rotate(90deg);
+        }
+
+        .corner.bottom-right {
+            bottom: 16px;
+            right: 16px;
+            transform: rotate(180deg);
+        }
+
+        .corner.bottom-left {
+            bottom: 16px;
+            left: 16px;
+            transform: rotate(270deg);
+        }
+
+        .card-title {
+            font-size: 22px;
+
+            font-weight: 750;
+        }
+
+        .card-subtitle {
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .field {
+            margin-top: 24px;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #bfd0d7;
+
+            font-size: 12px;
+
+            letter-spacing: 0.06em;
+
+            text-transform: uppercase;
+        }
+
+        .code-wrapper {
+            position: relative;
+        }
+
+        .code-input {
+            width: 100%;
+
+            height: 58px;
+
+            padding:
+                0 18px 0 18px;
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            border-radius: 15px;
+
+            outline: none;
+
+            background:
+                rgba(0,0,0,0.22);
+
+            color: var(--text);
+
+            text-align: center;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.12em;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .code-input::placeholder {
+            color: #526873;
+
+            font-weight: 500;
+
+            letter-spacing: 0.08em;
+        }
+
+        .code-input:focus {
+            border-color:
+                rgba(57,230,255,0.45);
+
+            background:
+                rgba(57,230,255,0.025);
+
+            box-shadow:
+                0 0 0 4px rgba(57,230,255,0.05);
+        }
+
+        .access-button {
+            width: 100%;
+
+            height: 52px;
+
+            margin-top: 16px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: var(--cyan);
+
+            color: #031016;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        .access-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 35px rgba(57,230,255,0.18);
+        }
+
+        .access-button:active {
+            transform: translateY(0);
+        }
+
+        .access-button:disabled {
+            cursor: wait;
+
+            opacity: 0.6;
+
+            transform: none;
+
+            box-shadow: none;
+        }
+
+        .status {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.error {
+            border:
+                1px solid rgba(255,90,90,0.18);
+
+            background:
+                rgba(255,70,70,0.055);
+
+            color: #ffb7b7;
+        }
+
+        .status.success {
+            border:
+                1px solid rgba(57,230,255,0.18);
+
+            background:
+                rgba(57,230,255,0.045);
+
+            color: var(--cyan-soft);
+        }
+
+        .security-note {
+            margin-top: 18px;
+
+            color: #627985;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            text-align: center;
+        }
+
+        /* =========================
+           INFO GRID
+        ========================= */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-top: 18px;
+        }
+
+        .info-card {
+            padding: 20px;
+
+            border:
+                1px solid rgba(255,255,255,0.055);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.015);
+        }
+
+        .info-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 11px;
+
+            color: var(--cyan);
+
+            background:
+                rgba(57,230,255,0.04);
+        }
+
+        .info-card h3 {
+            margin-top: 14px;
+
+            font-size: 15px;
+        }
+
+        .info-card p {
+            margin-top: 7px;
+
+            color: var(--muted);
+
+            line-height: 1.55;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 28px 20px 32px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.045);
+
+            color: #5f7480;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+        footer strong {
+            color: #8299a4;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .header-inner {
+                width:
+                    calc(100% - 28px);
+            }
+
+            .back-link {
+                font-size: 12px;
+            }
+
+            main {
+                padding:
+                    65px 14px;
+            }
+
+            .login-card {
+                padding: 26px 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .code-input {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="header-inner">
+
+            <a
+                href="/"
+                class="brand"
+            >
+                <img
+                    src="image.png"
+                    alt="Nexaris"
+                >
+
+                <span>
+                    NEXARIS
+                </span>
+            </a>
+
+            <a
+                href="/"
+                class="back-link"
+                data-i18n="back"
+            >
+                ← Back to website
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main>
+
+        <div class="content">
+
+
+            <!-- HERO -->
+
+            <div class="hero">
+
+                <div class="badge">
+
+                    <span class="badge-dot"></span>
+
+                    <span data-i18n="badge">
+                        RETS TESTER PROGRAM
+                    </span>
+
+                </div>
+
+
+                <h1>
+
+                    <span data-i18n="title">
+                        Welcome, tester.
+                    </span>
+
+                </h1>
+
+
+                <p
+                    data-i18n="description"
+                >
+                    You are entering the early access area
+                    of RETS. Enter your personal tester code
+                    to continue.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <section class="login-card">
+
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-right"></div>
+                <div class="corner bottom-left"></div>
+
+
+                <h2
+                    class="card-title"
+                    data-i18n="card.title"
+                >
+                    Tester access
+                </h2>
+
+
+                <p
+                    class="card-subtitle"
+                    data-i18n="card.subtitle"
+                >
+                    Enter the access code you received from
+                    the RETS team.
+                </p>
+
+
+                <div class="field">
+
+                    <label
+                        for="testerCode"
+                        data-i18n="code.label"
+                    >
+                        Tester code
+                    </label>
+
+
+                    <div class="code-wrapper">
+
+                        <input
+                            id="testerCode"
+                            class="code-input"
+                            type="text"
+                            inputmode="text"
+                            autocomplete="off"
+                            autocapitalize="characters"
+                            spellcheck="false"
+                            maxlength="13"
+                            placeholder="RETS-XXXX-XXXX"
+                            aria-describedby="status"
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="accessButton"
+                        class="access-button"
+                        type="button"
+                        data-i18n="button"
+                    >
+                        Continue
+                    </button>
+
+
+                    <div
+                        id="status"
+                        class="status"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <p
+                        class="security-note"
+                        data-i18n="security"
+                    >
+                        Your tester code is personal.
+                        Do not share it with other users.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- INFO -->
+
+            <div class="info-grid">
+
+
+                <article class="info-card">
+
+                    <div class="info-icon">
+                        ▲
+                    </div>
+
+                    <h3
+                        data-i18n="info.early.title"
+                    >
+                        Early access
+                    </h3>
+
+                    <p
+                        data-i18n="info.early.text"
+                    >
+                        Test RETS before the public release.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="info-icon">
+                        ◇
+                    </div>
+
+                    <h3
+                        data-i18n="info.feedback.title"
+                    >
+                        Your feedback
+                    </h3>
+
+                    <p
+                        data-i18n="info.feedback.text"
+                    >
+                        Help improve RETS by reporting bugs
+                        and sharing ideas.
+                    </p>
+
+                </article>
+
+
+                <article class="info-card">
+
+                    <div class="info-icon">
+                        ↻
+                    </div>
+
+                    <h3
+                        data-i18n="info.updates.title"
+                    >
+                        Updates
+                    </h3>
+
+                    <p
+                        data-i18n="info.updates.text"
+                    >
+                        New builds and testing information
+                        will appear here.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <strong>NEXARIS</strong>
+        ·
+        <span data-i18n="footer">
+            RETS Tester Program
+        </span>
+        ·
+        © <span id="year"></span>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    /* ========================================
+       TRANSLATIONS
+    ======================================== */
+
+    const translations = {
+
+        en: {
+
+            "back":
+                "← Back to website",
+
+            "badge":
+                "RETS TESTER PROGRAM",
+
+            "title":
+                "Welcome, tester.",
+
+            "description":
+                "You are entering the early access area of RETS. Enter your personal tester code to continue.",
+
+            "card.title":
+                "Tester access",
+
+            "card.subtitle":
+                "Enter the access code you received from the RETS team.",
+
+            "code.label":
+                "Tester code",
+
+            "button":
+                "Continue",
+
+            "security":
+                "Your tester code is personal. Do not share it with other users.",
+
+            "info.early.title":
+                "Early access",
+
+            "info.early.text":
+                "Test RETS before the public release.",
+
+            "info.feedback.title":
+                "Your feedback",
+
+            "info.feedback.text":
+                "Help improve RETS by reporting bugs and sharing ideas.",
+
+            "info.updates.title":
+                "Updates",
+
+            "info.updates.text":
+                "New builds and testing information will appear here.",
+
+            "footer":
+                "RETS Tester Program",
+
+            "invalid":
+                "Invalid or inactive tester code.",
+
+            "error":
+                "Something went wrong. Please try again later.",
+
+            "checking":
+                "Checking..."
+        },
+
+
+        es: {
+
+            "back":
+                "← Volver al sitio",
+
+            "badge":
+                "PROGRAMA DE TESTERS DE RETS",
+
+            "title":
+                "Bienvenido, tester.",
+
+            "description":
+                "Estás entrando al área de acceso anticipado de RETS. Introduce tu código personal de tester para continuar.",
+
+            "card.title":
+                "Acceso de tester",
+
+            "card.subtitle":
+                "Introduce el código de acceso que recibiste del equipo de RETS.",
+
+            "code.label":
+                "Código de tester",
+
+            "button":
+                "Continuar",
+
+            "security":
+                "Tu código de tester es personal. No lo compartas con otros usuarios.",
+
+            "info.early.title":
+                "Acceso anticipado",
+
+            "info.early.text":
+                "Prueba RETS antes del lanzamiento público.",
+
+            "info.feedback.title":
+                "Tu opinión",
+
+            "info.feedback.text":
+                "Ayuda a mejorar RETS reportando errores y compartiendo ideas.",
+
+            "info.updates.title":
+                "Actualizaciones",
+
+            "info.updates.text":
+                "Aquí aparecerán nuevas versiones e información de pruebas.",
+
+            "footer":
+                "Programa de Testers de RETS",
+
+            "invalid":
+                "El código de tester no es válido o está inactivo.",
+
+            "error":
+                "Ha ocurrido un error. Inténtalo de nuevo más tarde.",
+
+            "checking":
+                "Comprobando..."
+        },
+
+
+        pt: {
+
+            "back":
+                "← Voltar ao site",
+
+            "badge":
+                "PROGRAMA DE TESTADORES RETS",
+
+            "title":
+                "Bem-vindo, tester.",
+
+            "description":
+                "Você está entrando na área de acesso antecipado do RETS. Digite seu código pessoal de tester para continuar.",
+
+            "card.title":
+                "Acesso do tester",
+
+            "card.subtitle":
+                "Digite o código de acesso recebido da equipe RETS.",
+
+            "code.label":
+                "Código do tester",
+
+            "button":
+                "Continuar",
+
+            "security":
+                "Seu código de tester é pessoal. Não o compartilhe com outros usuários.",
+
+            "info.early.title":
+                "Acesso antecipado",
+
+            "info.early.text":
+                "Teste o RETS antes do lançamento público.",
+
+            "info.feedback.title":
+                "Seu feedback",
+
+            "info.feedback.text":
+                "Ajude a melhorar o RETS relatando bugs e compartilhando ideias.",
+
+            "info.updates.title":
+                "Atualizações",
+
+            "info.updates.text":
+                "Novas versões e informações de testes aparecerão aqui.",
+
+            "footer":
+                "Programa de Testadores RETS",
+
+            "invalid":
+                "Código de tester inválido ou inativo.",
+
+            "error":
+                "Algo deu errado. Tente novamente mais tarde.",
+
+            "checking":
+                "Verificando..."
+        },
+
+
+        ru: {
+
+            "back":
+                "← Вернуться на сайт",
+
+            "badge":
+                "ПРОГРАММА ТЕСТИРОВЩИКОВ RETS",
+
+            "title":
+                "Добро пожаловать, тестировщик.",
+
+            "description":
+                "Вы входите в область раннего доступа RETS. Введите свой персональный код тестировщика, чтобы продолжить.",
+
+            "card.title":
+                "Доступ тестировщика",
+
+            "card.subtitle":
+                "Введите код доступа, полученный от команды RETS.",
+
+            "code.label":
+                "Код тестировщика",
+
+            "button":
+                "Продолжить",
+
+            "security":
+                "Ваш код тестировщика является личным. Не передавайте его другим пользователям.",
+
+            "info.early.title":
+                "Ранний доступ",
+
+            "info.early.text":
+                "Тестируйте RETS до публичного запуска.",
+
+            "info.feedback.title":
+                "Ваш отзыв",
+
+            "info.feedback.text":
+                "Помогайте улучшать RETS, сообщая об ошибках и предлагая идеи.",
+
+            "info.updates.title":
+                "Обновления",
+
+            "info.updates.text":
+                "Новые сборки и информация о тестировании появятся здесь.",
+
+            "footer":
+                "Программа тестировщиков RETS",
+
+            "invalid":
+                "Код тестировщика недействителен или отключён.",
+
+            "error":
+                "Произошла ошибка. Попробуйте позже.",
+
+            "checking":
+                "Проверка..."
+        },
+
+
+        fr: {
+
+            "back":
+                "← Retour au site",
+
+            "badge":
+                "PROGRAMME DE TESTEURS RETS",
+
+            "title":
+                "Bienvenue, testeur.",
+
+            "description":
+                "Vous entrez dans l'espace d'accès anticipé de RETS. Entrez votre code personnel de testeur pour continuer.",
+
+            "card.title":
+                "Accès testeur",
+
+            "card.subtitle":
+                "Entrez le code d'accès reçu de l'équipe RETS.",
+
+            "code.label":
+                "Code testeur",
+
+            "button":
+                "Continuer",
+
+            "security":
+                "Votre code testeur est personnel. Ne le partagez pas avec d'autres utilisateurs.",
+
+            "info.early.title":
+                "Accès anticipé",
+
+            "info.early.text":
+                "Testez RETS avant son lancement public.",
+
+            "info.feedback.title":
+                "Vos retours",
+
+            "info.feedback.text":
+                "Aidez à améliorer RETS en signalant les bugs et en partageant vos idées.",
+
+            "info.updates.title":
+                "Mises à jour",
+
+            "info.updates.text":
+                "De nouvelles versions et informations de test apparaîtront ici.",
+
+            "footer":
+                "Programme de testeurs RETS",
+
+            "invalid":
+                "Code testeur invalide ou inactif.",
+
+            "error":
+                "Une erreur s'est produite. Réessayez plus tard.",
+
+            "checking":
+                "Vérification..."
+        }
+
+    };
+
+
+    /* ========================================
+       LANGUAGE DETECTION
+    ======================================== */
+
+    function detectLanguage() {
+
+        const saved =
+            localStorage.getItem(
+                "nexaris-language"
+            );
+
+        if (
+            saved &&
+            translations[saved]
+        ) {
+            return saved;
+        }
+
+
+        const browser =
+            (
+                navigator.language ||
+                "en"
+            ).toLowerCase();
+
+
+        if (browser.startsWith("es"))
+            return "es";
+
+        if (browser.startsWith("pt"))
+            return "pt";
+
+        if (browser.startsWith("ru"))
+            return "ru";
+
+        if (browser.startsWith("fr"))
+            return "fr";
+
+        return "en";
+    }
+
+
+    /* ========================================
+       APPLY LANGUAGE
+    ======================================== */
+
+    function applyLanguage(language) {
+
+        const dictionary =
+            translations[language] ||
+            translations.en;
+
+
+        document.documentElement.lang =
+            language;
+
+
+        document
+            .querySelectorAll(
+                "[data-i18n]"
+            )
+            .forEach((element) => {
+
+                const key =
+                    element.getAttribute(
+                        "data-i18n"
+                    );
+
+
+                if (
+                    dictionary[key]
+                ) {
+
+                    element.textContent =
+                        dictionary[key];
+
+                }
+
+            });
+
+
+        localStorage.setItem(
+            "nexaris-language",
+            language
+        );
+    }
+
+
+    /* ========================================
+       NORMALIZE CODE
+    ======================================== */
+
+    function normalizeCode(value) {
+
+        return value
+            .trim()
+            .toUpperCase()
+            .replace(/\s+/g, "")
+            .replace(/[^A-Z0-9-]/g, "");
+
+    }
+
+
+    /* ========================================
+       FORMAT CODE
+    ======================================== */
+
+    function formatCode(value) {
+
+        let clean =
+            value
+                .replace(/^RETS-/i, "")
+                .replace(/[^A-Z0-9]/gi, "")
+                .slice(0, 8)
+                .toUpperCase();
+
+
+        if (clean.length <= 4) {
+
+            return `RETS-${clean}`;
+
+        }
+
+
+        return (
+            `RETS-${clean.slice(0,4)}-${clean.slice(4)}`
+        );
+    }
+
+
+    /* ========================================
+       SHOW STATUS
+    ======================================== */
+
+    function showStatus(
+        type,
+        message
+    ) {
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        status.className =
+            `status show ${type}`;
+
+
+        status.textContent =
+            message;
+    }
+
+
+    /* ========================================
+       TESTER LOGIN
+       
+       IMPORTANT:
+       The real validation must happen
+       on your server / Cloudflare Worker.
+    ======================================== */
+
+    async function verifyTesterCode(code) {
+
+        /*
+         * Expected server endpoint:
+         *
+         * POST /api/tester-login
+         *
+         * Body:
+         * {
+         *     code: "RETS-K7M4-XQ9P"
+         * }
+         *
+         * Expected success response:
+         * {
+         *     valid: true,
+         *     redirect: "/testers/dashboard"
+         * }
+         *
+         * Expected failure:
+         * {
+         *     valid: false
+         * }
+         */
+
+
+        const response =
+            await fetch(
+                "/api/tester-login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            code
+                        })
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "SERVER_ERROR"
+            );
+
+        }
+
+
+        return await response.json();
+
+    }
+
+
+    /* ========================================
+       ACCESS BUTTON
+    ======================================== */
+
+    const button =
+        document.getElementById(
+            "accessButton"
+        );
+
+
+    const input =
+        document.getElementById(
+            "testerCode"
+        );
+
+
+    button.addEventListener(
+        "click",
+        async () => {
+
+            const language =
+                detectLanguage();
+
+
+            const dictionary =
+                translations[language] ||
+                translations.en;
+
+
+            const code =
+                normalizeCode(
+                    input.value
+                );
+
+
+            if (
+                !/^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
+                    .test(code)
+            ) {
+
+                showStatus(
+                    "error",
+                    dictionary.invalid
+                );
+
+                return;
+
+            }
+
+
+            button.disabled = true;
+
+            button.textContent =
+                dictionary.checking;
+
+
+            try {
+
+                const result =
+                    await verifyTesterCode(
+                        code
+                    );
+
+
+                if (
+                    result &&
+                    result.valid === true
+                ) {
+
+                    showStatus(
+                        "success",
+                        "Access granted."
+                    );
+
+
+                    /*
+                     * Server decides where
+                     * the tester goes.
+                     */
+
+                    if (
+                        result.redirect
+                    ) {
+
+                        window.location.href =
+                            result.redirect;
+
+                    }
+
+                } else {
+
+                    showStatus(
+                        "error",
+                        dictionary.invalid
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showStatus(
+                    "error",
+                    dictionary.error
+                );
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    dictionary.button;
+
+            }
+
+        }
+    );
+
+
+    /* ========================================
+       INPUT FORMAT
+    ======================================== */
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            const raw =
+                input.value;
+
+            input.value =
+                formatCode(raw);
+
+        }
+    );
+
+
+    /* ========================================
+       ENTER KEY
+    ======================================== */
+
+    input.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                button.click();
+
+            }
+
+        }
+    );
+
+
+    /* ========================================
+       YEAR
+    ======================================== */
+
+    document.getElementById(
+        "year"
+    ).textContent =
+        new Date().getFullYear();
+
+
+    /* ========================================
+       INITIAL LANGUAGE
+    ======================================== */
+
+    applyLanguage(
+        detectLanguage()
+    );
+
+</script>
+
+</body>
+</html>
