@@ -14,18 +14,15 @@
     <style>
         :root {
             --bg: #05080d;
-            --panel: rgba(9, 17, 27, 0.82);
-            --panel-soft: rgba(255,255,255,0.025);
-
+            --panel: rgba(9, 17, 27, 0.84);
             --cyan: #39e6ff;
             --cyan-soft: #8af3ff;
-
             --text: #f2fbff;
             --muted: #91a7b2;
-
-            --border: rgba(57,230,255,0.16);
-            --border-hover: rgba(57,230,255,0.36);
-
+            --border: rgba(57, 230, 255, 0.16);
+            --border-hover: rgba(57, 230, 255, 0.36);
+            --danger: #ffb7b7;
+            --danger-bg: rgba(255, 70, 70, 0.055);
             --radius: 24px;
         }
 
@@ -41,7 +38,6 @@
 
         body {
             min-height: 100vh;
-
             font-family:
                 Inter,
                 system-ui,
@@ -55,12 +51,12 @@
             background:
                 radial-gradient(
                     circle at 20% 10%,
-                    rgba(57,230,255,0.08),
+                    rgba(57, 230, 255, 0.08),
                     transparent 30%
                 ),
                 radial-gradient(
                     circle at 80% 80%,
-                    rgba(75,130,255,0.06),
+                    rgba(75, 130, 255, 0.06),
                     transparent 30%
                 ),
                 var(--bg);
@@ -70,10 +66,8 @@
 
         body::before {
             content: "";
-
             position: fixed;
             inset: 0;
-
             pointer-events: none;
 
             background-image:
@@ -103,14 +97,12 @@
         }
 
         button,
-        input,
-        select {
+        input {
             font: inherit;
         }
 
         .page {
             min-height: 100vh;
-
             display: flex;
             flex-direction: column;
         }
@@ -139,7 +131,6 @@
             );
 
             min-height: 76px;
-
             margin: 0 auto;
 
             display: flex;
@@ -176,14 +167,16 @@
 
         .back-link {
             color: var(--muted);
-
             font-size: 13px;
 
-            transition: 0.25s ease;
+            transition:
+                color 0.25s ease,
+                transform 0.25s ease;
         }
 
         .back-link:hover {
             color: var(--cyan-soft);
+            transform: translateX(-2px);
         }
 
         /* =========================
@@ -200,17 +193,12 @@
         }
 
         .content {
-            width: min(
-                920px,
-                100%
-            );
-
+            width: min(920px, 100%);
             margin: 0 auto;
         }
 
         .hero {
             text-align: center;
-
             margin-bottom: 34px;
         }
 
@@ -232,9 +220,7 @@
             color: var(--cyan-soft);
 
             font-size: 11px;
-
             letter-spacing: 0.1em;
-
             text-transform: uppercase;
         }
 
@@ -327,7 +313,6 @@
             height: 42px;
 
             pointer-events: none;
-
             opacity: 0.55;
         }
 
@@ -355,12 +340,6 @@
             left: 16px;
         }
 
-        .corner.top-left::before,
-        .corner.top-left::after {
-            top: 0;
-            left: 0;
-        }
-
         .corner.top-right {
             top: 16px;
             right: 16px;
@@ -381,7 +360,6 @@
 
         .card-title {
             font-size: 22px;
-
             font-weight: 750;
         }
 
@@ -391,7 +369,6 @@
             color: var(--muted);
 
             font-size: 14px;
-
             line-height: 1.6;
         }
 
@@ -419,11 +396,9 @@
 
         .code-input {
             width: 100%;
-
             height: 58px;
 
-            padding:
-                0 18px 0 18px;
+            padding: 0 18px;
 
             border:
                 1px solid rgba(255,255,255,0.09);
@@ -472,13 +447,11 @@
 
         .access-button {
             width: 100%;
-
             height: 52px;
 
             margin-top: 16px;
 
             border: none;
-
             border-radius: 14px;
 
             background: var(--cyan);
@@ -508,11 +481,8 @@
 
         .access-button:disabled {
             cursor: wait;
-
             opacity: 0.6;
-
             transform: none;
-
             box-shadow: none;
         }
 
@@ -520,13 +490,11 @@
             display: none;
 
             margin-top: 15px;
-
             padding: 12px 14px;
 
             border-radius: 12px;
 
             font-size: 13px;
-
             line-height: 1.5;
         }
 
@@ -539,9 +507,9 @@
                 1px solid rgba(255,90,90,0.18);
 
             background:
-                rgba(255,70,70,0.055);
+                var(--danger-bg);
 
-            color: #ffb7b7;
+            color: var(--danger);
         }
 
         .status.success {
@@ -591,6 +559,17 @@
 
             background:
                 rgba(255,255,255,0.015);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                var(--border-hover);
         }
 
         .info-icon {
@@ -613,7 +592,6 @@
 
         .info-card h3 {
             margin-top: 14px;
-
             font-size: 15px;
         }
 
@@ -653,7 +631,6 @@
         ========================= */
 
         @media (max-width: 700px) {
-
             .header-inner {
                 width:
                     calc(100% - 28px);
@@ -669,7 +646,8 @@
             }
 
             .login-card {
-                padding: 26px 20px;
+                padding:
+                    26px 20px;
             }
 
             .info-grid {
@@ -692,7 +670,6 @@
     ========================= -->
 
     <header>
-
         <div class="header-inner">
 
             <a
@@ -704,9 +681,7 @@
                     alt="Nexaris"
                 >
 
-                <span>
-                    NEXARIS
-                </span>
+                <span>NEXARIS</span>
             </a>
 
             <a
@@ -718,7 +693,6 @@
             </a>
 
         </div>
-
     </header>
 
 
@@ -729,7 +703,6 @@
     <main>
 
         <div class="content">
-
 
             <!-- HERO -->
 
@@ -747,17 +720,13 @@
 
 
                 <h1>
-
                     <span data-i18n="title">
                         Welcome, tester.
                     </span>
-
                 </h1>
 
 
-                <p
-                    data-i18n="description"
-                >
+                <p data-i18n="description">
                     You are entering the early access area
                     of RETS. Enter your personal tester code
                     to continue.
@@ -788,8 +757,8 @@
                     class="card-subtitle"
                     data-i18n="card.subtitle"
                 >
-                    Enter the access code you received from
-                    the RETS team.
+                    Enter the access code you received
+                    from the RETS team.
                 </p>
 
 
@@ -813,8 +782,15 @@
                             autocomplete="off"
                             autocapitalize="characters"
                             spellcheck="false"
-                            maxlength="13"
+
+                            <!-- FIX:
+                                 RETS-XXXX-XXXX = 14 characters -->
+
+                            maxlength="14"
+                            minlength="14"
+
                             placeholder="RETS-XXXX-XXXX"
+
                             aria-describedby="status"
                         >
 
@@ -856,22 +832,17 @@
 
             <div class="info-grid">
 
-
                 <article class="info-card">
 
                     <div class="info-icon">
                         ▲
                     </div>
 
-                    <h3
-                        data-i18n="info.early.title"
-                    >
+                    <h3 data-i18n="info.early.title">
                         Early access
                     </h3>
 
-                    <p
-                        data-i18n="info.early.text"
-                    >
+                    <p data-i18n="info.early.text">
                         Test RETS before the public release.
                     </p>
 
@@ -884,15 +855,11 @@
                         ◇
                     </div>
 
-                    <h3
-                        data-i18n="info.feedback.title"
-                    >
+                    <h3 data-i18n="info.feedback.title">
                         Your feedback
                     </h3>
 
-                    <p
-                        data-i18n="info.feedback.text"
-                    >
+                    <p data-i18n="info.feedback.text">
                         Help improve RETS by reporting bugs
                         and sharing ideas.
                     </p>
@@ -906,15 +873,11 @@
                         ↻
                     </div>
 
-                    <h3
-                        data-i18n="info.updates.title"
-                    >
+                    <h3 data-i18n="info.updates.title">
                         Updates
                     </h3>
 
-                    <p
-                        data-i18n="info.updates.text"
-                    >
+                    <p data-i18n="info.updates.text">
                         New builds and testing information
                         will appear here.
                     </p>
@@ -935,12 +898,10 @@
     <footer>
 
         <strong>NEXARIS</strong>
-        ·
-        <span data-i18n="footer">
-            RETS Tester Program
-        </span>
-        ·
-        © <span id="year"></span>
+        —
+        RETS Tester Program
+        —
+        <span id="year"></span>
 
     </footer>
 
@@ -956,314 +917,199 @@
     const translations = {
 
         en: {
-
-            "back":
-                "← Back to website",
-
-            "badge":
-                "RETS TESTER PROGRAM",
-
-            "title":
-                "Welcome, tester.",
-
-            "description":
+            back: "← Back to website",
+            badge: "RETS TESTER PROGRAM",
+            title: "Welcome, tester.",
+            description:
                 "You are entering the early access area of RETS. Enter your personal tester code to continue.",
 
-            "card.title":
-                "Tester access",
-
+            "card.title": "Tester access",
             "card.subtitle":
                 "Enter the access code you received from the RETS team.",
 
-            "code.label":
-                "Tester code",
+            "code.label": "Tester code",
 
-            "button":
-                "Continue",
+            button: "Continue",
+            checking: "Checking...",
 
-            "security":
+            invalid:
+                "The tester code is invalid or inactive.",
+
+            error:
+                "Unable to contact the RETS server. Please try again.",
+
+            security:
                 "Your tester code is personal. Do not share it with other users.",
 
-            "info.early.title":
-                "Early access",
-
+            "info.early.title": "Early access",
             "info.early.text":
                 "Test RETS before the public release.",
 
-            "info.feedback.title":
-                "Your feedback",
-
+            "info.feedback.title": "Your feedback",
             "info.feedback.text":
                 "Help improve RETS by reporting bugs and sharing ideas.",
 
-            "info.updates.title":
-                "Updates",
-
+            "info.updates.title": "Updates",
             "info.updates.text":
-                "New builds and testing information will appear here.",
-
-            "footer":
-                "RETS Tester Program",
-
-            "invalid":
-                "Invalid or inactive tester code.",
-
-            "error":
-                "Something went wrong. Please try again later.",
-
-            "checking":
-                "Checking..."
+                "New builds and testing information will appear here."
         },
 
-
         es: {
-
-            "back":
-                "← Volver al sitio",
-
-            "badge":
-                "PROGRAMA DE TESTERS DE RETS",
-
-            "title":
-                "Bienvenido, tester.",
-
-            "description":
+            back: "← Volver al sitio",
+            badge: "PROGRAMA DE TESTERS RETS",
+            title: "Bienvenido, tester.",
+            description:
                 "Estás entrando al área de acceso anticipado de RETS. Introduce tu código personal de tester para continuar.",
 
-            "card.title":
-                "Acceso de tester",
-
+            "card.title": "Acceso de tester",
             "card.subtitle":
                 "Introduce el código de acceso que recibiste del equipo de RETS.",
 
-            "code.label":
-                "Código de tester",
+            "code.label": "Código de tester",
 
-            "button":
-                "Continuar",
+            button: "Continuar",
+            checking: "Comprobando...",
 
-            "security":
+            invalid:
+                "El código de tester no es válido o está inactivo.",
+
+            error:
+                "No se pudo contactar con el servidor de RETS. Inténtalo de nuevo.",
+
+            security:
                 "Tu código de tester es personal. No lo compartas con otros usuarios.",
 
-            "info.early.title":
-                "Acceso anticipado",
-
+            "info.early.title": "Acceso anticipado",
             "info.early.text":
                 "Prueba RETS antes del lanzamiento público.",
 
-            "info.feedback.title":
-                "Tu opinión",
-
+            "info.feedback.title": "Tu opinión",
             "info.feedback.text":
                 "Ayuda a mejorar RETS reportando errores y compartiendo ideas.",
 
-            "info.updates.title":
-                "Actualizaciones",
-
+            "info.updates.title": "Actualizaciones",
             "info.updates.text":
-                "Aquí aparecerán nuevas versiones e información de pruebas.",
-
-            "footer":
-                "Programa de Testers de RETS",
-
-            "invalid":
-                "El código de tester no es válido o está inactivo.",
-
-            "error":
-                "Ha ocurrido un error. Inténtalo de nuevo más tarde.",
-
-            "checking":
-                "Comprobando..."
+                "Aquí aparecerán nuevas versiones e información de pruebas."
         },
 
-
         pt: {
-
-            "back":
-                "← Voltar ao site",
-
-            "badge":
-                "PROGRAMA DE TESTADORES RETS",
-
-            "title":
-                "Bem-vindo, tester.",
-
-            "description":
+            back: "← Voltar ao site",
+            badge: "PROGRAMA DE TESTADORES RETS",
+            title: "Bem-vindo, tester.",
+            description:
                 "Você está entrando na área de acesso antecipado do RETS. Digite seu código pessoal de tester para continuar.",
 
-            "card.title":
-                "Acesso do tester",
-
+            "card.title": "Acesso de tester",
             "card.subtitle":
                 "Digite o código de acesso recebido da equipe RETS.",
 
-            "code.label":
-                "Código do tester",
+            "code.label": "Código de tester",
 
-            "button":
-                "Continuar",
+            button: "Continuar",
+            checking: "Verificando...",
 
-            "security":
+            invalid:
+                "O código de tester é inválido ou está inativo.",
+
+            error:
+                "Não foi possível contactar o servidor RETS. Tente novamente.",
+
+            security:
                 "Seu código de tester é pessoal. Não o compartilhe com outros usuários.",
 
-            "info.early.title":
-                "Acesso antecipado",
-
+            "info.early.title": "Acesso antecipado",
             "info.early.text":
                 "Teste o RETS antes do lançamento público.",
 
-            "info.feedback.title":
-                "Seu feedback",
-
+            "info.feedback.title": "Seu feedback",
             "info.feedback.text":
                 "Ajude a melhorar o RETS relatando bugs e compartilhando ideias.",
 
-            "info.updates.title":
-                "Atualizações",
-
+            "info.updates.title": "Atualizações",
             "info.updates.text":
-                "Novas versões e informações de testes aparecerão aqui.",
-
-            "footer":
-                "Programa de Testadores RETS",
-
-            "invalid":
-                "Código de tester inválido ou inativo.",
-
-            "error":
-                "Algo deu errado. Tente novamente mais tarde.",
-
-            "checking":
-                "Verificando..."
+                "Novas versões e informações de testes aparecerão aqui."
         },
 
-
         ru: {
+            back: "← Вернуться на сайт",
+            badge: "ПРОГРАММА ТЕСТЕРОВ RETS",
+            title: "Добро пожаловать, тестер.",
+            description:
+                "Вы входите в раздел раннего доступа RETS. Введите свой персональный код тестера, чтобы продолжить.",
 
-            "back":
-                "← Вернуться на сайт",
-
-            "badge":
-                "ПРОГРАММА ТЕСТИРОВЩИКОВ RETS",
-
-            "title":
-                "Добро пожаловать, тестировщик.",
-
-            "description":
-                "Вы входите в область раннего доступа RETS. Введите свой персональный код тестировщика, чтобы продолжить.",
-
-            "card.title":
-                "Доступ тестировщика",
-
+            "card.title": "Доступ тестера",
             "card.subtitle":
                 "Введите код доступа, полученный от команды RETS.",
 
-            "code.label":
-                "Код тестировщика",
+            "code.label": "Код тестера",
 
-            "button":
-                "Продолжить",
+            button: "Продолжить",
+            checking: "Проверка...",
 
-            "security":
-                "Ваш код тестировщика является личным. Не передавайте его другим пользователям.",
+            invalid:
+                "Код тестера недействителен или неактивен.",
 
-            "info.early.title":
-                "Ранний доступ",
+            error:
+                "Не удалось связаться с сервером RETS. Попробуйте снова.",
 
+            security:
+                "Ваш код тестера является личным. Не делитесь им с другими пользователями.",
+
+            "info.early.title": "Ранний доступ",
             "info.early.text":
                 "Тестируйте RETS до публичного запуска.",
 
-            "info.feedback.title":
-                "Ваш отзыв",
-
+            "info.feedback.title": "Ваш отзыв",
             "info.feedback.text":
-                "Помогайте улучшать RETS, сообщая об ошибках и предлагая идеи.",
+                "Помогите улучшить RETS, сообщая об ошибках и предлагая идеи.",
 
-            "info.updates.title":
-                "Обновления",
-
+            "info.updates.title": "Обновления",
             "info.updates.text":
-                "Новые сборки и информация о тестировании появятся здесь.",
-
-            "footer":
-                "Программа тестировщиков RETS",
-
-            "invalid":
-                "Код тестировщика недействителен или отключён.",
-
-            "error":
-                "Произошла ошибка. Попробуйте позже.",
-
-            "checking":
-                "Проверка..."
+                "Здесь будут появляться новые сборки и информация о тестировании."
         },
 
-
         fr: {
+            back: "← Retour au site",
+            badge: "PROGRAMME DE TESTEURS RETS",
+            title: "Bienvenue, testeur.",
+            description:
+                "Vous entrez dans la zone d'accès anticipé de RETS. Entrez votre code personnel de testeur pour continuer.",
 
-            "back":
-                "← Retour au site",
-
-            "badge":
-                "PROGRAMME DE TESTEURS RETS",
-
-            "title":
-                "Bienvenue, testeur.",
-
-            "description":
-                "Vous entrez dans l'espace d'accès anticipé de RETS. Entrez votre code personnel de testeur pour continuer.",
-
-            "card.title":
-                "Accès testeur",
-
+            "card.title": "Accès testeur",
             "card.subtitle":
                 "Entrez le code d'accès reçu de l'équipe RETS.",
 
-            "code.label":
-                "Code testeur",
+            "code.label": "Code testeur",
 
-            "button":
-                "Continuer",
+            button: "Continuer",
+            checking: "Vérification...",
 
-            "security":
+            invalid:
+                "Le code testeur est invalide ou inactif.",
+
+            error:
+                "Impossible de contacter le serveur RETS. Réessayez.",
+
+            security:
                 "Votre code testeur est personnel. Ne le partagez pas avec d'autres utilisateurs.",
 
-            "info.early.title":
-                "Accès anticipé",
-
+            "info.early.title": "Accès anticipé",
             "info.early.text":
-                "Testez RETS avant son lancement public.",
+                "Testez RETS avant la sortie publique.",
 
-            "info.feedback.title":
-                "Vos retours",
-
+            "info.feedback.title": "Vos retours",
             "info.feedback.text":
                 "Aidez à améliorer RETS en signalant les bugs et en partageant vos idées.",
 
-            "info.updates.title":
-                "Mises à jour",
-
+            "info.updates.title": "Mises à jour",
             "info.updates.text":
-                "De nouvelles versions et informations de test apparaîtront ici.",
-
-            "footer":
-                "Programme de testeurs RETS",
-
-            "invalid":
-                "Code testeur invalide ou inactif.",
-
-            "error":
-                "Une erreur s'est produite. Réessayez plus tard.",
-
-            "checking":
-                "Vérification..."
+                "De nouvelles versions et informations de test apparaîtront ici."
         }
-
     };
 
 
     /* ========================================
-       LANGUAGE DETECTION
+       LANGUAGE
     ======================================== */
 
     function detectLanguage() {
@@ -1280,33 +1126,39 @@
             return saved;
         }
 
-
-        const browser =
+        const browserLanguage =
             (
                 navigator.language ||
                 "en"
             ).toLowerCase();
 
-
-        if (browser.startsWith("es"))
+        if (
+            browserLanguage.startsWith("es")
+        ) {
             return "es";
+        }
 
-        if (browser.startsWith("pt"))
+        if (
+            browserLanguage.startsWith("pt")
+        ) {
             return "pt";
+        }
 
-        if (browser.startsWith("ru"))
+        if (
+            browserLanguage.startsWith("ru")
+        ) {
             return "ru";
+        }
 
-        if (browser.startsWith("fr"))
+        if (
+            browserLanguage.startsWith("fr")
+        ) {
             return "fr";
+        }
 
         return "en";
     }
 
-
-    /* ========================================
-       APPLY LANGUAGE
-    ======================================== */
 
     function applyLanguage(language) {
 
@@ -1314,15 +1166,11 @@
             translations[language] ||
             translations.en;
 
-
         document.documentElement.lang =
             language;
 
-
         document
-            .querySelectorAll(
-                "[data-i18n]"
-            )
+            .querySelectorAll("[data-i18n]")
             .forEach((element) => {
 
                 const key =
@@ -1330,18 +1178,14 @@
                         "data-i18n"
                     );
 
-
                 if (
                     dictionary[key]
                 ) {
-
                     element.textContent =
                         dictionary[key];
-
                 }
 
             });
-
 
         localStorage.setItem(
             "nexaris-language",
@@ -1351,7 +1195,7 @@
 
 
     /* ========================================
-       NORMALIZE CODE
+       CODE NORMALIZATION
     ======================================== */
 
     function normalizeCode(value) {
@@ -1361,39 +1205,40 @@
             .toUpperCase()
             .replace(/\s+/g, "")
             .replace(/[^A-Z0-9-]/g, "");
-
     }
 
 
     /* ========================================
-       FORMAT CODE
+       CODE FORMAT
+       RETS-XXXX-XXXX
+       TOTAL = 14 CHARACTERS
     ======================================== */
 
     function formatCode(value) {
 
         let clean =
             value
-                .replace(/^RETS-/i, "")
-                .replace(/[^A-Z0-9]/gi, "")
-                .slice(0, 8)
-                .toUpperCase();
+                .toUpperCase()
+                .replace(/^RETS[-]?/i, "")
+                .replace(/[^A-Z0-9]/g, "")
+                .slice(0, 8);
 
-
-        if (clean.length <= 4) {
-
-            return `RETS-${clean}`;
-
+        if (clean.length === 0) {
+            return "";
         }
 
+        if (clean.length <= 4) {
+            return `RETS-${clean}`;
+        }
 
         return (
-            `RETS-${clean.slice(0,4)}-${clean.slice(4)}`
+            `RETS-${clean.slice(0, 4)}-${clean.slice(4, 8)}`
         );
     }
 
 
     /* ========================================
-       SHOW STATUS
+       STATUS
     ======================================== */
 
     function showStatus(
@@ -1406,48 +1251,35 @@
                 "status"
             );
 
-
         status.className =
             `status show ${type}`;
-
 
         status.textContent =
             message;
     }
 
 
+    function clearStatus() {
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+        status.className =
+            "status";
+
+        status.textContent =
+            "";
+    }
+
+
     /* ========================================
-       TESTER LOGIN
-       
-       IMPORTANT:
-       The real validation must happen
-       on your server / Cloudflare Worker.
+       VERIFY TESTER CODE
+       SERVER VALIDATION
     ======================================== */
 
     async function verifyTesterCode(code) {
-
-        /*
-         * Expected server endpoint:
-         *
-         * POST /api/tester-login
-         *
-         * Body:
-         * {
-         *     code: "RETS-K7M4-XQ9P"
-         * }
-         *
-         * Expected success response:
-         * {
-         *     valid: true,
-         *     redirect: "/testers/dashboard"
-         * }
-         *
-         * Expected failure:
-         * {
-         *     valid: false
-         * }
-         */
-
 
         const response =
             await fetch(
@@ -1469,21 +1301,18 @@
 
 
         if (!response.ok) {
-
             throw new Error(
                 "SERVER_ERROR"
             );
-
         }
 
 
         return await response.json();
-
     }
 
 
     /* ========================================
-       ACCESS BUTTON
+       DOM
     ======================================== */
 
     const button =
@@ -1491,12 +1320,15 @@
             "accessButton"
         );
 
-
     const input =
         document.getElementById(
             "testerCode"
         );
 
+
+    /* ========================================
+       ACCESS BUTTON
+    ======================================== */
 
     button.addEventListener(
         "click",
@@ -1504,7 +1336,6 @@
 
             const language =
                 detectLanguage();
-
 
             const dictionary =
                 translations[language] ||
@@ -1517,6 +1348,12 @@
                 );
 
 
+            /*
+             * Exact format:
+             *
+             * RETS-XXXX-XXXX
+             */
+
             if (
                 !/^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
                     .test(code)
@@ -1528,9 +1365,10 @@
                 );
 
                 return;
-
             }
 
+
+            clearStatus();
 
             button.disabled = true;
 
@@ -1553,21 +1391,22 @@
 
                     showStatus(
                         "success",
+                        result.message ||
                         "Access granted."
                     );
 
-
-                    /*
-                     * Server decides where
-                     * the tester goes.
-                     */
 
                     if (
                         result.redirect
                     ) {
 
-                        window.location.href =
-                            result.redirect;
+                        setTimeout(
+                            () => {
+                                window.location.href =
+                                    result.redirect;
+                            },
+                            350
+                        );
 
                     }
 
@@ -1583,9 +1422,9 @@
             } catch (error) {
 
                 console.error(
+                    "Tester login error:",
                     error
                 );
-
 
                 showStatus(
                     "error",
@@ -1614,11 +1453,60 @@
         "input",
         () => {
 
+            const start =
+                input.selectionStart;
+
             const raw =
                 input.value;
 
-            input.value =
+            const formatted =
                 formatCode(raw);
+
+            input.value =
+                formatted;
+
+            /*
+             * Mantener el cursor al final
+             * para que escribir el último
+             * carácter funcione correctamente.
+             */
+
+            try {
+                input.setSelectionRange(
+                    input.value.length,
+                    input.value.length
+                );
+            } catch {
+                // Algunos navegadores pueden
+                // no permitir reposicionar el cursor.
+            }
+
+            clearStatus();
+        }
+    );
+
+
+    /* ========================================
+       FOCUS
+    ======================================== */
+
+    input.addEventListener(
+        "focus",
+        () => {
+
+            if (
+                !input.value
+            ) {
+
+                input.value =
+                    "RETS-";
+
+                input.setSelectionRange(
+                    input.value.length,
+                    input.value.length
+                );
+
+            }
 
         }
     );
@@ -1633,9 +1521,10 @@
         (event) => {
 
             if (
-                event.key ===
-                "Enter"
+                event.key === "Enter"
             ) {
+
+                event.preventDefault();
 
                 button.click();
 
