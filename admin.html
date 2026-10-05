@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexaris — Admin</title>
+
+    <style>
+        :root {
+            --bg: #05080d;
+            --panel: rgba(9, 17, 27, 0.86);
+            --panel-soft: rgba(255,255,255,0.025);
+
+            --cyan: #39e6ff;
+            --cyan-soft: #8af3ff;
+
+            --text: #f2fbff;
+            --muted: #8ea4af;
+
+            --border: rgba(57,230,255,0.15);
+            --border-hover: rgba(57,230,255,0.34);
+
+            --danger: #ff6e7c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(57,230,255,0.07),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(69,130,255,0.06),
+                    transparent 30%
+                ),
+                var(--bg);
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.014) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.014) 1px,
+                    transparent 1px
+                );
+
+            background-size: 64px 64px;
+
+            z-index: -1;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ========================================
+           HEADER
+        ======================================== */
+
+        header {
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.05);
+
+            background:
+                rgba(5,8,13,0.78);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .header-inner {
+            width: min(
+                1280px,
+                calc(100% - 36px)
+            );
+
+            min-height: 74px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .brand img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+
+            filter:
+                drop-shadow(
+                    0 0 12px rgba(57,230,255,0.22)
+                );
+        }
+
+        .brand-text {
+            font-size: 14px;
+        }
+
+        .admin-label {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* ========================================
+           LOGIN
+        ======================================== */
+
+        #loginScreen {
+            min-height: calc(100vh - 74px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 50px 18px;
+        }
+
+        .login-card {
+            width: min(470px, 100%);
+
+            padding: 34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,230,255,0.045),
+                    rgba(255,255,255,0.015)
+                );
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.28);
+        }
+
+        .login-icon {
+            width: 54px;
+            height: 54px;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            color: var(--cyan);
+
+            background:
+                rgba(57,230,255,0.045);
+
+            font-size: 22px;
+        }
+
+        .login-card h1 {
+            margin-top: 20px;
+
+            font-size: 34px;
+
+            letter-spacing: -0.04em;
+        }
+
+        .login-card p {
+            margin-top: 9px;
+
+            color: var(--muted);
+
+            line-height: 1.65;
+
+            font-size: 14px;
+        }
+
+        .field {
+            margin-top: 23px;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #b5c8cf;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+        }
+
+        .field input {
+            width: 100%;
+
+            height: 52px;
+
+            padding:
+                0 15px;
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            border-radius: 13px;
+
+            outline: none;
+
+            background:
+                rgba(0,0,0,0.2);
+
+            color: var(--text);
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .field input:focus {
+            border-color:
+                rgba(57,230,255,0.4);
+
+            box-shadow:
+                0 0 0 4px rgba(57,230,255,0.04);
+        }
+
+        .primary-button {
+            width: 100%;
+
+            min-height: 50px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: var(--cyan);
+
+            color: #031116;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 12px 32px rgba(57,230,255,0.14);
+        }
+
+        .primary-button:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
+
+        /* ========================================
+           STATUS
+        ======================================== */
+
+        .status {
+            display: none;
+
+            margin-top: 13px;
+
+            padding: 11px 13px;
+
+            border-radius: 11px;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.error {
+            color: #ffbdc4;
+
+            background:
+                rgba(255,70,85,0.055);
+
+            border:
+                1px solid rgba(255,70,85,0.17);
+        }
+
+        .status.success {
+            color: var(--cyan-soft);
+
+            background:
+                rgba(57,230,255,0.04);
+
+            border:
+                1px solid rgba(57,230,255,0.14);
+        }
+
+        /* ========================================
+           DASHBOARD
+        ======================================== */
+
+        #dashboard {
+            display: none;
+
+            padding:
+                38px 0 70px;
+        }
+
+        .dashboard-container {
+            width: min(
+                1280px,
+                calc(100% - 36px)
+            );
+
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 40px;
+            letter-spacing: -0.05em;
+        }
+
+        .heading p {
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        .logout {
+            min-height: 42px;
+
+            padding: 0 15px;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: var(--muted);
+
+            transition: 0.2s ease;
+        }
+
+        .logout:hover {
+            color: var(--text);
+
+            border-color:
+                rgba(255,255,255,0.18);
+        }
+
+        /* ========================================
+           STATS
+        ======================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            padding: 22px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: 18px;
+
+            background:
+                var(--panel);
+        }
+
+        .stat-label {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+        }
+
+        .stat-number {
+            margin-top: 9px;
+
+            font-size: 31px;
+
+            font-weight: 800;
+        }
+
+        /* ========================================
+           PANELS
+        ======================================== */
+
+        .panel {
+            padding: 25px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: 20px;
+
+            background:
+                var(--panel);
+
+            box-shadow:
+                0 20px 65px rgba(0,0,0,0.16);
+        }
+
+        .panel + .panel {
+            margin-top: 18px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 {
+            font-size: 19px;
+        }
+
+        .panel-header p {
+            margin-top: 5px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        /* ========================================
+           GENERATOR
+        ======================================== */
+
+        .generator {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr auto;
+
+            gap: 12px;
+
+            align-items: end;
+        }
+
+        .generator-field label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #b5c8cf;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+        }
+
+        .generator-field input,
+        .generator-field select {
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 13px;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 11px;
+
+            background:
+                rgba(0,0,0,0.18);
+
+            color: var(--text);
+
+            outline: none;
+        }
+
+        .generate-button {
+            height: 48px;
+
+            padding: 0 17px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: var(--cyan);
+
+            color: #031116;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .generated-code {
+            display: none;
+
+            margin-top: 16px;
+
+            padding: 16px;
+
+            border:
+                1px solid rgba(57,230,255,0.18);
+
+            border-radius: 13px;
+
+            background:
+                rgba(57,230,255,0.035);
+        }
+
+        .generated-code.show {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .generated-code strong {
+            color: var(--cyan-soft);
+
+            font-size: 18px;
+
+            letter-spacing: 0.08em;
+        }
+
+        .copy-button {
+            min-height: 38px;
+
+            padding: 0 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            background:
+                rgba(57,230,255,0.04);
+
+            color: var(--cyan-soft);
+        }
+
+        /* ========================================
+           TESTER TABLE
+        ======================================== */
+
+        .tester-list {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding:
+                11px 12px;
+
+            text-align: left;
+
+            color: #78909b;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+        td {
+            padding:
+                15px 12px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.045);
+
+            color: #c8d6db;
+
+            font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background:
+                rgba(255,255,255,0.014);
+        }
+
+        .code-cell {
+            color: var(--cyan-soft);
+
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Consolas,
+                monospace;
+
+            letter-spacing: 0.06em;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+
+            padding:
+                5px 8px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.06em;
+        }
+
+        .status-active {
+            color: #9cf5d0;
+
+            background:
+                rgba(55,210,130,0.08);
+
+            border:
+                1px solid rgba(55,210,130,0.15);
+        }
+
+        .status-revoked {
+            color: #ffadb6;
+
+            background:
+                rgba(255,85,100,0.07);
+
+            border:
+                1px solid rgba(255,85,100,0.14);
+        }
+
+        .action-button {
+            min-height: 34px;
+
+            padding: 0 10px;
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,0.02);
+
+            color: #a9bbc2;
+
+            font-size: 11px;
+        }
+
+        .action-button:hover {
+            color: var(--text);
+        }
+
+        .empty {
+            padding: 35px 10px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* ========================================
+           SECURITY
+        ======================================== */
+
+        .security-box {
+            padding: 16px 17px;
+
+            border:
+                1px solid rgba(57,230,255,0.09);
+
+            border-radius: 13px;
+
+            background:
+                rgba(57,230,255,0.018);
+
+            color: #79919b;
+
+            font-size: 11px;
+
+            line-height: 1.65;
+        }
+
+        .security-box strong {
+            color: #a8bdc5;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .generator {
+                grid-template-columns: 1fr;
+            }
+
+            .generate-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .header-inner,
+            .dashboard-container {
+                width:
+                    calc(100% - 26px);
+            }
+
+            .admin-label {
+                display: none;
+            }
+
+            .login-card {
+                padding: 27px 20px;
+            }
+
+            .heading h1 {
+                font-size: 32px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .logout {
+                width: 100%;
+            }
+
+            .panel {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
+
+    <header>
+
+        <div class="header-inner">
+
+            <a
+                href="/"
+                class="brand"
+            >
+
+                <img
+                    src="image.png"
+                    alt="Nexaris"
+                >
+
+                <span class="brand-text">
+                    NEXARIS
+                </span>
+
+            </a>
+
+            <span class="admin-label">
+                RETS ADMIN
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================================
+         LOGIN SCREEN
+    ======================================== -->
+
+    <section id="loginScreen">
+
+        <div class="login-card">
+
+            <div class="login-icon">
+                🔐
+            </div>
+
+            <h1>
+                Admin access
+            </h1>
+
+            <p>
+                Private administration area for the
+                RETS Tester Program.
+            </p>
+
+
+            <div class="field">
+
+                <label for="adminPassword">
+                    Administrator password
+                </label>
+
+                <input
+                    id="adminPassword"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                >
+
+            </div>
+
+
+            <button
+                id="loginButton"
+                class="primary-button"
+                type="button"
+            >
+                Sign in
+            </button>
+
+
+            <div
+                id="loginStatus"
+                class="status"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         DASHBOARD
+    ======================================== -->
+
+    <section id="dashboard">
+
+        <div class="dashboard-container">
+
+            <div class="topbar">
+
+                <div class="heading">
+
+                    <h1>
+                        RETS Admin
+                    </h1>
+
+                    <p>
+                        Tester Program Management
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="logoutButton"
+                    class="logout"
+                    type="button"
+                >
+                    Log out
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Active testers
+                    </div>
+
+                    <div
+                        id="activeCount"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Total testers
+                    </div>
+
+                    <div
+                        id="totalCount"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Program
+                    </div>
+
+                    <div class="stat-number">
+                        RETS
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GENERATOR -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Generate tester access
+                        </h2>
+
+                        <p>
+                            Create a new personal tester code.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="generator">
+
+
+                    <div class="generator-field">
+
+                        <label for="testerName">
+                            Tester name
+                        </label>
+
+                        <input
+                            id="testerName"
+                            type="text"
+                            placeholder="Tester name"
+                        >
+
+                    </div>
+
+
+                    <div class="generator-field">
+
+                        <label for="testerEmail">
+                            Email
+                        </label>
+
+                        <input
+                            id="testerEmail"
+                            type="email"
+                            placeholder="tester@example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="generator-field">
+
+                        <label for="testerStatus">
+                            Status
+                        </label>
+
+                        <select id="testerStatus">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        id="generateButton"
+                        class="generate-button"
+                        type="button"
+                    >
+                        + Generate code
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="generatedCode"
+                    class="generated-code"
+                >
+
+                    <strong
+                        id="generatedCodeText"
+                    >
+                        RETS-XXXX-XXXX
+                    </strong>
+
+                    <button
+                        id="copyCode"
+                        class="copy-button"
+                        type="button"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TESTERS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Tester accounts
+                        </h2>
+
+                        <p>
+                            Manage access to the RETS early access program.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tester-list">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Code
+                                </th>
+
+                                <th>
+                                    Tester
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="testerTableBody"
+                        >
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    class="empty"
+                                >
+                                    No tester accounts loaded yet.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- SECURITY -->
+
+            <div class="panel">
+
+                <div class="security-box">
+
+                    <strong>
+                        Security:
+                    </strong>
+
+                    Tester codes should be generated and
+                    validated by the Cloudflare Worker.
+                    Never store administrator passwords,
+                    secret keys or valid tester codes
+                    directly in this HTML file.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        /* ========================================
+           CONFIGURATION
+        ======================================== */
+
+        const API = {
+
+            login:
+                "/api/admin-login",
+
+            testers:
+                "/api/admin/testers",
+
+            generate:
+                "/api/admin/testers/generate",
+
+            revoke:
+                "/api/admin/testers/revoke"
+
+        };
+
+
+        /* ========================================
+           ELEMENTS
+        ======================================== */
+
+        const loginScreen =
+            document.getElementById(
+                "loginScreen"
+            );
+
+        const dashboard =
+            document.getElementById(
+                "dashboard"
+            );
+
+        const passwordInput =
+            document.getElementById(
+                "adminPassword"
+            );
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        const loginStatus =
+            document.getElementById(
+                "loginStatus"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        const generateButton =
+            document.getElementById(
+                "generateButton"
+            );
+
+        const generatedCodeBox =
+            document.getElementById(
+                "generatedCode"
+            );
+
+        const generatedCodeText =
+            document.getElementById(
+                "generatedCodeText"
+            );
+
+        const copyCodeButton =
+            document.getElementById(
+                "copyCode"
+            );
+
+        const testerTableBody =
+            document.getElementById(
+                "testerTableBody"
+            );
+
+        const activeCount =
+            document.getElementById(
+                "activeCount"
+            );
+
+        const totalCount =
+            document.getElementById(
+                "totalCount"
+            );
+
+
+        /* ========================================
+           SHOW STATUS
+        ======================================== */
+
+        function showStatus(
+            element,
+            type,
+            message
+        ) {
+
+            element.className =
+                `status show ${type}`;
+
+            element.textContent =
+                message;
+
+        }
+
+
+        /* ========================================
+           LOGIN
+        ======================================== */
+
+        async function login() {
+
+            const password =
+                passwordInput.value;
+
+
+            if (!password) {
+
+                showStatus(
+                    loginStatus,
+                    "error",
+                    "Enter your administrator password."
+                );
+
+                return;
+            }
+
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Signing in...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API.login,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            credentials: "include",
+
+                            body:
+                                JSON.stringify({
+                                    password
+                                })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "LOGIN_FAILED"
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                if (
+                    !result ||
+                    result.authenticated !== true
+                ) {
+
+                    showStatus(
+                        loginStatus,
+                        "error",
+                        "Invalid administrator credentials."
+                    );
+
+                    return;
+                }
+
+
+                passwordInput.value = "";
+
+                loginScreen.style.display =
+                    "none";
+
+                dashboard.style.display =
+                    "block";
+
+
+                await loadTesters();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showStatus(
+                    loginStatus,
+                    "error",
+                    "The administrator service is not connected yet."
+                );
+
+            } finally {
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign in";
+
+            }
+
+        }
+
+
+        /* ========================================
+           LOGOUT
+        ======================================== */
+
+        async function logout() {
+
+            try {
+
+                await fetch(
+                    "/api/admin-logout",
+                    {
+                        method: "POST",
+                        credentials: "include"
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+
+            dashboard.style.display =
+                "none";
+
+            loginScreen.style.display =
+                "flex";
+
+        }
+
+
+        /* ========================================
+           LOAD TESTERS
+        ======================================== */
+
+        async function loadTesters() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        API.testers,
+                        {
+                            credentials:
+                                "include"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "TESTERS_FAILED"
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                renderTesters(
+                    Array.isArray(result.testers)
+                        ? result.testers
+                        : []
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                renderTesters([]);
+
+            }
+
+        }
+
+
+        /* ========================================
+           RENDER TESTERS
+        ======================================== */
+
+        function renderTesters(
+            testers
+        ) {
+
+            activeCount.textContent =
+                testers.filter(
+                    tester =>
+                        tester.status === "active"
+                ).length;
+
+            totalCount.textContent =
+                testers.length;
+
+
+            if (!testers.length) {
+
+                testerTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty">
+                            No tester accounts available.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            testerTableBody.innerHTML =
+                testers.map(
+                    tester => `
+
+                    <tr>
+
+                        <td class="code-cell">
+                            ${escapeHtml(
+                                tester.code || "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                tester.name || "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                tester.email || "—"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status-pill ${
+                                    tester.status === "active"
+                                        ? "status-active"
+                                        : "status-revoked"
+                                }"
+                            >
+                                ${escapeHtml(
+                                    tester.status || "unknown"
+                                )}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            ${
+                                tester.status === "active"
+                                ? `
+                                    <button
+                                        class="action-button"
+                                        data-revoke="${escapeHtml(
+                                            tester.id || tester.code
+                                        )}"
+                                    >
+                                        Revoke
+                                    </button>
+                                `
+                                : "—"
+                            }
+
+                        </td>
+
+                    </tr>
+                `
+                ).join("");
+
+
+            document
+                .querySelectorAll(
+                    "[data-revoke]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                revokeTester(
+                                    button.dataset.revoke
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* ========================================
+           GENERATE CODE
+        ======================================== */
+
+        async function generateTesterCode() {
+
+            const name =
+                document.getElementById(
+                    "testerName"
+                ).value.trim();
+
+            const email =
+                document.getElementById(
+                    "testerEmail"
+                ).value.trim();
+
+
+            if (!name || !email) {
+
+                alert(
+                    "Enter the tester name and email first."
+                );
+
+                return;
+            }
+
+
+            generateButton.disabled =
+                true;
+
+            generateButton.textContent =
+                "Generating...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API.generate,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            credentials:
+                                "include",
+
+                            body:
+                                JSON.stringify({
+                                    name,
+                                    email
+                                })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "GENERATE_FAILED"
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.code) {
+
+                    throw new Error(
+                        "NO_CODE"
+                    );
+
+                }
+
+
+                generatedCodeText.textContent =
+                    result.code;
+
+                generatedCodeBox.classList.add(
+                    "show"
+                );
+
+
+                document.getElementById(
+                    "testerName"
+                ).value = "";
+
+                document.getElementById(
+                    "testerEmail"
+                ).value = "";
+
+
+                await loadTesters();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "The tester generator is not connected yet."
+                );
+
+            } finally {
+
+                generateButton.disabled =
+                    false;
+
+                generateButton.textContent =
+                    "+ Generate code";
+
+            }
+
+        }
+
+
+        /* ========================================
+           REVOKE
+        ======================================== */
+
+        async function revokeTester(
+            testerId
+        ) {
+
+            const confirmed =
+                window.confirm(
+                    "Revoke this tester's access?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API.revoke,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            credentials:
+                                "include",
+
+                            body:
+                                JSON.stringify({
+                                    id: testerId
+                                })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "REVOKE_FAILED"
+                    );
+
+                }
+
+
+                await loadTesters();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "The revoke service is not connected yet."
+                );
+
+            }
+
+        }
+
+
+        /* ========================================
+           COPY CODE
+        ======================================== */
+
+        copyCodeButton.addEventListener(
+            "click",
+            async () => {
+
+                const code =
+                    generatedCodeText.textContent;
+
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        code
+                    );
+
+                    copyCodeButton.textContent =
+                        "Copied!";
+
+
+                    setTimeout(
+                        () => {
+
+                            copyCodeButton.textContent =
+                                "Copy";
+
+                        },
+                        1500
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           ESCAPE HTML
+        ======================================== */
+
+        function escapeHtml(
+            value
+        ) {
+
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+
+        }
+
+
+        /* ========================================
+           EVENTS
+        ======================================== */
+
+        loginButton.addEventListener(
+            "click",
+            login
+        );
+
+        passwordInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    login();
+
+                }
+
+            }
+        );
+
+        logoutButton.addEventListener(
+            "click",
+            logout
+        );
+
+        generateButton.addEventListener(
+            "click",
+            generateTesterCode
+        );
+
+
+        /* ========================================
+           INITIAL STATE
+        ======================================== */
+
+        loginScreen.style.display =
+            "flex";
+
+        dashboard.style.display =
+            "none";
+
+    </script>
+
+</body>
+</html>
