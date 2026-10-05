@@ -16,9 +16,8 @@ export default {
         if (!env.ADMIN_PASSWORD) {
           return json(
             {
-              success: false,
               authenticated: false,
-              error: "ADMIN_PASSWORD no está configurado en Cloudflare."
+              error: "ADMIN_PASSWORD no está configurado."
             },
             500
           );
@@ -27,23 +26,16 @@ export default {
         if (!password) {
           return json(
             {
-              success: false,
               authenticated: false,
-              error: "Introduce la contraseña."
+              error: "Falta la contraseña."
             },
             400
           );
         }
 
-        const valid = safeEqual(
-          password,
-          String(env.ADMIN_PASSWORD)
-        );
-
-        if (!valid) {
+        if (!safeEqual(password, String(env.ADMIN_PASSWORD))) {
           return json(
             {
-              success: false,
               authenticated: false,
               error: "Contraseña incorrecta."
             },
@@ -51,14 +43,12 @@ export default {
           );
         }
 
-        // Crear sesión temporal
-        const session = await createSession(
+        const session = await createAdminSession(
           String(env.ADMIN_PASSWORD)
         );
 
         return new Response(
           JSON.stringify({
-            success: true,
             authenticated: true
           }),
           {
@@ -71,19 +61,20 @@ export default {
             }
           }
         );
+
       } catch (error) {
-        console.error("ADMIN LOGIN ERROR:", error);
+        console.error(error);
 
         return json(
           {
-            success: false,
             authenticated: false,
-            error: "Solicitud de inicio de sesión inválida."
+            error: "Solicitud inválida."
           },
           400
         );
       }
     }
+
 
     // =========================================
     // ADMIN LOGOUT
@@ -99,7 +90,8 @@ export default {
         {
           status: 200,
           headers: {
-            "Content-Type": "application/json; charset=UTF-8",
+            "Content-Type":
+              "application/json; charset=UTF-8",
             "Cache-Control": "no-store",
             "Set-Cookie":
               "rets_admin_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0"
@@ -108,22 +100,6 @@ export default {
       );
     }
 
-    // =========================================
-    // ADMIN SESSION
-    // =========================================
-    if (
-      url.pathname === "/api/admin-session" &&
-      request.method === "GET"
-    ) {
-      const authenticated = await verifySession(
-        request,
-        env
-      );
-
-      return json({
-        authenticated
-      });
-    }
 
     // =========================================
     // LISTAR TESTERS
@@ -132,12 +108,7 @@ export default {
       url.pathname === "/api/admin/testers" &&
       request.method === "GET"
     ) {
-      const authenticated = await verifySession(
-        request,
-        env
-      );
-
-      if (!authenticated) {
+      if (!(await verifyAdminSession(request, env))) {
         return json(
           {
             success: false,
@@ -147,26 +118,49 @@ export default {
         );
       }
 
-      // Aún no tenemos almacenamiento persistente.
-      return json({
-        success: true,
-        testers: []
-      });
+      try {
+        const result = await env.DB
+          .prepare(`
+            SELECT
+              id,
+              code,
+              name,
+              email,
+              status,
+              created_at,
+              revoked_at
+            FROM testers
+            ORDER BY id DESC
+          `)
+          .all();
+
+        return json({
+          success: true,
+          testers: result.results || []
+        });
+
+      } catch (error) {
+        console.error("LIST TESTERS ERROR:", error);
+
+        return json(
+          {
+            success: false,
+            error: "No se pudieron cargar los testers."
+          },
+          500
+        );
+      }
     }
 
+
     // =========================================
-    // GENERAR CÓDIGO DE TESTER
+    // GENERAR TESTER
     // =========================================
     if (
       url.pathname === "/api/admin/testers/generate" &&
       request.method === "POST"
     ) {
-      const authenticated = await verifySession(
-        request,
-        env
-      );
-
-      if (!authenticated) {
+      if (!(await verifyAdminSession(request, env))) {
         return json(
           {
             success: false,
@@ -176,42 +170,88 @@ export default {
         );
       }
 
-      let body = {};
-
       try {
-        body = await request.json();
-      } catch {
-        body = {};
-      }
+        const body = await request.json();
 
-      const name = String(body.name ?? "").trim();
-      const email = String(body.email ?? "").trim();
+        const name = String(body.name ?? "").trim();
+        const email = String(body.email ?? "").trim();
 
-      if (!name || !email) {
+        if (!name || !email) {
+          return json(
+            {
+              success: false,
+              error: "Nombre y correo son obligatorios."
+            },
+            400
+          );
+        }
+
+        let code = null;
+
+        // Evitar duplicados.
+        for (let attempt = 0; attempt < 10; attempt++) {
+          const candidate = generateTesterCode();
+
+          const existing = await env.DB
+            .prepare(
+              "SELECT id FROM testers WHERE code = ? LIMIT 1"
+            )
+            .bind(candidate)
+            .first();
+
+          if (!existing) {
+            code = candidate;
+            break;
+          }
+        }
+
+        if (!code) {
+          return json(
+            {
+              success: false,
+              error: "No se pudo generar un código único."
+            },
+            500
+          );
+        }
+
+        const insert = await env.DB
+          .prepare(`
+            INSERT INTO testers
+            (code, name, email, status)
+            VALUES (?, ?, ?, 'active')
+          `)
+          .bind(code, name, email)
+          .run();
+
+        if (!insert.success) {
+          return json(
+            {
+              success: false,
+              error: "No se pudo guardar el tester."
+            },
+            500
+          );
+        }
+
+        return json({
+          success: true,
+          code
+        });
+
+      } catch (error) {
+        console.error("GENERATE TESTER ERROR:", error);
+
         return json(
           {
             success: false,
-            error: "Nombre y correo son obligatorios."
+            error: "No se pudo generar el tester."
           },
-          400
+          500
         );
       }
-
-      const code = generateTesterCode();
-
-      // Temporalmente no se guarda en una base de datos.
-      return json({
-        success: true,
-        code,
-        tester: {
-          id: code,
-          code,
-          name,
-          email,
-          status: "active"
-        }
-      });
     }
+
 
     // =========================================
     // REVOCAR TESTER
@@ -220,12 +260,7 @@ export default {
       url.pathname === "/api/admin/testers/revoke" &&
       request.method === "POST"
     ) {
-      const authenticated = await verifySession(
-        request,
-        env
-      );
-
-      if (!authenticated) {
+      if (!(await verifyAdminSession(request, env))) {
         return json(
           {
             success: false,
@@ -235,35 +270,142 @@ export default {
         );
       }
 
-      let body = {};
-
       try {
-        body = await request.json();
-      } catch {
-        body = {};
-      }
+        const body = await request.json();
 
-      const id = String(body.id ?? "").trim();
+        const id = Number(body.id);
 
-      if (!id) {
+        if (!Number.isInteger(id) || id <= 0) {
+          return json(
+            {
+              success: false,
+              error: "Identificador inválido."
+            },
+            400
+          );
+        }
+
+        const result = await env.DB
+          .prepare(`
+            UPDATE testers
+            SET
+              status = 'revoked',
+              revoked_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+              AND status = 'active'
+          `)
+          .bind(id)
+          .run();
+
+        if (!result.success) {
+          return json(
+            {
+              success: false,
+              error: "No se pudo revocar el tester."
+            },
+            500
+          );
+        }
+
+        return json({
+          success: true
+        });
+
+      } catch (error) {
+        console.error("REVOKE TESTER ERROR:", error);
+
         return json(
           {
             success: false,
-            error: "Falta el identificador del tester."
+            error: "No se pudo revocar el tester."
           },
-          400
+          500
         );
       }
-
-      // La persistencia real la conectaremos después.
-      return json({
-        success: true,
-        revoked: id
-      });
     }
 
+
     // =========================================
-    // SITIO ESTÁTICO
+    // TESTER LOGIN
+    // =========================================
+    if (
+      url.pathname === "/api/tester-login" &&
+      request.method === "POST"
+    ) {
+      try {
+        const body = await request.json();
+
+        const code = String(body.code ?? "")
+          .trim()
+          .toUpperCase();
+
+        if (
+          !/^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)
+        ) {
+          return json(
+            {
+              valid: false
+            },
+            200
+          );
+        }
+
+        const tester = await env.DB
+          .prepare(`
+            SELECT
+              id,
+              code,
+              name,
+              status
+            FROM testers
+            WHERE code = ?
+            LIMIT 1
+          `)
+          .bind(code)
+          .first();
+
+        if (!tester) {
+          return json({
+            valid: false
+          });
+        }
+
+        if (tester.status !== "active") {
+          return json({
+            valid: false
+          });
+        }
+
+        return new Response(
+          JSON.stringify({
+            valid: true,
+            message: "Access granted."
+          }),
+          {
+            status: 200,
+            headers: {
+              "Content-Type":
+                "application/json; charset=UTF-8",
+              "Cache-Control": "no-store"
+            }
+          }
+        );
+
+      } catch (error) {
+        console.error("TESTER LOGIN ERROR:", error);
+
+        return json(
+          {
+            valid: false
+          },
+          500
+        );
+      }
+    }
+
+
+    // =========================================
+    // STATIC ASSETS
     // =========================================
     if (env.ASSETS) {
       return env.ASSETS.fetch(request);
@@ -284,7 +426,7 @@ export default {
 
 
 // =========================================
-// JSON RESPONSE
+// JSON
 // =========================================
 
 function json(data, status = 200) {
@@ -303,7 +445,68 @@ function json(data, status = 200) {
 
 
 // =========================================
-// COMPARACIÓN DE CONTRASEÑA
+// ADMIN SESSION
+// =========================================
+
+async function createAdminSession(password) {
+  const timestamp = Date.now().toString();
+
+  const hash = await sha256(
+    `${timestamp}.${password}`
+  );
+
+  return `${timestamp}.${hash}`;
+}
+
+
+async function verifyAdminSession(request, env) {
+  if (!env.ADMIN_PASSWORD) {
+    return false;
+  }
+
+  const cookieHeader =
+    request.headers.get("Cookie") || "";
+
+  const match = cookieHeader.match(
+    /(?:^|;\s*)rets_admin_session=([^;]+)/
+  );
+
+  if (!match) {
+    return false;
+  }
+
+  const parts = match[1].split(".");
+
+  if (parts.length !== 2) {
+    return false;
+  }
+
+  const timestamp = Number(parts[0]);
+  const suppliedHash = parts[1];
+
+  if (!Number.isFinite(timestamp)) {
+    return false;
+  }
+
+  const age = Date.now() - timestamp;
+
+  if (age < 0 || age > 2 * 60 * 60 * 1000) {
+    return false;
+  }
+
+  const expectedHash = await sha256(
+    `${timestamp}.${env.ADMIN_PASSWORD}`
+  );
+
+  return safeEqual(
+    suppliedHash,
+    expectedHash
+  );
+}
+
+
+// =========================================
+// SAFE EQUAL
 // =========================================
 
 function safeEqual(a, b) {
@@ -327,80 +530,12 @@ function safeEqual(a, b) {
 
 
 // =========================================
-// CREAR SESIÓN
-// =========================================
-
-async function createSession(password) {
-  const timestamp = Date.now().toString();
-
-  const data = `${timestamp}.${password}`;
-
-  const hash = await sha256(data);
-
-  return `${timestamp}.${hash}`;
-}
-
-
-// =========================================
-// VERIFICAR SESIÓN
-// =========================================
-
-async function verifySession(request, env) {
-  if (!env.ADMIN_PASSWORD) {
-    return false;
-  }
-
-  const cookieHeader =
-    request.headers.get("Cookie") || "";
-
-  const match = cookieHeader.match(
-    /(?:^|;\s*)rets_admin_session=([^;]+)/
-  );
-
-  if (!match) {
-    return false;
-  }
-
-  const session = match[1];
-
-  const parts = session.split(".");
-
-  if (parts.length !== 2) {
-    return false;
-  }
-
-  const timestamp = Number(parts[0]);
-  const hash = parts[1];
-
-  if (!Number.isFinite(timestamp)) {
-    return false;
-  }
-
-  const MAX_AGE =
-    2 * 60 * 60 * 1000;
-
-  const age = Date.now() - timestamp;
-
-  if (age < 0 || age > MAX_AGE) {
-    return false;
-  }
-
-  const expected = await sha256(
-    `${timestamp}.${env.ADMIN_PASSWORD}`
-  );
-
-  return safeEqual(hash, expected);
-}
-
-
-// =========================================
 // SHA-256
 // =========================================
 
 async function sha256(text) {
-  const encoder = new TextEncoder();
-
-  const data = encoder.encode(text);
+  const data =
+    new TextEncoder().encode(text);
 
   const digest =
     await crypto.subtle.digest(
@@ -413,37 +548,37 @@ async function sha256(text) {
   )
     .map(
       byte =>
-        byte.toString(16).padStart(2, "0")
+        byte
+          .toString(16)
+          .padStart(2, "0")
     )
     .join("");
 }
 
 
 // =========================================
-// GENERADOR DE CÓDIGOS RETS
+// RETS CODE GENERATOR
 // =========================================
 
 function generateTesterCode() {
   const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-  function randomPart(length) {
-    const values =
-      new Uint32Array(length);
+  const values =
+    new Uint32Array(8);
 
-    crypto.getRandomValues(values);
+  crypto.getRandomValues(values);
 
-    let result = "";
+  let code = "";
 
-    for (let i = 0; i < length; i++) {
-      result +=
-        chars[
-          values[i] % chars.length
-        ];
-    }
-
-    return result;
+  for (let i = 0; i < values.length; i++) {
+    code +=
+      chars[
+        values[i] % chars.length
+      ];
   }
 
-  return `RETS-${randomPart(4)}-${randomPart(4)}`;
+  return (
+    `RETS-${code.slice(0, 4)}-${code.slice(4, 8)}`
+  );
 }
