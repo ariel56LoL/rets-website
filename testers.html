@@ -1,2095 +1,2448 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>RETS Tester Program — Nexaris</title>
-
-    <style>
-        /* =========================================================
-           RETS TESTER PROGRAM
-           Diseño optimizado para evitar lag
-        ========================================================= */
-
-        :root {
-            --bg: #02070a;
-            --bg-soft: #071116;
-            --panel: #081319;
-            --panel-2: #0b171d;
-
-            --cyan: #16e7f5;
-            --cyan-soft: #72f4fa;
-
-            --text: #f4fbfc;
-            --text-soft: #91a7ad;
-            --text-dim: #62787f;
-
-            --border: rgba(22, 231, 245, 0.14);
-            --border-strong: rgba(22, 231, 245, 0.35);
-
-            --danger: #ff5e70;
-            --success: #23e7b5;
-
-            --radius: 14px;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            width: 100%;
-            min-height: 100%;
-            background: var(--bg);
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                linear-gradient(
-                    rgba(22, 231, 245, 0.025) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(22, 231, 245, 0.025) 1px,
-                    transparent 1px
-                ),
-                radial-gradient(
-                    circle at 50% 20%,
-                    rgba(22, 231, 245, 0.055),
-                    transparent 40%
-                ),
-                var(--bg);
-
-            background-size:
-                64px 64px,
-                64px 64px,
-                100% 100%;
-
-            color: var(--text);
-            font-family:
-                Inter,
-                ui-sans-serif,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            overflow-x: hidden;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-
-        /* =========================================================
-           LOGIN
-        ========================================================= */
-
-        #loginView {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 20px;
-        }
-
-        .login-shell {
-            width: min(430px, 100%);
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RETS Tester Program — Nexaris</title>
+
+<style>
+:root{
+    --bg:#02070a;
+    --panel:#081319;
+    --cyan:#16e7f5;
+    --cyan-soft:#72f4fa;
+    --text:#f4fbfc;
+    --text-soft:#91a7ad;
+    --text-dim:#62787f;
+    --border:rgba(22,231,245,.14);
+    --border-strong:rgba(22,231,245,.35);
+    --danger:#ff5e70;
+    --success:#23e7b5;
+    --radius:14px
+}
+
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#02070a;
+    color:var(--text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+
+    background:
+        linear-gradient(
+            rgba(22,231,245,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(22,231,245,.025) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(22,231,245,.055),
+            transparent 40%
+        ),
+        var(--bg);
+
+    background-size:
+        64px 64px,
+        64px 64px,
+        100% 100%
+}
+
+button,input{
+    font:inherit
+}
+
+button{
+    cursor:pointer
+}
+
+.hidden{
+    display:none!important
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginView{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 20px
+}
+
+.login-shell{
+    width:min(430px,100%);
+    text-align:center
+}
+
+.brand-logo{
+    width:76px;
+    height:76px;
+    object-fit:contain;
+    margin-bottom:20px;
+
+    filter:
+        drop-shadow(
+            0 0 12px rgba(22,231,245,.22)
+        )
+}
+
+.eyebrow{
+    margin-bottom:10px;
+    color:var(--cyan);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.22em;
+    text-transform:uppercase
+}
+
+.login-title{
+    margin:0;
+    font-size:clamp(28px,5vw,38px);
+    line-height:1.1;
+    font-weight:800;
+    letter-spacing:-.03em
+}
+
+.login-description{
+    margin:14px auto 28px;
+    max-width:360px;
+    color:var(--text-soft);
+    font-size:14px;
+    line-height:1.65
+}
+
+.login-card{
+    padding:24px;
+
+    background:rgba(5,13,17,.94);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+
+    box-shadow:
+        0 16px 50px rgba(0,0,0,.25)
+}
+
+.code-label{
+    display:block;
+    margin-bottom:10px;
+
+    color:var(--text-dim);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-align:left;
+    text-transform:uppercase
+}
+
+#testerCode{
+    width:100%;
+    height:52px;
+
+    padding:0 15px;
+
+    color:var(--text);
+    background:#03090c;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    outline:none;
+
+    text-align:center;
+
+    font-size:16px;
+    font-weight:700;
+
+    letter-spacing:.12em;
+    text-transform:uppercase;
+
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease
+}
+
+#testerCode:focus{
+    border-color:var(--border-strong);
+
+    box-shadow:
+        0 0 0 3px rgba(22,231,245,.05)
+}
+
+#testerCode::placeholder{
+    color:#42555c
+}
+
+.access-button{
+    width:100%;
+    height:52px;
+
+    margin-top:14px;
+
+    color:#001013;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan-soft),
+            var(--cyan)
+        );
+
+    border:
+        1px solid
+        rgba(22,231,245,.35);
+
+    border-radius:10px;
+
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+
+    transition:
+        transform 160ms ease,
+        filter 160ms ease
+}
+
+.access-button:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.06)
+}
+
+.access-button:active{
+    transform:translateY(0)
+}
+
+.access-button:disabled{
+    cursor:wait;
+    opacity:.55;
+    transform:none
+}
 
-        .brand-logo {
-            width: 76px;
-            height: 76px;
-            object-fit: contain;
-            margin-bottom: 20px;
+#loginMessage{
+    min-height:18px;
+    margin-top:14px;
+
+    font-size:12px;
+    line-height:1.5
+}
+
+#loginMessage.error{
+    color:var(--danger)
+}
+
+#loginMessage.success{
+    color:var(--success)
+}
+
+.login-footer{
+    margin-top:26px;
+    color:var(--text-dim);
+    font-size:11px
+}
+
+.login-footer strong{
+    color:var(--text-soft)
+}
+
+
+/* =========================
+   TRAILER
+========================= */
 
-            filter:
-                drop-shadow(
-                    0 0 12px rgba(22, 231, 245, 0.22)
-                );
-        }
+#trailerView{
+    position:fixed;
+    inset:0;
+    z-index:100;
 
-        .eyebrow {
-            margin-bottom: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            color: var(--cyan);
-            font-size: 11px;
-            font-weight: 700;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(22,231,245,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(22,231,245,.025) 1px,
+            transparent 1px
+        ),
+        #010609;
+
+    background-size:
+        64px 64px
+}
+
+.trailer-content{
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 20px 90px;
+
+    text-align:center
+}
+
+
+/* LOGO CENTRADO ARRIBA */
+
+.trailer-logo{
+    position:relative;
+
+    width:92px;
+    height:92px;
+
+    margin:
+        0
+        auto
+        24px;
+
+    object-fit:contain;
+
+    z-index:2;
+
+    filter:
+        drop-shadow(
+            0 0 14px rgba(22,231,245,.22)
+        );
+
+    opacity:0;
+
+    animation:
+        trailerLogoIn
+        900ms
+        cubic-bezier(.22,1,.36,1)
+        250ms
+        forwards;
 
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-        }
+    will-change:
+        transform,
+        opacity
+}
+
+.trailer-title{
+    position:relative;
+    z-index:3;
+
+    margin:0;
+
+    font-size:
+        clamp(
+            34px,
+            6vw,
+            62px
+        );
 
-        .login-title {
-            margin: 0;
+    line-height:1.05;
+
+    font-weight:900;
 
-            font-size: clamp(28px, 5vw, 38px);
-            line-height: 1.1;
-            font-weight: 800;
+    letter-spacing:.035em;
 
-            letter-spacing: -0.03em;
-        }
+    opacity:0;
 
-        .login-description {
-            margin: 14px auto 28px;
-            max-width: 360px;
-
-            color: var(--text-soft);
-            font-size: 14px;
-            line-height: 1.65;
-        }
+    animation:
+        trailerTitleIn
+        700ms
+        cubic-bezier(.22,1,.36,1)
+        650ms
+        forwards;
 
-        .login-card {
-            padding: 24px;
-
-            background: rgba(5, 13, 17, 0.92);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            box-shadow:
-                0 16px 50px rgba(0, 0, 0, 0.25);
-        }
-
-        .code-label {
-            display: block;
-            margin-bottom: 10px;
-
-            color: var(--text-dim);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-
-            text-align: left;
-        }
-
-        #testerCode {
-            width: 100%;
-            height: 52px;
-
-            padding: 0 15px;
-
-            color: var(--text);
-            background: #03090c;
-
-            border: 1px solid var(--border);
-            border-radius: 10px;
+    will-change:
+        transform,
+        opacity
+}
 
-            outline: none;
+.trailer-subtitle{
+    position:relative;
+    z-index:3;
 
-            text-align: center;
-            font-size: 16px;
-            font-weight: 700;
-
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-
-            transition:
-                border-color 180ms ease,
-                box-shadow 180ms ease;
-        }
-
-        #testerCode:focus {
-            border-color: var(--border-strong);
-
-            box-shadow:
-                0 0 0 3px rgba(22, 231, 245, 0.05);
-        }
-
-        #testerCode::placeholder {
-            color: #42555c;
-            letter-spacing: 0.08em;
-        }
-
-        .access-button {
-            width: 100%;
-            height: 52px;
-
-            margin-top: 14px;
-
-            border: 1px solid rgba(22, 231, 245, 0.35);
-            border-radius: 10px;
-
-            color: #001013;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--cyan-soft),
-                    var(--cyan)
-                );
-
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-
-            transition:
-                transform 160ms ease,
-                filter 160ms ease;
-        }
-
-        .access-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.06);
-        }
-
-        .access-button:active {
-            transform: translateY(0);
-        }
-
-        .access-button:disabled {
-            cursor: wait;
-            opacity: 0.55;
-            transform: none;
-        }
-
-        #loginMessage {
-            min-height: 18px;
-            margin-top: 14px;
-
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        #loginMessage.error {
-            color: var(--danger);
-        }
-
-        #loginMessage.success {
-            color: var(--success);
-        }
-
-        .login-footer {
-            margin-top: 26px;
+    margin:
+        18px
+        0
+        0;
 
-            color: var(--text-dim);
-            font-size: 11px;
-        }
-
-        .login-footer strong {
-            color: var(--text-soft);
-        }
-
-
-        /* =========================================================
-           TRAILER / WELCOME
-        ========================================================= */
+    color:var(--text-soft);
 
-        #trailerView {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
+    font-size:
+        clamp(
+            13px,
+            2vw,
+            16px
+        );
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background:
-                linear-gradient(
-                    rgba(22, 231, 245, 0.025) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(22, 231, 245, 0.025) 1px,
-                    transparent 1px
-                ),
-                #010609;
+    opacity:0;
 
-            background-size: 64px 64px;
+    animation:
+        trailerFadeIn
+        700ms
+        ease
+        1100ms
+        forwards;
 
-            overflow: hidden;
-        }
-
-        /*
-           IMPORTANTE:
-           Todo el contenido está dentro de este contenedor.
-           El logo está en flujo normal, por encima del título.
-        */
-
-        .trailer-content {
-            width: 100%;
-            min-height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding:
-                40px
-                20px
-                90px;
-        }
-
-        .trailer-logo {
-            position: relative;
-
-            width: 92px;
-            height: 92px;
-
-            object-fit: contain;
-
-            margin:
-                0
-                auto
-                24px;
-
-            z-index: 2;
-
-            filter:
-                drop-shadow(
-                    0 0 14px rgba(22, 231, 245, 0.22)
-                );
-
-            opacity: 0;
-
-            animation:
-                trailerLogoIn
-                900ms
-                cubic-bezier(0.22, 1, 0.36, 1)
-                250ms
-                forwards;
-        }
-
-        .trailer-title {
-            margin: 0;
-
-            position: relative;
-            z-index: 3;
-
-            font-size:
-                clamp(
-                    34px,
-                    6vw,
-                    62px
-                );
+    will-change:
+        transform,
+        opacity
+}
 
-            line-height: 1.05;
+.trailer-version{
+    position:relative;
+    z-index:3;
 
-            font-weight: 900;
+    margin-top:24px;
 
-            letter-spacing: 0.035em;
+    color:var(--cyan-soft);
 
-            opacity: 0;
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Consolas,
+        monospace;
 
-            animation:
-                trailerTitleIn
-                700ms
-                cubic-bezier(0.22, 1, 0.36, 1)
-                650ms
-                forwards;
-        }
+    font-size:
+        clamp(
+            10px,
+            1.7vw,
+            12px
+        );
 
-        .trailer-subtitle {
-            margin:
-                18px
-                0
-                0;
+    font-weight:700;
 
-            position: relative;
-            z-index: 3;
+    letter-spacing:.14em;
 
-            color: var(--text-soft);
+    text-transform:uppercase;
 
-            font-size:
-                clamp(
-                    13px,
-                    2vw,
-                    16px
-                );
+    opacity:0;
 
-            opacity: 0;
+    animation:
+        trailerFadeIn
+        700ms
+        ease
+        1500ms
+        forwards;
 
-            animation:
-                trailerFadeIn
-                700ms
-                ease
-                1100ms
-                forwards;
-        }
+    will-change:
+        transform,
+        opacity
+}
 
-        .trailer-version {
-            margin-top: 24px;
+.access-confirmed{
+    position:absolute;
 
-            position: relative;
-            z-index: 3;
+    bottom:34px;
+    left:50%;
 
-            color: var(--cyan-soft);
+    display:flex;
+    align-items:center;
 
-            font-family:
-                ui-monospace,
-                SFMono-Regular,
-                Consolas,
-                monospace;
+    gap:9px;
 
-            font-size:
-                clamp(
-                    10px,
-                    1.7vw,
-                    12px
-                );
+    transform:
+        translateX(-50%)
+        translateY(8px);
 
-            font-weight: 700;
+    color:#708b92;
 
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
+    font-size:10px;
+    font-weight:800;
 
-            opacity: 0;
+    letter-spacing:.15em;
 
-            animation:
-                trailerFadeIn
-                700ms
-                ease
-                1500ms
-                forwards;
-        }
+    opacity:0;
 
-        .access-confirmed {
-            position: absolute;
+    animation:
+        accessIn
+        500ms
+        ease
+        2150ms
+        forwards
+}
 
-            bottom: 34px;
-            left: 50%;
+.access-confirmed span{
+    width:6px;
+    height:6px;
 
-            transform:
-                translateX(-50%)
-                translateY(8px);
+    border-radius:50%;
 
-            display: flex;
-            align-items: center;
-            gap: 9px;
+    background:var(--cyan);
 
-            color: #708b92;
+    box-shadow:
+        0 0 7px rgba(22,231,245,.4)
+}
 
-            font-size: 10px;
-            font-weight: 800;
 
-            letter-spacing: 0.15em;
+/* =========================
+   HEADER
+========================= */
 
-            opacity: 0;
+.topbar{
+    position:sticky;
+    top:0;
 
-            animation:
-                accessIn
-                500ms
-                ease
-                2150ms
-                forwards;
-        }
+    z-index:20;
 
-        .access-confirmed span {
-            width: 6px;
-            height: 6px;
+    height:72px;
 
-            border-radius: 50%;
+    display:flex;
+    align-items:center;
 
-            background: var(--cyan);
+    padding:0 26px;
 
-            box-shadow:
-                0 0 7px rgba(22, 231, 245, 0.4);
-        }
+    background:rgba(2,7,10,.96);
 
+    border-bottom:
+        1px solid
+        var(--border)
+}
 
-        /* Logo after trailer */
+.topbar-logo{
+    width:42px;
+    height:42px;
 
-        .trailer-logo.is-moving {
-            animation: none !important;
-            opacity: 1;
-            transition: none;
-        }
+    object-fit:contain;
 
+    opacity:0;
+    visibility:hidden
+}
 
-        /* =========================================================
-           HEADER
-        ========================================================= */
+.topbar-brand{
+    margin-left:13px;
 
-        #hubView {
-            min-height: 100vh;
-            background: transparent;
-        }
+    display:flex;
+    flex-direction:column;
 
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 20;
+    line-height:1
+}
 
-            height: 72px;
+.topbar-brand strong{
+    font-size:15px;
+    letter-spacing:.08em
+}
 
-            display: flex;
-            align-items: center;
+.topbar-brand span{
+    margin-top:5px;
 
-            padding: 0 26px;
+    color:var(--text-dim);
 
-            background: rgba(2, 7, 10, 0.94);
-            border-bottom: 1px solid var(--border);
-        }
+    font-size:9px;
+    font-weight:700;
 
-        .topbar-logo {
-            width: 42px;
-            height: 42px;
+    letter-spacing:.15em;
 
-            object-fit: contain;
+    text-transform:uppercase
+}
 
-            opacity: 0;
-            visibility: hidden;
-        }
+.topbar-right{
+    margin-left:auto
+}
 
-        .topbar-brand {
-            margin-left: 13px;
+.status-pill{
+    display:inline-flex;
+    align-items:center;
 
-            display: flex;
-            flex-direction: column;
+    gap:7px;
 
-            line-height: 1;
-        }
+    padding:
+        7px
+        10px;
 
-        .topbar-brand strong {
-            font-size: 15px;
-            letter-spacing: 0.08em;
-        }
+    color:var(--text-soft);
 
-        .topbar-brand span {
-            margin-top: 5px;
+    border:
+        1px solid
+        var(--border);
 
-            color: var(--text-dim);
+    border-radius:999px;
 
-            font-size: 9px;
-            font-weight: 700;
+    font-size:10px;
+    font-weight:700;
 
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
+    letter-spacing:.06em
+}
 
-        .topbar-right {
-            margin-left: auto;
+.status-dot{
+    width:6px;
+    height:6px;
 
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    border-radius:50%;
 
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
+    background:var(--success)
+}
 
-            padding:
-                7px
-                10px;
 
-            border: 1px solid var(--border);
-            border-radius: 999px;
+/* =========================
+   HUB
+========================= */
 
-            color: var(--text-soft);
+.hub-container{
+    width:min(1100px,100%);
 
-            font-size: 10px;
-            font-weight: 700;
+    margin:0 auto;
 
-            letter-spacing: 0.06em;
-        }
+    padding:
+        54px
+        24px
+        70px
+}
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
+.hub-hero{
+    max-width:730px;
 
-            border-radius: 50%;
+    opacity:0;
 
-            background: var(--success);
-        }
+    animation:
+        hubHeroIn
+        700ms
+        cubic-bezier(.22,1,.36,1)
+        100ms
+        forwards;
 
+    will-change:
+        transform,
+        opacity
+}
 
-        /* =========================================================
-           HUB
-        ========================================================= */
+.hub-kicker,
+.section-kicker{
+    color:var(--cyan);
 
-        .hub-container {
-            width: min(1100px, 100%);
+    font-size:11px;
+    font-weight:800;
 
-            margin:
-                0
-                auto;
+    letter-spacing:.2em;
 
-            padding:
-                54px
-                24px
-                70px;
-        }
+    text-transform:uppercase
+}
 
-        .hub-hero {
-            max-width: 730px;
+.hub-title{
+    margin:
+        10px
+        0
+        12px;
 
-            opacity: 0;
+    font-size:
+        clamp(
+            34px,
+            6vw,
+            58px
+        );
 
-            animation:
-                hubHeroIn
-                700ms
-                cubic-bezier(0.22, 1, 0.36, 1)
-                100ms
-                forwards;
-        }
+    line-height:1;
 
-        .hub-kicker {
-            color: var(--cyan);
+    letter-spacing:-.04em;
 
-            font-size: 11px;
-            font-weight: 800;
+    font-weight:900
+}
 
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
+.hub-description{
+    max-width:650px;
 
-        .hub-title {
-            margin:
-                10px
-                0
-                12px;
+    margin:0;
 
-            font-size:
-                clamp(
-                    34px,
-                    6vw,
-                    58px
-                );
+    color:var(--text-soft);
 
-            line-height: 1;
+    font-size:15px;
 
-            letter-spacing: -0.04em;
-            font-weight: 900;
-        }
+    line-height:1.7
+}
 
-        .hub-description {
-            max-width: 650px;
 
-            margin: 0;
+/* =========================
+   INFO
+========================= */
 
-            color: var(--text-soft);
+.info-grid{
+    display:grid;
 
-            font-size: 15px;
-            line-height: 1.7;
-        }
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
 
+    gap:14px;
 
-        /* =========================================================
-           INFO GRID
-        ========================================================= */
+    margin-top:40px
+}
 
-        .info-grid {
-            display: grid;
+.info-card{
+    position:relative;
 
-            grid-template-columns:
-                repeat(
-                    3,
-                    minmax(0, 1fr)
-                );
+    padding:21px;
 
-            gap: 14px;
+    overflow:hidden;
 
-            margin-top: 40px;
-        }
+    background:
+        rgba(7,16,21,.86);
 
-        .info-card {
-            position: relative;
+    border:
+        1px solid
+        var(--border);
 
-            padding: 21px;
+    border-radius:13px;
 
-            background: rgba(7, 16, 21, 0.82);
+    opacity:0;
 
-            border:
-                1px solid
-                var(--border);
+    animation:
+        cardIn
+        650ms
+        cubic-bezier(.22,1,.36,1)
+        var(--delay)
+        forwards;
 
-            border-radius: 13px;
+    will-change:
+        transform,
+        opacity
+}
 
-            overflow: hidden;
+.info-card::before{
+    content:"";
 
-            opacity: 0;
+    position:absolute;
 
-            animation:
-                cardIn
-                650ms
-                cubic-bezier(0.22, 1, 0.36, 1)
-                var(--delay)
-                forwards;
-        }
+    top:0;
+    left:0;
 
-        .info-card::before {
-            content: "";
+    width:100%;
+    height:1px;
 
-            position: absolute;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(22,231,245,.45),
+            transparent
+        )
+}
 
-            top: 0;
-            left: 0;
+.info-icon{
+    width:34px;
+    height:34px;
 
-            width: 100%;
-            height: 1px;
+    display:grid;
+    place-items:center;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(22, 231, 245, 0.45),
-                    transparent
-                );
-        }
+    margin-bottom:15px;
 
-        .info-icon {
-            width: 34px;
-            height: 34px;
+    color:var(--cyan);
 
-            display: grid;
-            place-items: center;
+    border:
+        1px solid
+        rgba(22,231,245,.18);
 
-            margin-bottom: 15px;
+    border-radius:9px;
 
-            border:
-                1px solid
-                rgba(22, 231, 245, 0.18);
+    font-size:14px
+}
 
-            border-radius: 9px;
+.info-title{
+    margin:
+        0
+        0
+        7px;
 
-            color: var(--cyan);
-            font-size: 14px;
-        }
+    font-size:14px;
 
-        .info-title {
-            margin: 0 0 7px;
+    font-weight:800
+}
 
-            font-size: 14px;
-            font-weight: 800;
-        }
+.info-text{
+    margin:0;
 
-        .info-text {
-            margin: 0;
+    color:var(--text-dim);
 
-            color: var(--text-dim);
+    font-size:12px;
 
-            font-size: 12px;
-            line-height: 1.6;
-        }
+    line-height:1.6
+}
 
 
-        /* =========================================================
-           BUILD SECTION
-        ========================================================= */
+/* =========================
+   SECTION
+========================= */
 
-        .section-header {
-            margin-top: 58px;
-            margin-bottom: 20px;
+.section-header{
+    display:flex;
 
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
+    align-items:flex-end;
 
-            gap: 20px;
-        }
+    justify-content:space-between;
 
-        .section-kicker {
-            color: var(--cyan);
+    gap:20px;
 
-            font-size: 10px;
-            font-weight: 800;
+    margin-top:58px;
+    margin-bottom:20px
+}
 
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
+.section-title{
+    margin:
+        7px
+        0
+        0;
 
-        .section-title {
-            margin:
-                7px
-                0
-                0;
+    font-size:24px;
 
-            font-size: 24px;
-            font-weight: 850;
-        }
+    font-weight:850
+}
 
-        .section-note {
-            color: var(--text-dim);
+.section-note{
+    color:var(--text-dim);
 
-            font-size: 11px;
-            line-height: 1.5;
+    font-size:11px;
 
-            text-align: right;
-        }
+    line-height:1.5;
 
+    text-align:right
+}
 
-        /* =========================================================
-           PLATFORMS
-        ========================================================= */
 
-        .platform-grid {
-            display: grid;
+/* =========================
+   PLATFORMS
+========================= */
 
-            grid-template-columns:
-                repeat(
-                    4,
-                    minmax(0, 1fr)
-                );
+.platform-grid{
+    display:grid;
 
-            gap: 12px;
-        }
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
 
-        .platform-card {
-            position: relative;
+    gap:12px
+}
 
-            min-height: 205px;
+.platform-card{
+    position:relative;
 
-            padding: 21px;
+    min-height:205px;
 
-            display: flex;
-            flex-direction: column;
+    padding:21px;
 
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(11, 23, 29, 0.9),
-                    rgba(5, 12, 16, 0.9)
-                );
+    display:flex;
+    flex-direction:column;
 
-            border:
-                1px solid
-                var(--border);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(11,23,29,.92),
+            rgba(5,12,16,.92)
+        );
 
-            border-radius: 13px;
+    border:
+        1px solid
+        var(--border);
 
-            transition:
-                transform 180ms ease,
-                border-color 180ms ease,
-                background 180ms ease;
+    border-radius:13px;
 
-            opacity: 0;
+    opacity:0;
 
-            animation:
-                platformIn
-                650ms
-                cubic-bezier(0.22, 1, 0.36, 1)
-                var(--delay)
-                forwards;
-        }
+    animation:
+        platformIn
+        650ms
+        cubic-bezier(.22,1,.36,1)
+        var(--delay)
+        forwards;
 
-        .platform-card:hover {
-            transform: translateY(-4px);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
 
-            border-color:
-                rgba(22, 231, 245, 0.27);
+    will-change:
+        transform,
+        opacity
+}
 
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(11, 27, 34, 0.98),
-                    rgba(5, 13, 17, 0.95)
-                );
-        }
+.platform-card:hover{
+    transform:translateY(-4px);
 
-        .platform-symbol {
-            width: 42px;
-            height: 42px;
+    border-color:
+        rgba(22,231,245,.27);
 
-            display: grid;
-            place-items: center;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(11,27,34,.98),
+            rgba(5,13,17,.95)
+        )
+}
 
-            margin-bottom: 19px;
+.platform-symbol{
+    width:42px;
+    height:42px;
 
-            border:
-                1px solid
-                rgba(22, 231, 245, 0.15);
+    display:grid;
+    place-items:center;
 
-            border-radius: 10px;
+    margin-bottom:19px;
 
-            color: var(--cyan);
+    color:var(--cyan);
 
-            font-size: 17px;
-            font-weight: 800;
-        }
+    border:
+        1px solid
+        rgba(22,231,245,.15);
 
-        .platform-name {
-            margin: 0;
+    border-radius:10px;
 
-            font-size: 17px;
-            font-weight: 800;
-        }
+    font-size:17px;
+    font-weight:800
+}
 
-        .platform-version {
-            margin-top: 7px;
+.platform-name{
+    margin:0;
 
-            color: var(--text-dim);
+    font-size:17px;
 
-            font-size: 11px;
-        }
+    font-weight:800
+}
 
-        .platform-status {
-            margin-top: auto;
+.platform-version{
+    margin-top:7px;
 
-            padding-top: 22px;
+    color:var(--text-dim);
 
-            color: var(--cyan-soft);
+    font-size:11px
+}
 
-            font-size: 10px;
-            font-weight: 800;
+.platform-status{
+    margin-top:auto;
 
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-        }
+    padding-top:22px;
 
-        .platform-status::before {
-            content: "";
+    color:var(--cyan-soft);
 
-            display: inline-block;
+    font-size:10px;
 
-            width: 5px;
-            height: 5px;
+    font-weight:800;
 
-            margin:
-                0
-                7px
-                1px
-                0;
+    letter-spacing:.14em;
 
-            border-radius: 50%;
+    text-transform:uppercase
+}
 
-            background: var(--cyan);
-        }
+.platform-status::before{
+    content:"";
 
+    display:inline-block;
 
-        /* =========================================================
-           FOOTER
-        ========================================================= */
+    width:5px;
+    height:5px;
 
-        .hub-footer {
-            margin-top: 70px;
-            padding-top: 22px;
+    margin:
+        0
+        7px
+        1px
+        0;
 
-            border-top:
-                1px solid
-                var(--border);
+    border-radius:50%;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    background:var(--cyan)
+}
 
-            gap: 20px;
 
-            color: var(--text-dim);
+/* =========================
+   FOOTER
+========================= */
 
-            font-size: 10px;
-        }
+.hub-footer{
+    display:flex;
 
-        .hub-footer strong {
-            color: var(--text-soft);
-            font-weight: 700;
-        }
+    align-items:center;
 
-        .hub-footer-right {
-            text-align: right;
-        }
+    justify-content:space-between;
 
+    gap:20px;
 
-        /* =========================================================
-           ANIMATIONS
-        ========================================================= */
+    margin-top:70px;
 
-        @keyframes trailerLogoIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(18px)
-                    scale(0.88);
-            }
+    padding-top:22px;
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
+    color:var(--text-dim);
 
-        @keyframes trailerTitleIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(16px);
-            }
+    border-top:
+        1px solid
+        var(--border);
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+    font-size:10px
+}
 
-        @keyframes trailerFadeIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(8px);
-            }
+.hub-footer strong{
+    color:var(--text-soft)
+}
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+.hub-footer-right{
+    text-align:right
+}
 
-        @keyframes accessIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateX(-50%)
-                    translateY(8px);
-            }
 
-            to {
-                opacity: 1;
-                transform:
-                    translateX(-50%)
-                    translateY(0);
-            }
-        }
+/* =========================
+   ANIMATIONS
+========================= */
 
-        @keyframes hubHeroIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(18px);
-            }
+@keyframes trailerLogoIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(18px)
+            scale(.88)
+    }
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1)
+    }
+}
 
-        @keyframes cardIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(15px);
-            }
+@keyframes trailerTitleIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(16px)
+    }
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+    }
+}
 
-        @keyframes platformIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(18px);
-            }
+@keyframes trailerFadeIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(8px)
+    }
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+    }
+}
 
+@keyframes accessIn{
+    from{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            translateY(8px)
+    }
 
-        /* =========================================================
-           MOBILE
-        ========================================================= */
+    to{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            translateY(0)
+    }
+}
 
-        @media (max-width: 850px) {
+@keyframes hubHeroIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(18px)
+    }
 
-            .info-grid {
-                grid-template-columns:
-                    1fr;
-            }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+    }
+}
 
-            .platform-grid {
-                grid-template-columns:
-                    repeat(
-                        2,
-                        minmax(0, 1fr)
-                    );
-            }
-        }
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(15px)
+    }
 
-        @media (max-width: 600px) {
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+    }
+}
 
-            .topbar {
-                height: 64px;
-                padding: 0 16px;
-            }
+@keyframes platformIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(18px)
+    }
 
-            .topbar-logo {
-                width: 36px;
-                height: 36px;
-            }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+    }
+}
 
-            .topbar-brand strong {
-                font-size: 13px;
-            }
 
-            .topbar-brand span {
-                font-size: 8px;
-            }
+/* =========================
+   RESPONSIVE
+========================= */
 
-            .status-pill {
-                display: none;
-            }
+@media(max-width:850px){
 
-            .hub-container {
-                padding:
-                    42px
-                    17px
-                    55px;
-            }
+    .info-grid{
+        grid-template-columns:1fr
+    }
 
-            .section-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
+    .platform-grid{
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            )
+    }
+}
 
-            .section-note {
-                text-align: left;
-            }
+@media(max-width:600px){
 
-            .platform-grid {
-                grid-template-columns:
-                    1fr;
-            }
+    .topbar{
+        height:64px;
+        padding:0 16px
+    }
 
-            .hub-footer {
-                align-items: flex-start;
-                flex-direction: column;
-            }
+    .topbar-logo{
+        width:36px;
+        height:36px
+    }
 
-            .hub-footer-right {
-                text-align: left;
-            }
-        }
+    .topbar-brand strong{
+        font-size:13px
+    }
 
-        @media (prefers-reduced-motion: reduce) {
+    .topbar-brand span{
+        font-size:8px
+    }
 
-            *,
-            *::before,
-            *::after {
-                animation-duration: 1ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 1ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    .status-pill{
+        display:none
+    }
+
+    .hub-container{
+        padding:
+            42px
+            17px
+            55px
+    }
+
+    .section-header{
+        align-items:flex-start;
+        flex-direction:column
+    }
+
+    .section-note{
+        text-align:left
+    }
+
+    .platform-grid{
+        grid-template-columns:1fr
+    }
+
+    .hub-footer{
+        align-items:flex-start;
+        flex-direction:column
+    }
+
+    .hub-footer-right{
+        text-align:left
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:1ms!important;
+
+        animation-iteration-count:1!important;
+
+        transition-duration:1ms!important
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =========================================================
-         LOGIN
-    ========================================================== -->
+<!-- =========================
+     LOGIN
+========================= -->
 
-    <main id="loginView">
+<main id="loginView">
 
-        <div class="login-shell">
+    <div class="login-shell">
 
-            <img
-                class="brand-logo"
-                src="image.png"
-                alt="RETS"
+        <img
+            class="brand-logo"
+            src="image.png"
+            alt="RETS"
+        >
+
+        <div class="eyebrow">
+            Nexaris · Tester Program
+        </div>
+
+        <h1 class="login-title">
+            Acceso anticipado
+        </h1>
+
+        <p class="login-description">
+            Introduce tu código de tester para acceder
+            a la primera versión de RETS.
+        </p>
+
+        <div class="login-card">
+
+            <label
+                class="code-label"
+                for="testerCode"
+            >
+                Código de acceso
+            </label>
+
+            <input
+                id="testerCode"
+                type="text"
+                placeholder="RETS-XXXX-XXXX"
+                maxlength="14"
+                autocomplete="off"
+                spellcheck="false"
             >
 
-            <div class="eyebrow">
-                Nexaris · Tester Program
+            <button
+                id="accessButton"
+                class="access-button"
+                type="button"
+            >
+                Verificar acceso
+            </button>
+
+            <div
+                id="loginMessage"
+                aria-live="polite"
+            ></div>
+
+        </div>
+
+        <div class="login-footer">
+            <strong>Nexaris</strong> — Created for you.
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     TRAILER
+========================= -->
+
+<section
+    id="trailerView"
+    class="hidden"
+    aria-hidden="true"
+>
+
+    <div class="trailer-content">
+
+        <!-- LOGO CENTRADO ARRIBA DEL TEXTO -->
+
+        <img
+            id="trailerLogo"
+            class="trailer-logo"
+            src="image.png"
+            alt="RETS"
+        >
+
+        <h1 class="trailer-title">
+            BIENVENIDO, TESTER
+        </h1>
+
+        <p class="trailer-subtitle">
+            Has obtenido acceso anticipado a RETS.
+        </p>
+
+        <div class="trailer-version">
+            RETS v0.1.0 · VERSIÓN PARA TESTERS
+        </div>
+
+    </div>
+
+    <div class="access-confirmed">
+        <span></span>
+        ACCESO CONFIRMADO
+    </div>
+
+</section>
+
+
+<!-- =========================
+     HUB
+========================= -->
+
+<section
+    id="hubView"
+    class="hidden"
+>
+
+    <header class="topbar">
+
+        <img
+            id="headerLogo"
+            class="topbar-logo"
+            src="image.png"
+            alt="RETS"
+        >
+
+        <div class="topbar-brand">
+
+            <strong>
+                RETS
+            </strong>
+
+            <span>
+                Tester Program
+            </span>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="status-pill">
+
+                <span class="status-dot"></span>
+
+                ACCESO ANTICIPADO
+
             </div>
 
-            <h1 class="login-title">
-                Acceso anticipado
+        </div>
+
+    </header>
+
+
+    <div class="hub-container">
+
+        <div class="hub-hero">
+
+            <div class="hub-kicker">
+                RETS FIRST BUILD
+            </div>
+
+            <h1 class="hub-title">
+                Primera versión
             </h1>
 
-            <p class="login-description">
-                Introduce tu código de tester para acceder
-                a la primera versión de RETS.
+            <p class="hub-description">
+                Has obtenido acceso al programa de testers
+                de RETS. Desde aquí podrás encontrar futuras
+                compilaciones, novedades y versiones
+                experimentales antes del lanzamiento público.
             </p>
 
-            <div class="login-card">
-
-                <label
-                    class="code-label"
-                    for="testerCode"
-                >
-                    Código de acceso
-                </label>
-
-                <input
-                    id="testerCode"
-                    type="text"
-                    placeholder="RETS-XXXX-XXXX"
-                    maxlength="14"
-                    autocomplete="off"
-                    spellcheck="false"
-                >
-
-                <button
-                    id="accessButton"
-                    class="access-button"
-                    type="button"
-                >
-                    Verificar acceso
-                </button>
-
-                <div
-                    id="loginMessage"
-                    aria-live="polite"
-                ></div>
-
-            </div>
-
-            <div class="login-footer">
-                <strong>Nexaris</strong> — Created for you.
-            </div>
-
         </div>
 
-    </main>
 
+        <div class="info-grid">
 
-    <!-- =========================================================
-         TRAILER
-    ========================================================== -->
-
-    <section
-        id="trailerView"
-        class="hidden"
-        aria-hidden="true"
-    >
-
-        <div class="trailer-content">
-
-            <!--
-                Logo completamente centrado.
-                Está ARRIBA del título, no encima.
-            -->
-
-            <img
-                id="trailerLogo"
-                class="trailer-logo"
-                src="image.png"
-                alt="RETS"
+            <article
+                class="info-card"
+                style="--delay:250ms"
             >
 
-            <h1 class="trailer-title">
-                BIENVENIDO, TESTER
-            </h1>
-
-            <p class="trailer-subtitle">
-                Has obtenido acceso anticipado a RETS.
-            </p>
-
-            <div class="trailer-version">
-                RETS v0.1.0 · VERSIÓN PARA TESTERS
-            </div>
-
-        </div>
-
-        <div class="access-confirmed">
-            <span></span>
-            ACCESO CONFIRMADO
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         TESTER HUB
-    ========================================================== -->
-
-    <section
-        id="hubView"
-        class="hidden"
-    >
-
-        <header class="topbar">
-
-            <img
-                id="headerLogo"
-                class="topbar-logo"
-                src="image.png"
-                alt="RETS"
-            >
-
-            <div class="topbar-brand">
-                <strong>RETS</strong>
-                <span>Tester Program</span>
-            </div>
-
-            <div class="topbar-right">
-
-                <div class="status-pill">
-                    <span class="status-dot"></span>
-                    ACCESO ANTICIPADO
+                <div class="info-icon">
+                    ▲
                 </div>
 
-            </div>
+                <h2 class="info-title">
+                    Acceso anticipado
+                </h2>
 
-        </header>
-
-
-        <div class="hub-container">
-
-            <div class="hub-hero">
-
-                <div class="hub-kicker">
-                    RETS FIRST BUILD
-                </div>
-
-                <h1 class="hub-title">
-                    Primera versión
-                </h1>
-
-                <p class="hub-description">
-                    Has obtenido acceso al programa de testers
-                    de RETS. Desde aquí podrás encontrar futuras
-                    compilaciones, novedades y versiones
-                    experimentales antes del lanzamiento público.
+                <p class="info-text">
+                    Prueba funciones nuevas antes de que
+                    estén disponibles para todos.
                 </p>
 
-            </div>
+            </article>
 
 
-            <!-- =================================================
-                 INFO
-            ================================================== -->
+            <article
+                class="info-card"
+                style="--delay:340ms"
+            >
 
-            <div class="info-grid">
-
-                <article
-                    class="info-card"
-                    style="--delay: 250ms;"
-                >
-
-                    <div class="info-icon">
-                        ▲
-                    </div>
-
-                    <h2 class="info-title">
-                        Acceso anticipado
-                    </h2>
-
-                    <p class="info-text">
-                        Prueba funciones nuevas antes de que
-                        estén disponibles para todos.
-                    </p>
-
-                </article>
-
-
-                <article
-                    class="info-card"
-                    style="--delay: 340ms;"
-                >
-
-                    <div class="info-icon">
-                        ◈
-                    </div>
-
-                    <h2 class="info-title">
-                        Tu opinión importa
-                    </h2>
-
-                    <p class="info-text">
-                        Los comentarios de los testers ayudan
-                        a detectar problemas y mejorar RETS.
-                    </p>
-
-                </article>
-
-
-                <article
-                    class="info-card"
-                    style="--delay: 430ms;"
-                >
-
-                    <div class="info-icon">
-                        +
-                    </div>
-
-                    <h2 class="info-title">
-                        Nuevas versiones
-                    </h2>
-
-                    <p class="info-text">
-                        Durante el programa podrás recibir
-                        nuevas compilaciones y actualizaciones.
-                    </p>
-
-                </article>
-
-            </div>
-
-
-            <!-- =================================================
-                 FIRST BUILD
-            ================================================== -->
-
-            <div class="section-header">
-
-                <div>
-
-                    <div class="section-kicker">
-                        Disponible próximamente
-                    </div>
-
-                    <h2 class="section-title">
-                        RETS First Build
-                    </h2>
-
+                <div class="info-icon">
+                    ◈
                 </div>
 
-                <div class="section-note">
-                    Lanzamiento previsto · día 15<br>
-                    Sujeto a disponibilidad
+                <h2 class="info-title">
+                    Tu opinión importa
+                </h2>
+
+                <p class="info-text">
+                    Los comentarios de los testers ayudan
+                    a detectar problemas y mejorar RETS.
+                </p>
+
+            </article>
+
+
+            <article
+                class="info-card"
+                style="--delay:430ms"
+            >
+
+                <div class="info-icon">
+                    +
                 </div>
 
-            </div>
+                <h2 class="info-title">
+                    Nuevas versiones
+                </h2>
 
+                <p class="info-text">
+                    Durante el programa podrás recibir
+                    nuevas compilaciones y actualizaciones.
+                </p>
 
-            <div class="platform-grid">
-
-                <!-- WINDOWS -->
-
-                <article
-                    class="platform-card"
-                    style="--delay: 540ms;"
-                >
-
-                    <div class="platform-symbol">
-                        W
-                    </div>
-
-                    <h3 class="platform-name">
-                        Windows
-                    </h3>
-
-                    <div class="platform-version">
-                        x64 · Installer
-                    </div>
-
-                    <div class="platform-status">
-                        Próximamente
-                    </div>
-
-                </article>
-
-
-                <!-- ANDROID -->
-
-                <article
-                    class="platform-card"
-                    style="--delay: 620ms;"
-                >
-
-                    <div class="platform-symbol">
-                        A
-                    </div>
-
-                    <h3 class="platform-name">
-                        Android
-                    </h3>
-
-                    <div class="platform-version">
-                        APK
-                    </div>
-
-                    <div class="platform-status">
-                        Próximamente
-                    </div>
-
-                </article>
-
-
-                <!-- MACOS -->
-
-                <article
-                    class="platform-card"
-                    style="--delay: 700ms;"
-                >
-
-                    <div class="platform-symbol">
-                        M
-                    </div>
-
-                    <h3 class="platform-name">
-                        macOS
-                    </h3>
-
-                    <div class="platform-version">
-                        Universal
-                    </div>
-
-                    <div class="platform-status">
-                        Próximamente
-                    </div>
-
-                </article>
-
-
-                <!-- CHROMEOS -->
-
-                <article
-                    class="platform-card"
-                    style="--delay: 780ms;"
-                >
-
-                    <div class="platform-symbol">
-                        C
-                    </div>
-
-                    <h3 class="platform-name">
-                        ChromeOS
-                    </h3>
-
-                    <div class="platform-version">
-                        Compatible build
-                    </div>
-
-                    <div class="platform-status">
-                        Próximamente
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- =================================================
-                 FOOTER
-            ================================================== -->
-
-            <footer class="hub-footer">
-
-                <div>
-                    <strong>Nexaris</strong>
-                    — RETS Tester Program
-                </div>
-
-                <div class="hub-footer-right">
-                    Created for you.
-                </div>
-
-            </footer>
+            </article>
 
         </div>
 
-    </section>
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    Disponible próximamente
+                </div>
+
+                <h2 class="section-title">
+                    RETS First Build
+                </h2>
+
+            </div>
+
+            <div class="section-note">
+
+                Lanzamiento previsto · día 15<br>
+
+                Sujeto a disponibilidad
+
+            </div>
+
+        </div>
 
 
-    <script>
-        /* =========================================================
-           ELEMENTOS
-        ========================================================= */
+        <div class="platform-grid">
 
-        const loginView =
-            document.getElementById("loginView");
+            <article
+                class="platform-card"
+                style="--delay:540ms"
+            >
 
-        const trailerView =
-            document.getElementById("trailerView");
+                <div class="platform-symbol">
+                    W
+                </div>
 
-        const hubView =
-            document.getElementById("hubView");
+                <h3 class="platform-name">
+                    Windows
+                </h3>
 
-        const testerCodeInput =
-            document.getElementById("testerCode");
+                <div class="platform-version">
+                    x64 · Installer
+                </div>
 
-        const accessButton =
-            document.getElementById("accessButton");
+                <div class="platform-status">
+                    Próximamente
+                </div>
 
-        const loginMessage =
-            document.getElementById("loginMessage");
-
-        const trailerLogo =
-            document.getElementById("trailerLogo");
-
-        const headerLogo =
-            document.getElementById("headerLogo");
+            </article>
 
 
-        /* =========================================================
-           FORMATEADOR DEL CÓDIGO
-        ========================================================== */
+            <article
+                class="platform-card"
+                style="--delay:620ms"
+            >
 
-        testerCodeInput.addEventListener(
-            "input",
-            () => {
+                <div class="platform-symbol">
+                    A
+                </div>
 
-                let value =
-                    testerCodeInput.value
-                        .toUpperCase()
-                        .replace(/[^A-Z0-9]/g, "");
+                <h3 class="platform-name">
+                    Android
+                </h3>
 
-                /*
-                   Quitamos RETS para reconstruir
-                   el formato correctamente.
-                */
+                <div class="platform-version">
+                    APK
+                </div>
 
-                if (value.startsWith("RETS")) {
-                    value = value.substring(4);
+                <div class="platform-status">
+                    Próximamente
+                </div>
+
+            </article>
+
+
+            <article
+                class="platform-card"
+                style="--delay:700ms"
+            >
+
+                <div class="platform-symbol">
+                    M
+                </div>
+
+                <h3 class="platform-name">
+                    macOS
+                </h3>
+
+                <div class="platform-version">
+                    Universal
+                </div>
+
+                <div class="platform-status">
+                    Próximamente
+                </div>
+
+            </article>
+
+
+            <article
+                class="platform-card"
+                style="--delay:780ms"
+            >
+
+                <div class="platform-symbol">
+                    C
+                </div>
+
+                <h3 class="platform-name">
+                    ChromeOS
+                </h3>
+
+                <div class="platform-version">
+                    Compatible build
+                </div>
+
+                <div class="platform-status">
+                    Próximamente
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <footer class="hub-footer">
+
+            <div>
+                <strong>Nexaris</strong>
+                — RETS Tester Program
+            </div>
+
+            <div class="hub-footer-right">
+                Created for you.
+            </div>
+
+        </footer>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const loginView =
+    document.getElementById("loginView");
+
+const trailerView =
+    document.getElementById("trailerView");
+
+const hubView =
+    document.getElementById("hubView");
+
+const testerCodeInput =
+    document.getElementById("testerCode");
+
+const accessButton =
+    document.getElementById("accessButton");
+
+const loginMessage =
+    document.getElementById("loginMessage");
+
+const trailerLogo =
+    document.getElementById("trailerLogo");
+
+const headerLogo =
+    document.getElementById("headerLogo");
+
+
+/* =========================================================
+   RETS AUDIO ENGINE
+   Los sonidos se generan directamente desde el código.
+========================================================= */
+
+let audioContext = null;
+let masterGain = null;
+
+
+/* Inicializar audio */
+
+function initAudio(){
+
+    if(audioContext)
+        return;
+
+    const AudioCtx =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+    if(!AudioCtx)
+        return;
+
+    audioContext =
+        new AudioCtx();
+
+    masterGain =
+        audioContext.createGain();
+
+    masterGain.gain.value =
+        0.16;
+
+    masterGain.connect(
+        audioContext.destination
+    );
+}
+
+
+/* Reactivar contexto */
+
+async function resumeAudio(){
+
+    initAudio();
+
+    if(
+        audioContext &&
+        audioContext.state === "suspended"
+    ){
+
+        try{
+            await audioContext.resume();
+        }catch{}
+    }
+}
+
+
+/* Tono */
+
+function makeTone({
+
+    frequency = 440,
+
+    duration = 0.15,
+
+    volume = 0.15,
+
+    type = "sine",
+
+    attack = 0.01,
+
+    release = 0.08
+
+} = {}){
+
+    if(!audioContext || !masterGain)
+        return;
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type =
+        type;
+
+    const now =
+        audioContext.currentTime;
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        now
+    );
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+    gain.gain.linearRampToValueAtTime(
+        volume,
+        now + attack
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + duration + release
+    );
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+
+    oscillator.start(now);
+
+    oscillator.stop(
+        now +
+        duration +
+        release +
+        0.02
+    );
+}
+
+
+/* =========================================================
+   CLICK
+========================================================= */
+
+function soundClick(){
+
+    makeTone({
+        frequency:720,
+        duration:.065,
+        volume:.15,
+        attack:.004,
+        release:.035
+    });
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:1040,
+                duration:.045,
+                volume:.075,
+                attack:.003,
+                release:.025
+            });
+
+        },
+        28
+    );
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function soundError(){
+
+    makeTone({
+        frequency:210,
+        duration:.12,
+        volume:.085,
+        type:"triangle",
+        attack:.006,
+        release:.05
+    });
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:150,
+                duration:.17,
+                volume:.075,
+                type:"triangle",
+                attack:.006,
+                release:.08
+            });
+
+        },
+        90
+    );
+}
+
+
+/* =========================================================
+   ACCESS SUCCESS
+========================================================= */
+
+function soundSuccess(){
+
+    makeTone({
+        frequency:520,
+        duration:.13,
+        volume:.12,
+        attack:.008,
+        release:.05
+    });
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:740,
+                duration:.16,
+                volume:.12,
+                attack:.008,
+                release:.06
+            });
+
+        },
+        85
+    );
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:1040,
+                duration:.24,
+                volume:.105,
+                attack:.01,
+                release:.10
+            });
+
+        },
+        180
+    );
+}
+
+
+/* =========================================================
+   TRAILER START
+========================================================= */
+
+function soundTrailerStart(){
+
+    makeTone({
+        frequency:180,
+        duration:.30,
+        volume:.085,
+        attack:.02,
+        release:.12
+    });
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:280,
+                duration:.34,
+                volume:.065,
+                attack:.03,
+                release:.14
+            });
+
+        },
+        130
+    );
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:420,
+                duration:.25,
+                volume:.045,
+                attack:.02,
+                release:.12
+            });
+
+        },
+        300
+    );
+}
+
+
+/* =========================================================
+   LOGO WHOOSH
+========================================================= */
+
+function soundLogoWhoosh(){
+
+    if(!audioContext || !masterGain)
+        return;
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    const now =
+        audioContext.currentTime;
+
+    oscillator.type =
+        "sine";
+
+    oscillator.frequency.setValueAtTime(
+        180,
+        now
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        720,
+        now + .75
+    );
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+    gain.gain.linearRampToValueAtTime(
+        .075,
+        now + .12
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now + .85
+    );
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+
+    oscillator.start(now);
+
+    oscillator.stop(
+        now + .9
+    );
+}
+
+
+/* =========================================================
+   HUB READY
+========================================================= */
+
+function soundHubReady(){
+
+    makeTone({
+        frequency:420,
+        duration:.11,
+        volume:.075,
+        attack:.006,
+        release:.05
+    });
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:620,
+                duration:.15,
+                volume:.085,
+                attack:.008,
+                release:.06
+            });
+
+        },
+        75
+    );
+
+    setTimeout(
+        () => {
+
+            makeTone({
+                frequency:860,
+                duration:.22,
+                volume:.065,
+                attack:.01,
+                release:.10
+            });
+
+        },
+        155
+    );
+}
+
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+function setLoginMessage(
+    text,
+    type = ""
+){
+
+    loginMessage.textContent =
+        text;
+
+    loginMessage.className =
+        type;
+}
+
+
+/* =========================================================
+   FORMATO DEL CÓDIGO
+========================================================= */
+
+testerCodeInput.addEventListener(
+    "input",
+    () => {
+
+        let value =
+            testerCodeInput.value
+                .toUpperCase()
+                .replace(
+                    /[^A-Z0-9]/g,
+                    ""
+                );
+
+        if(
+            value.startsWith("RETS")
+        ){
+
+            value =
+                value.substring(4);
+        }
+
+        value =
+            value.substring(0,8);
+
+        let formatted =
+            "RETS";
+
+        if(value.length > 0){
+
+            formatted +=
+                "-" +
+                value.substring(0,4);
+        }
+
+        if(value.length > 4){
+
+            formatted +=
+                "-" +
+                value.substring(4,8);
+        }
+
+        testerCodeInput.value =
+            formatted;
+    }
+);
+
+
+/* =========================================================
+   VALIDAR FORMATO
+========================================================= */
+
+function isValidCodeFormat(code){
+
+    return /^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
+        .test(code);
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function verifyTesterCode(){
+
+    await resumeAudio();
+
+    const code =
+        testerCodeInput.value
+            .trim()
+            .toUpperCase();
+
+
+    if(
+        !isValidCodeFormat(code)
+    ){
+
+        soundError();
+
+        setLoginMessage(
+            "Introduce un código válido.",
+            "error"
+        );
+
+        testerCodeInput.focus();
+
+        return;
+    }
+
+
+    soundClick();
+
+    accessButton.disabled =
+        true;
+
+    setLoginMessage(
+        "Verificando acceso..."
+    );
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/tester-login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials:"include",
+
+                    body:JSON.stringify({
+                        code
+                    })
                 }
+            );
 
-                value = value.substring(0, 8);
 
-                let formatted = "RETS";
+        let data = null;
 
-                if (value.length > 0) {
-                    formatted += "-" + value.substring(0, 4);
-                }
+        try{
 
-                if (value.length > 4) {
-                    formatted += "-" + value.substring(4, 8);
-                }
+            data =
+                await response.json();
 
-                testerCodeInput.value =
-                    formatted;
-            }
+        }catch{
+            data = null;
+        }
+
+
+        const approved =
+            response.ok &&
+            (
+                data?.success === true ||
+                data?.valid === true ||
+                data?.access === true ||
+                data?.ok === true
+            );
+
+
+        if(!approved){
+
+            throw new Error(
+                data?.message ||
+                data?.error ||
+                "Código inválido o acceso no autorizado."
+            );
+        }
+
+
+        setLoginMessage(
+            "Acceso confirmado.",
+            "success"
         );
 
 
-        /* =========================================================
-           MENSAJE
-        ========================================================== */
+        soundSuccess();
 
-        function setLoginMessage(
-            text,
-            type = ""
-        ) {
 
-            loginMessage.textContent = text;
+        setTimeout(
+            showTrailer,
+            450
+        );
 
-            loginMessage.className =
-                type;
+
+    }catch(error){
+
+        console.error(
+            "Tester login error:",
+            error
+        );
+
+        soundError();
+
+        setLoginMessage(
+            error.message ||
+            "No se pudo verificar el código.",
+            "error"
+        );
+
+        accessButton.disabled =
+            false;
+    }
+}
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+testerCodeInput.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            verifyTesterCode();
         }
 
+    }
+);
 
-        /* =========================================================
-           VALIDACIÓN BÁSICA
-        ========================================================== */
 
-        function isValidCodeFormat(code) {
+/* =========================================================
+   BOTÓN
+========================================================= */
 
-            return /^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
-                .test(code);
+accessButton.addEventListener(
+    "click",
+    verifyTesterCode
+);
+
+
+/* =========================================================
+   TRAILER
+========================================================= */
+
+function showTrailer(){
+
+    loginView.classList.add(
+        "hidden"
+    );
+
+    trailerView.classList.remove(
+        "hidden"
+    );
+
+    trailerView.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    soundTrailerStart();
+
+
+    trailerLogo.style.animation =
+        "none";
+
+    void trailerLogo.offsetWidth;
+
+    trailerLogo.style.animation =
+        "";
+
+
+    setTimeout(
+        startHubTransition,
+        3300
+    );
+}
+
+
+/* =========================================================
+   TRANSICIÓN LOGO
+========================================================= */
+
+function startHubTransition(){
+
+    hubView.classList.remove(
+        "hidden"
+    );
+
+
+    headerLogo.style.visibility =
+        "hidden";
+
+    headerLogo.style.opacity =
+        "0";
+
+
+    const source =
+        trailerLogo.getBoundingClientRect();
+
+    const target =
+        headerLogo.getBoundingClientRect();
+
+
+    const deltaX =
+        (
+            target.left +
+            target.width / 2
+        ) -
+        (
+            source.left +
+            source.width / 2
+        );
+
+
+    const deltaY =
+        (
+            target.top +
+            target.height / 2
+        ) -
+        (
+            source.top +
+            source.height / 2
+        );
+
+
+    const scaleX =
+        target.width /
+        source.width;
+
+
+    const scaleY =
+        target.height /
+        source.height;
+
+
+    soundLogoWhoosh();
+
+
+    trailerLogo.style.animation =
+        "none";
+
+
+    trailerLogo.animate(
+
+        [
+            {
+                transform:
+                    "translate(0,0) scale(1)",
+
+                opacity:1
+            },
+
+            {
+                transform:
+                    `translate(${deltaX}px,${deltaY}px) ` +
+                    `scale(${scaleX},${scaleY})`,
+
+                opacity:1
+            }
+        ],
+
+        {
+            duration:950,
+
+            easing:
+                "cubic-bezier(.22,1,.36,1)",
+
+            fill:"forwards"
         }
 
+    )
+    .finished
 
-        /* =========================================================
-           LOGIN
-        ========================================================== */
+    .then(
+        finishHubTransition
+    )
 
-        async function verifyTesterCode() {
+    .catch(
+        finishHubTransition
+    );
+}
 
-            const code =
-                testerCodeInput.value
-                    .trim()
-                    .toUpperCase();
 
-            if (!isValidCodeFormat(code)) {
+/* =========================================================
+   FINAL
+========================================================= */
 
-                setLoginMessage(
-                    "Introduce un código válido.",
-                    "error"
-                );
+function finishHubTransition(){
+
+    trailerView.classList.add(
+        "hidden"
+    );
+
+    trailerView.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    trailerLogo.style.visibility =
+        "hidden";
+
+
+    headerLogo.style.visibility =
+        "visible";
+
+    headerLogo.style.opacity =
+        "1";
+
+
+    hubView.classList.remove(
+        "hidden"
+    );
+
+
+    soundHubReady();
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        setTimeout(
+            () => {
 
                 testerCodeInput.focus();
 
-                return;
-            }
-
-            accessButton.disabled = true;
-
-            setLoginMessage(
-                "Verificando acceso..."
-            );
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/tester-login",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            credentials: "include",
-
-                            body: JSON.stringify({
-                                code
-                            })
-                        }
-                    );
-
-                let data = null;
-
-                try {
-                    data =
-                        await response.json();
-                } catch {
-                    data = null;
-                }
-
-
-                /*
-                   Admitimos distintos formatos de respuesta
-                   para que el frontend no dependa de una sola
-                   estructura JSON.
-                */
-
-                const approved =
-                    response.ok &&
-                    (
-                        data?.success === true ||
-                        data?.valid === true ||
-                        data?.access === true ||
-                        data?.ok === true
-                    );
-
-
-                if (!approved) {
-
-                    const serverMessage =
-                        data?.message ||
-                        data?.error ||
-                        "Código inválido o acceso no autorizado.";
-
-                    throw new Error(
-                        serverMessage
-                    );
-                }
-
-
-                setLoginMessage(
-                    "Acceso confirmado.",
-                    "success"
-                );
-
-                /*
-                   Pequeña pausa para que se perciba
-                   la confirmación sin añadir animaciones
-                   continuas.
-                */
-
-                setTimeout(
-                    showTrailer,
-                    350
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "Tester login error:",
-                    error
-                );
-
-                setLoginMessage(
-                    error.message ||
-                    "No se pudo verificar el código.",
-                    "error"
-                );
-
-                accessButton.disabled = false;
-            }
-        }
-
-
-        /* =========================================================
-           ENTER
-        ========================================================== */
-
-        testerCodeInput.addEventListener(
-            "keydown",
-            event => {
-
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    verifyTesterCode();
-                }
-
-            }
+            },
+            150
         );
 
+    }
+);
 
-        accessButton.addEventListener(
-            "click",
-            verifyTesterCode
-        );
-
-
-        /* =========================================================
-           MOSTRAR TRAILER
-        ========================================================== */
-
-        function showTrailer() {
-
-            loginView.classList.add("hidden");
-
-            trailerView.classList.remove("hidden");
-
-            trailerView.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-            /*
-               Reiniciamos las animaciones del trailer
-               por si el usuario vuelve a cargar la vista.
-            */
-
-            trailerLogo.style.animation = "none";
-
-            void trailerLogo.offsetWidth;
-
-            trailerLogo.style.animation = "";
-
-            /*
-               Después de unos segundos inicia
-               el movimiento del logo hacia el header.
-            */
-
-            setTimeout(
-                startHubTransition,
-                3300
-            );
-        }
-
-
-        /* =========================================================
-           TRANSICIÓN DEL LOGO
-        ========================================================== */
-
-        function startHubTransition() {
-
-            /*
-               Preparamos el Hub detrás del trailer.
-            */
-
-            hubView.classList.remove("hidden");
-
-            /*
-               El header permanece invisible hasta
-               que el logo termine su viaje.
-            */
-
-            headerLogo.style.visibility =
-                "hidden";
-
-            headerLogo.style.opacity =
-                "0";
-
-            /*
-               Calculamos las posiciones reales.
-            */
-
-            const sourceRect =
-                trailerLogo.getBoundingClientRect();
-
-            const targetRect =
-                headerLogo.getBoundingClientRect();
-
-
-            /*
-               Punto inicial.
-            */
-
-            const startX =
-                sourceRect.left;
-
-            const startY =
-                sourceRect.top;
-
-            const startWidth =
-                sourceRect.width;
-
-            const startHeight =
-                sourceRect.height;
-
-
-            /*
-               Punto final.
-            */
-
-            const endX =
-                targetRect.left;
-
-            const endY =
-                targetRect.top;
-
-            const endWidth =
-                targetRect.width;
-
-            const endHeight =
-                targetRect.height;
-
-
-            /*
-               Convertimos el logo del trailer
-               en un elemento independiente durante
-               la animación.
-            */
-
-            trailerLogo.classList.add(
-                "is-moving"
-            );
-
-
-            /*
-               Web Animations API:
-               una sola animación, sin loop.
-            */
-
-            const animation =
-                trailerLogo.animate(
-
-                    [
-                        {
-                            left: "0px",
-                            top: "0px",
-                            width:
-                                startWidth + "px",
-                            height:
-                                startHeight + "px",
-                            transform:
-                                "translate(0, 0)"
-                        },
-
-                        {
-                            left:
-                                (endX - startX) + "px",
-
-                            top:
-                                (endY - startY) + "px",
-
-                            width:
-                                endWidth + "px",
-
-                            height:
-                                endHeight + "px",
-
-                            transform:
-                                "translate(0, 0)"
-                        }
-                    ],
-
-                    {
-                        duration: 950,
-
-                        easing:
-                            "cubic-bezier(0.22, 1, 0.36, 1)",
-
-                        fill: "forwards"
-                    }
-                );
-
-
-            animation.finished
-                .then(
-                    finishHubTransition
-                )
-                .catch(
-                    finishHubTransition
-                );
-        }
-
-
-        /* =========================================================
-           FINAL DE TRANSICIÓN
-        ========================================================== */
-
-        function finishHubTransition() {
-
-            /*
-               Ocultamos el trailer.
-            */
-
-            trailerView.classList.add(
-                "hidden"
-            );
-
-            trailerView.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-
-            /*
-               Mostramos el logo real del header.
-            */
-
-            headerLogo.style.visibility =
-                "visible";
-
-            headerLogo.style.opacity =
-                "1";
-
-
-            /*
-               Ya no necesitamos mantener
-               el logo del trailer.
-            */
-
-            trailerLogo.style.visibility =
-                "hidden";
-
-
-            /*
-               El Hub queda totalmente visible.
-            */
-
-            hubView.classList.remove(
-                "hidden"
-            );
-        }
-
-
-        /* =========================================================
-           FOCUS AUTOMÁTICO
-        ========================================================== */
-
-        window.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                setTimeout(
-                    () => {
-                        testerCodeInput.focus();
-                    },
-                    150
-                );
-
-            }
-        );
-    </script>
+</script>
 
 </body>
 </html>
