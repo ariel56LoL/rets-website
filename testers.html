@@ -29,14 +29,16 @@
             --dim: #607782;
 
             --border:
-                rgba(57, 230, 255, 0.15);
+                rgba(57,230,255,0.15);
 
             --border-strong:
-                rgba(57, 230, 255, 0.3);
+                rgba(57,230,255,0.30);
 
-            --green: #72e1ae;
+            --green:
+                #72e1ae;
 
-            --radius: 22px;
+            --red:
+                #ff9ca8;
         }
 
 
@@ -73,7 +75,7 @@
                 ),
                 radial-gradient(
                     circle at 80% 90%,
-                    rgba(70,120,255,0.055),
+                    rgba(60,120,255,0.05),
                     transparent 32%
                 ),
                 linear-gradient(
@@ -90,6 +92,7 @@
             content: "";
 
             position: fixed;
+
             inset: 0;
 
             pointer-events: none;
@@ -118,9 +121,38 @@
         }
 
 
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            right: -160px;
+            bottom: -160px;
+
+            border:
+                1px solid
+                rgba(57,230,255,0.045);
+
+            transform:
+                rotate(45deg);
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
         button,
         input {
             font: inherit;
+        }
+
+
+        button {
+            cursor: pointer;
         }
 
 
@@ -130,9 +162,9 @@
         }
 
 
-        /* ==================================================
+        /* =====================================================
            LOGIN
-        ================================================== */
+        ===================================================== */
 
         #loginView {
             min-height: 100vh;
@@ -147,25 +179,27 @@
 
 
         .login-card {
-            width:
-                min(560px, 100%);
-
-            padding: 38px;
-
             position: relative;
 
-            border:
-                1px solid var(--border);
+            width:
+                min(570px, 100%);
 
-            border-radius:
-                26px;
+            padding: 40px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 27px;
 
             background:
-                rgba(8,16,25,0.88);
+                rgba(7,15,24,0.90);
 
             box-shadow:
                 0 35px 110px
-                rgba(0,0,0,0.4);
+                rgba(0,0,0,0.42);
+
+            overflow: hidden;
         }
 
 
@@ -174,19 +208,21 @@
 
             position: absolute;
 
-            top: 15px;
-            left: 15px;
+            top: 16px;
+            left: 16px;
 
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
 
             border-top:
-                1px solid var(--cyan);
+                1px solid
+                var(--cyan);
 
             border-left:
-                1px solid var(--cyan);
+                1px solid
+                var(--cyan);
 
-            opacity: 0.48;
+            opacity: 0.45;
         }
 
 
@@ -195,19 +231,41 @@
 
             position: absolute;
 
-            right: 15px;
-            bottom: 15px;
+            right: 16px;
+            bottom: 16px;
 
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
 
             border-right:
-                1px solid var(--cyan);
+                1px solid
+                var(--cyan);
 
             border-bottom:
-                1px solid var(--cyan);
+                1px solid
+                var(--cyan);
 
             opacity: 0.25;
+        }
+
+
+        .login-decoration {
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            right: -65px;
+            top: -70px;
+
+            border:
+                1px solid
+                rgba(57,230,255,0.05);
+
+            transform:
+                rotate(45deg);
+
+            pointer-events: none;
         }
 
 
@@ -222,8 +280,8 @@
 
 
         .brand img {
-            width: 35px;
-            height: 35px;
+            width: 36px;
+            height: 36px;
 
             object-fit: contain;
 
@@ -245,32 +303,34 @@
 
 
         .login-badge {
-            margin-top: 53px;
-
             display: inline-flex;
 
             align-items: center;
 
             gap: 8px;
 
+            margin-top: 54px;
+
             padding:
                 7px 11px;
 
             border:
-                1px solid var(--border);
+                1px solid
+                var(--border);
 
             border-radius: 999px;
 
-            color: var(--cyan-soft);
-
             background:
                 rgba(57,230,255,0.035);
+
+            color:
+                var(--cyan-soft);
 
             font-size: 10px;
 
             font-weight: 800;
 
-            letter-spacing: 0.11em;
+            letter-spacing: 0.10em;
 
             text-transform: uppercase;
         }
@@ -282,11 +342,12 @@
 
             border-radius: 50%;
 
-            background: var(--cyan);
+            background:
+                var(--cyan);
 
             box-shadow:
                 0 0 11px
-                rgba(57,230,255,0.75);
+                rgba(57,230,255,0.72);
         }
 
 
@@ -294,11 +355,11 @@
             margin-top: 20px;
 
             font-size:
-                clamp(38px, 8vw, 58px);
+                clamp(40px, 8vw, 60px);
 
-            line-height: 0.98;
+            line-height: 0.96;
 
-            letter-spacing: -0.055em;
+            letter-spacing: -0.06em;
         }
 
 
@@ -318,7 +379,9 @@
 
 
         .login-description {
-            margin-top: 14px;
+            max-width: 520px;
+
+            margin-top: 15px;
 
             color: var(--muted);
 
@@ -329,7 +392,7 @@
 
 
         .field {
-            margin-top: 27px;
+            margin-top: 28px;
         }
 
 
@@ -344,7 +407,7 @@
 
             font-weight: 800;
 
-            letter-spacing: 0.1em;
+            letter-spacing: 0.10em;
 
             text-transform: uppercase;
         }
@@ -352,10 +415,10 @@
 
         #testerCode {
             width: 100%;
-            height: 56px;
+            height: 57px;
 
             padding:
-                0 15px;
+                0 16px;
 
             border:
                 1px solid
@@ -366,9 +429,10 @@
             outline: none;
 
             background:
-                rgba(0,0,0,0.23);
+                rgba(0,0,0,0.24);
 
-            color: var(--text);
+            color:
+                var(--text);
 
             text-align: center;
 
@@ -379,14 +443,14 @@
             letter-spacing: 0.11em;
 
             transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
+                border-color .22s ease,
+                box-shadow .22s ease,
+                background .22s ease;
         }
 
 
         #testerCode::placeholder {
-            color: #526b76;
+            color: #536d77;
 
             font-weight: 500;
         }
@@ -428,12 +492,10 @@
 
             font-weight: 850;
 
-            cursor: pointer;
-
             transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                opacity 0.2s ease;
+                transform .2s ease,
+                box-shadow .2s ease,
+                opacity .2s ease;
         }
 
 
@@ -442,7 +504,7 @@
                 translateY(-2px);
 
             box-shadow:
-                0 15px 35px
+                0 15px 36px
                 rgba(57,230,255,0.14);
         }
 
@@ -470,7 +532,7 @@
 
             font-size: 12px;
 
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
 
@@ -480,7 +542,7 @@
 
 
         #status.error {
-            color: #ffafb7;
+            color: var(--red);
 
             background:
                 rgba(255,70,95,0.045);
@@ -504,7 +566,7 @@
 
 
         .login-note {
-            margin-top: 15px;
+            margin-top: 16px;
 
             color: var(--dim);
 
@@ -516,9 +578,9 @@
         }
 
 
-        /* ==================================================
-           ENTRY TRAILER
-        ================================================== */
+        /* =====================================================
+           TRAILER
+        ===================================================== */
 
         #trailerView {
             position: fixed;
@@ -529,18 +591,36 @@
 
             display: none;
 
-            align-items: center;
-            justify-content: center;
-
             background:
-                #020407;
+                transparent;
 
             overflow: hidden;
+
+            pointer-events: none;
         }
 
 
         #trailerView.show {
-            display: flex;
+            display: block;
+        }
+
+
+        .trailer-background {
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(57,230,255,0.025),
+                    transparent 34%
+                ),
+                #020407;
+
+            opacity: 1;
+
+            z-index: 0;
         }
 
 
@@ -549,16 +629,15 @@
 
             inset: 0;
 
-            pointer-events: none;
+            z-index: 2;
         }
 
 
         .trailer-line {
             position: absolute;
 
-            height: 1px;
-
             width: 0;
+            height: 1px;
 
             background:
                 linear-gradient(
@@ -573,32 +652,29 @@
 
 
         .trailer-line.one {
-            top: 26%;
+            top: 27%;
             left: 0;
         }
 
 
         .trailer-line.two {
-            top: 73%;
             right: 0;
+            top: 73%;
         }
 
 
         .trailer-triangle {
             position: absolute;
 
-            width: 310px;
-            height: 270px;
+            top: 50%;
+            left: 50%;
 
-            opacity: 0;
-
-            transform:
-                scale(0.72)
-                rotate(0deg);
+            width: 320px;
+            height: 280px;
 
             border:
                 1px solid
-                rgba(57,230,255,0.22);
+                rgba(57,230,255,0.18);
 
             clip-path:
                 polygon(
@@ -606,11 +682,23 @@
                     100% 100%,
                     0% 100%
                 );
+
+            transform:
+                translate(-50%, -50%)
+                scale(.72)
+                rotate(0deg);
+
+            opacity: 0;
+
+            z-index: 1;
         }
 
 
         .trailer-logo {
-            position: relative;
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
 
             width: 115px;
             height: 115px;
@@ -620,15 +708,24 @@
             opacity: 0;
 
             transform:
-                scale(0.72);
+                translate(-50%, -50%)
+                scale(.72);
+
+            z-index: 10;
 
             filter:
                 drop-shadow(
-                    0 0 24px
-                    rgba(57,230,255,0.2)
+                    0 0 28px
+                    rgba(57,230,255,0.22)
                 );
 
-            z-index: 2;
+            will-change:
+                left,
+                top,
+                width,
+                height,
+                transform,
+                opacity;
         }
 
 
@@ -636,6 +733,8 @@
             position: absolute;
 
             inset: 0;
+
+            z-index: 5;
 
             display: flex;
 
@@ -646,59 +745,50 @@
 
             text-align: center;
 
-            z-index: 3;
-
             pointer-events: none;
         }
 
 
         .trailer-welcome {
-            margin-top: 23px;
+            margin-top: 150px;
+
+            color: #f2fcff;
+
+            font-size:
+                clamp(28px, 6vw, 50px);
+
+            font-weight: 850;
+
+            letter-spacing:
+                .075em;
 
             opacity: 0;
 
             transform:
                 translateY(18px);
-
-            color: #f2fcff;
-
-            font-size:
-                clamp(27px, 6vw, 48px);
-
-            font-weight: 800;
-
-            letter-spacing:
-                0.08em;
         }
 
 
         .trailer-subtitle {
             margin-top: 13px;
 
-            opacity: 0;
-
-            transform:
-                translateY(14px);
-
             color: #88a2ad;
 
             font-size:
                 clamp(12px, 2vw, 15px);
 
-            letter-spacing:
-                0.04em;
+            opacity: 0;
+
+            transform:
+                translateY(14px);
         }
 
 
         .trailer-version {
             margin-top: 23px;
 
-            opacity: 0;
-
-            transform:
-                translateY(12px);
-
-            color: var(--cyan-soft);
+            color:
+                var(--cyan-soft);
 
             font-family:
                 ui-monospace,
@@ -709,18 +799,68 @@
 
             font-size: 13px;
 
-            letter-spacing: 0.12em;
+            letter-spacing: .12em;
+
+            opacity: 0;
+
+            transform:
+                translateY(12px);
         }
 
 
-        .trailer-scan {
+        .trailer-status {
+            position: absolute;
+
+            left: 50%;
+            bottom: 50px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            transform:
+                translateX(-50%)
+                translateY(10px);
+
+            color: #617b85;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .13em;
+
+            text-transform: uppercase;
+
+            opacity: 0;
+        }
+
+
+        .trailer-status-dot {
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background:
+                var(--cyan);
+
+            box-shadow:
+                0 0 10px
+                rgba(57,230,255,0.8);
+        }
+
+
+        .trailer-sweep {
             position: absolute;
 
             top: 0;
             left: 0;
 
             width: 100%;
-            height: 2px;
+            height: 1px;
 
             background:
                 linear-gradient(
@@ -730,31 +870,24 @@
                     transparent
                 );
 
-            transform:
-                translateY(-10px);
-
-            opacity: 0;
-        }
-
-
-        .trailer-close {
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                #020407;
+            box-shadow:
+                0 0 16px
+                rgba(57,230,255,0.5);
 
             opacity: 0;
 
-            pointer-events: none;
+            z-index: 15;
         }
 
+
+        /* =====================================================
+           TRAILER ANIMATIONS
+        ===================================================== */
 
         #trailerView.play .trailer-line.one {
             animation:
                 trailerLineLeft
-                1.15s
+                1.05s
                 ease-out
                 forwards;
         }
@@ -763,17 +896,17 @@
         #trailerView.play .trailer-line.two {
             animation:
                 trailerLineRight
-                1.15s
+                1.05s
                 ease-out
-                0.2s
+                .15s
                 forwards;
         }
 
 
         #trailerView.play .trailer-triangle {
             animation:
-                trailerTriangle
-                1.3s
+                trailerTriangleIn
+                1.2s
                 cubic-bezier(.2,.8,.2,1)
                 forwards;
         }
@@ -781,58 +914,94 @@
 
         #trailerView.play .trailer-logo {
             animation:
-                trailerLogo
-                1.25s
+                trailerLogoIn
+                1.05s
                 cubic-bezier(.2,.8,.2,1)
-                0.65s
+                .32s
                 forwards;
         }
 
 
         #trailerView.play .trailer-welcome {
             animation:
-                trailerText
-                0.9s
+                trailerTextIn
+                .85s
                 ease-out
-                1.55s
+                1.25s
                 forwards;
         }
 
 
         #trailerView.play .trailer-subtitle {
             animation:
-                trailerText
-                0.85s
+                trailerTextIn
+                .8s
                 ease-out
-                1.8s
+                1.48s
                 forwards;
         }
 
 
         #trailerView.play .trailer-version {
             animation:
-                trailerText
-                0.8s
+                trailerTextIn
+                .75s
                 ease-out
-                2.2s
+                1.78s
                 forwards;
         }
 
 
-        #trailerView.play .trailer-scan {
+        #trailerView.play .trailer-status {
             animation:
-                trailerScan
-                1.1s
+                trailerStatusIn
+                .65s
+                ease-out
+                2.12s
+                forwards;
+        }
+
+
+        #trailerView.transitioning .trailer-logo {
+            animation:
+                trailerLogoToHeader
+                1.08s
+                cubic-bezier(.72,0,.18,1)
+                forwards;
+        }
+
+
+        #trailerView.transitioning .trailer-content {
+            animation:
+                trailerContentOut
+                .56s
+                ease-in
+                forwards;
+        }
+
+
+        #trailerView.transitioning .trailer-triangle {
+            animation:
+                trailerTriangleOut
+                .8s
+                ease-in
+                forwards;
+        }
+
+
+        #trailerView.transitioning .trailer-sweep {
+            animation:
+                trailerSweep
+                1s
                 ease-in-out
-                2.45s
                 forwards;
         }
 
 
-        #trailerView.finish .trailer-close {
+        #trailerView.transitioning .trailer-background {
             animation:
-                trailerFinish
-                0.75s
+                trailerBackgroundOut
+                1s
                 ease-in
                 forwards;
         }
@@ -845,15 +1014,14 @@
                 opacity: 0;
             }
 
-            30% {
-                opacity: 0.7;
+            35% {
+                opacity: .7;
             }
 
             100% {
                 width: 100%;
-                opacity: 0.25;
+                opacity: .13;
             }
-
         }
 
 
@@ -864,131 +1032,252 @@
                 opacity: 0;
             }
 
-            30% {
-                opacity: 0.7;
+            35% {
+                opacity: .7;
             }
 
             100% {
                 width: 100%;
-                opacity: 0.18;
+                opacity: .10;
             }
-
         }
 
 
-        @keyframes trailerTriangle {
+        @keyframes trailerTriangleIn {
 
             0% {
                 opacity: 0;
+
                 transform:
-                    scale(0.72)
+                    translate(-50%, -50%)
+                    scale(.72)
                     rotate(0deg);
             }
 
-            35% {
-                opacity: 0.9;
+            40% {
+                opacity: .8;
             }
 
             100% {
-                opacity: 0.34;
+                opacity: .27;
+
                 transform:
+                    translate(-50%, -50%)
                     scale(1)
                     rotate(4deg);
             }
-
         }
 
 
-        @keyframes trailerLogo {
+        @keyframes trailerLogoIn {
 
             0% {
                 opacity: 0;
-                transform: scale(0.72);
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(.72);
             }
 
-            65% {
+            55% {
                 opacity: 1;
             }
 
             100% {
                 opacity: 1;
-                transform: scale(1);
-            }
 
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+            }
         }
 
 
-        @keyframes trailerText {
+        @keyframes trailerTextIn {
 
             from {
                 opacity: 0;
+
                 transform:
                     translateY(18px);
             }
 
             to {
                 opacity: 1;
+
                 transform:
                     translateY(0);
             }
-
         }
 
 
-        @keyframes trailerScan {
-
-            0% {
-                opacity: 0;
-                transform:
-                    translateY(-10px);
-            }
-
-            20% {
-                opacity: 0.8;
-            }
-
-            100% {
-                opacity: 0;
-                transform:
-                    translateY(100vh);
-            }
-
-        }
-
-
-        @keyframes trailerFinish {
+        @keyframes trailerStatusIn {
 
             from {
                 opacity: 0;
+
+                transform:
+                    translateX(-50%)
+                    translateY(10px);
             }
 
             to {
                 opacity: 1;
-            }
 
+                transform:
+                    translateX(-50%)
+                    translateY(0);
+            }
         }
 
 
-        /* ==================================================
+        /*
+         * ESTA ES LA TRANSICIÓN PRINCIPAL.
+         *
+         * El mismo logo pasa del centro
+         * hasta la posición del logo del header.
+         */
+
+        @keyframes trailerLogoToHeader {
+
+            0% {
+                left: 50%;
+                top: 50%;
+
+                width: 115px;
+                height: 115px;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+
+                opacity: 1;
+            }
+
+            45% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 32px;
+                top: 23px;
+
+                width: 31px;
+                height: 31px;
+
+                transform:
+                    translate(0, 0)
+                    scale(1);
+
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes trailerContentOut {
+
+            from {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+            to {
+                opacity: 0;
+
+                transform:
+                    translateY(-12px);
+            }
+        }
+
+
+        @keyframes trailerTriangleOut {
+
+            from {
+                opacity: .27;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1)
+                    rotate(4deg);
+            }
+
+            to {
+                opacity: 0;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.12)
+                    rotate(8deg);
+            }
+        }
+
+
+        @keyframes trailerSweep {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translateY(-5px);
+            }
+
+            12% {
+                opacity: .78;
+            }
+
+            100% {
+                opacity: 0;
+
+                transform:
+                    translateY(100vh);
+            }
+        }
+
+
+        @keyframes trailerBackgroundOut {
+
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+
+        /* =====================================================
            HUB
-        ================================================== */
+        ===================================================== */
 
         #hubView {
             display: none;
 
             min-height: 100vh;
+
+            opacity: 0;
+
+            transition:
+                opacity .7s ease;
         }
 
 
         #hubView.show {
             display: block;
+
+            opacity: 1;
         }
 
 
         .hub-header {
+            position: relative;
+
             min-height: 78px;
 
             display: flex;
+
             align-items: center;
             justify-content: space-between;
 
@@ -1002,15 +1291,21 @@
                 rgba(255,255,255,0.045);
 
             background:
-                rgba(4,8,13,0.72);
+                rgba(4,8,13,0.75);
 
             backdrop-filter:
                 blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            z-index: 2;
         }
 
 
         .hub-brand {
             display: flex;
+
             align-items: center;
 
             gap: 11px;
@@ -1022,24 +1317,30 @@
             height: 31px;
 
             object-fit: contain;
+
+            opacity: 0;
+
+            transition:
+                opacity .3s ease;
         }
 
 
         .hub-brand strong {
             font-size: 13px;
 
-            letter-spacing: 0.11em;
+            letter-spacing: .11em;
         }
 
 
         .hub-label {
-            color: var(--cyan-soft);
+            color:
+                var(--cyan-soft);
 
             font-size: 10px;
 
             font-weight: 800;
 
-            letter-spacing: 0.13em;
+            letter-spacing: .13em;
 
             text-transform: uppercase;
         }
@@ -1049,58 +1350,22 @@
             width:
                 min(1100px, calc(100% - 36px));
 
-            margin: 0 auto;
+            margin:
+                0 auto;
 
             padding:
                 65px 0 80px;
         }
 
 
+        /* =====================================================
+           HUB HERO
+        ===================================================== */
+
         .hub-hero {
             text-align: center;
 
-            margin-bottom: 50px;
-        }
-
-
-        .hub-hero h1 {
-            margin-top: 18px;
-
-            font-size:
-                clamp(37px, 7vw, 65px);
-
-            line-height: 0.98;
-
-            letter-spacing: -0.06em;
-        }
-
-
-        .hub-hero h1 span {
-            background:
-                linear-gradient(
-                    120deg,
-                    #ffffff,
-                    var(--cyan-soft)
-                );
-
-            -webkit-background-clip: text;
-            background-clip: text;
-
-            color: transparent;
-        }
-
-
-        .hub-hero p {
-            max-width: 700px;
-
-            margin:
-                17px auto 0;
-
-            color: var(--muted);
-
-            font-size: 14px;
-
-            line-height: 1.7;
+            margin-bottom: 52px;
         }
 
 
@@ -1116,20 +1381,21 @@
 
             border:
                 1px solid
-                rgba(113,226,174,0.13);
+                rgba(113,226,174,0.14);
 
             border-radius: 999px;
 
             background:
                 rgba(113,226,174,0.03);
 
-            color: #8edcb4;
+            color:
+                #8edcb4;
 
             font-size: 9px;
 
             font-weight: 800;
 
-            letter-spacing: 0.09em;
+            letter-spacing: .09em;
 
             text-transform: uppercase;
         }
@@ -1152,23 +1418,66 @@
         }
 
 
-        /* ==================================================
-           DOWNLOADS
-        ================================================== */
+        .hub-hero h1 {
+            margin-top: 18px;
 
-        .section-title {
-            margin-bottom: 20px;
+            font-size:
+                clamp(38px, 7vw, 66px);
+
+            line-height: .98;
+
+            letter-spacing: -.06em;
         }
 
 
-        .section-title .eyebrow {
-            color: var(--cyan-soft);
+        .hub-hero h1 span {
+            background:
+                linear-gradient(
+                    120deg,
+                    #ffffff,
+                    var(--cyan-soft)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .hub-hero p {
+            max-width: 720px;
+
+            margin:
+                17px auto 0;
+
+            color:
+                var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+            margin-bottom: 21px;
+        }
+
+
+        .section-eyebrow {
+            color:
+                var(--cyan-soft);
 
             font-size: 10px;
 
             font-weight: 800;
 
-            letter-spacing: 0.13em;
+            letter-spacing: .13em;
 
             text-transform: uppercase;
         }
@@ -1177,16 +1486,19 @@
         .section-title h2 {
             margin-top: 8px;
 
-            font-size: 25px;
+            font-size: 26px;
 
-            letter-spacing: -0.035em;
+            letter-spacing: -.035em;
         }
 
 
         .section-title p {
             margin-top: 6px;
 
-            color: var(--muted);
+            max-width: 650px;
+
+            color:
+                var(--muted);
 
             font-size: 12px;
 
@@ -1208,18 +1520,23 @@
 
             border-radius: 999px;
 
-            color: #78919b;
+            color:
+                #78919b;
 
             background:
                 rgba(57,230,255,0.025);
 
             font-size: 9px;
 
-            letter-spacing: 0.07em;
+            letter-spacing: .07em;
 
             text-transform: uppercase;
         }
 
+
+        /* =====================================================
+           PLATFORMS
+        ===================================================== */
 
         .platform-grid {
             display: grid;
@@ -1234,7 +1551,7 @@
         .platform-card {
             position: relative;
 
-            min-height: 190px;
+            min-height: 195px;
 
             padding: 23px;
 
@@ -1246,20 +1563,21 @@
                 1px solid
                 rgba(255,255,255,0.055);
 
-            border-radius: 19px;
+            border-radius: 20px;
 
             background:
                 linear-gradient(
                     145deg,
-                    rgba(10,19,29,0.9),
-                    rgba(6,12,19,0.84)
+                    rgba(10,19,29,0.92),
+                    rgba(6,12,19,0.86)
                 );
 
             overflow: hidden;
 
             transition:
-                transform 0.25s ease,
-                border-color 0.25s ease;
+                transform .25s ease,
+                border-color .25s ease,
+                background .25s ease;
         }
 
 
@@ -1269,6 +1587,13 @@
 
             border-color:
                 var(--border-strong);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(11,21,32,0.95),
+                    rgba(7,14,22,0.90)
+                );
         }
 
 
@@ -1277,15 +1602,15 @@
 
             position: absolute;
 
-            width: 95px;
-            height: 95px;
+            width: 100px;
+            height: 100px;
 
-            right: -35px;
-            bottom: -35px;
+            right: -36px;
+            bottom: -36px;
 
             border:
                 1px solid
-                rgba(57,230,255,0.06);
+                rgba(57,230,255,0.055);
 
             transform:
                 rotate(45deg);
@@ -1296,9 +1621,11 @@
             width: 49px;
             height: 49px;
 
-            flex: 0 0 49px;
+            flex:
+                0 0 49px;
 
             display: grid;
+
             place-items: center;
 
             border:
@@ -1310,7 +1637,8 @@
             background:
                 rgba(57,230,255,0.025);
 
-            color: var(--cyan);
+            color:
+                var(--cyan);
 
             font-size: 20px;
 
@@ -1335,13 +1663,14 @@
 
             margin-top: 5px;
 
-            color: #647c87;
+            color:
+                #667f89;
 
             font-size: 9px;
 
             font-weight: 800;
 
-            letter-spacing: 0.1em;
+            letter-spacing: .10em;
 
             text-transform: uppercase;
         }
@@ -1350,7 +1679,8 @@
         .platform-content p {
             margin-top: 9px;
 
-            color: var(--muted);
+            color:
+                var(--muted);
 
             font-size: 11px;
 
@@ -1380,19 +1710,21 @@
             background:
                 rgba(255,255,255,0.014);
 
-            color: #627781;
+            color:
+                #627781;
 
             font-size: 10px;
 
             font-weight: 800;
 
-            cursor: not-allowed;
+            cursor:
+                not-allowed;
         }
 
 
-        /* ==================================================
-           TESTER INFO
-        ================================================== */
+        /* =====================================================
+           INFORMATION CARDS
+        ===================================================== */
 
         .info-grid {
             display: grid;
@@ -1407,7 +1739,7 @@
 
 
         .info-card {
-            padding: 19px;
+            padding: 20px;
 
             border:
                 1px solid
@@ -1417,6 +1749,19 @@
 
             background:
                 rgba(255,255,255,0.014);
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease;
+        }
+
+
+        .info-card:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--border);
         }
 
 
@@ -1425,6 +1770,7 @@
             height: 36px;
 
             display: grid;
+
             place-items: center;
 
             border:
@@ -1433,7 +1779,11 @@
 
             border-radius: 10px;
 
-            color: var(--cyan);
+            color:
+                var(--cyan);
+
+            background:
+                rgba(57,230,255,0.025);
         }
 
 
@@ -1447,7 +1797,8 @@
         .info-card p {
             margin-top: 6px;
 
-            color: var(--muted);
+            color:
+                var(--muted);
 
             font-size: 11px;
 
@@ -1455,9 +1806,9 @@
         }
 
 
-        /* ==================================================
+        /* =====================================================
            FOOTER
-        ================================================== */
+        ===================================================== */
 
         .hub-footer {
             padding:
@@ -1465,26 +1816,34 @@
 
             text-align: center;
 
-            color: #5c727d;
+            color:
+                #5c727d;
 
             font-size: 10px;
         }
 
 
         .hub-footer strong {
-            color: #8299a4;
+            color:
+                #8299a4;
         }
 
 
-        /* ==================================================
+        .hub-footer em {
+            color:
+                #677e88;
+        }
+
+
+        /* =====================================================
            RESPONSIVE
-        ================================================== */
+        ===================================================== */
 
         @media (max-width: 780px) {
 
             .login-card {
                 padding:
-                    28px 21px;
+                    30px 22px;
             }
 
 
@@ -1496,20 +1855,22 @@
 
             .hub-main {
                 width:
-                    calc(100% - 24px);
+                    calc(100% - 26px);
 
                 padding-top:
-                    45px;
+                    46px;
             }
 
 
             .platform-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
 
             .info-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
         }
@@ -1517,17 +1878,20 @@
 
         @media (prefers-reduced-motion: reduce) {
 
-            * {
-                scroll-behavior:
-                    auto !important;
-            }
-
-            #trailerView.play * {
+            *,
+            *::before,
+            *::after {
                 animation-duration:
-                    0.01ms !important;
+                    .01ms !important;
 
                 animation-iteration-count:
                     1 !important;
+
+                transition-duration:
+                    .01ms !important;
+
+                scroll-behavior:
+                    auto !important;
             }
 
         }
@@ -1539,17 +1903,20 @@
 <body>
 
 
-<!-- ======================================================
-     LOGIN VIEW
-======================================================= -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
 
 <section id="loginView">
 
     <div class="login-card">
 
+        <div class="login-decoration"></div>
+
+
         <a
-            class="brand"
             href="/"
+            class="brand"
         >
 
             <img
@@ -1583,9 +1950,11 @@
 
 
         <p class="login-description">
-            Esta es la zona de acceso anticipado de RETS.
-            Introduce tu código personal de tester para
-            continuar.
+
+            Estás entrando al área de acceso anticipado
+            de RETS. Introduce tu código personal de tester
+            para continuar.
+
         </p>
 
 
@@ -1633,8 +2002,10 @@
 
 
             <p class="login-note">
-                Tu código es personal. No lo compartas
-                con otras personas.
+
+                Tu código es personal.
+                No lo compartas con otras personas.
+
             </p>
 
         </div>
@@ -1645,14 +2016,17 @@
 
 
 
-<!-- ======================================================
-     TRAILER VIEW
-======================================================= -->
+<!-- =========================================================
+     TRAILER
+========================================================= -->
 
 <section
     id="trailerView"
     aria-hidden="true"
 >
+
+    <div class="trailer-background"></div>
+
 
     <div class="trailer-lines">
 
@@ -1666,17 +2040,16 @@
     <div class="trailer-triangle"></div>
 
 
-    <div class="trailer-scan"></div>
+    <!-- MISMO LOGO QUE LUEGO LLEGA AL HEADER -->
+
+    <img
+        class="trailer-logo"
+        src="image.png"
+        alt=""
+    >
 
 
     <div class="trailer-content">
-
-        <img
-            class="trailer-logo"
-            src="image.png"
-            alt=""
-        >
-
 
         <div class="trailer-welcome">
             BIENVENIDO, TESTER
@@ -1695,24 +2068,36 @@
     </div>
 
 
-    <div class="trailer-close"></div>
+    <div class="trailer-status">
+
+        <span class="trailer-status-dot"></span>
+
+        ACCESO CONFIRMADO
+
+    </div>
+
+
+    <div class="trailer-sweep"></div>
 
 </section>
 
 
 
-<!-- ======================================================
+<!-- =========================================================
      TESTER HUB
-======================================================= -->
+========================================================= -->
 
 <section id="hubView">
+
+
+    <!-- HEADER -->
 
     <header class="hub-header">
 
 
         <a
-            class="hub-brand"
             href="/"
+            class="hub-brand"
         >
 
             <img
@@ -1733,6 +2118,9 @@
 
     </header>
 
+
+
+    <!-- MAIN -->
 
     <main class="hub-main">
 
@@ -1756,23 +2144,27 @@
 
 
             <p>
+
                 Has entrado en el área privada del
                 programa de testers. Aquí encontrarás
                 las primeras versiones de RETS, novedades
                 y recursos para tus pruebas.
+
             </p>
 
         </section>
 
 
 
-        <!-- DOWNLOADS -->
+        <!-- =================================================
+             FIRST BUILD
+        ================================================== -->
 
         <section>
 
             <div class="section-title">
 
-                <div class="eyebrow">
+                <div class="section-eyebrow">
                     RETS FIRST BUILD
                 </div>
 
@@ -1783,17 +2175,24 @@
 
 
                 <p>
+
                     La primera versión de RETS aparecerá
                     aquí cuando esté lista para pruebas.
+
                 </p>
 
 
                 <span class="release-note">
+
                     Lanzamiento previsto · día 15 · sujeto a disponibilidad
+
                 </span>
 
             </div>
 
+
+
+            <!-- PLATFORMS -->
 
             <div class="platform-grid">
 
@@ -1820,15 +2219,18 @@
 
 
                         <p>
-                            La primera versión de RETS
-                            para Windows estará disponible
-                            cuando termine el desarrollo
-                            y las pruebas necesarias.
+
+                            La primera versión de RETS para
+                            Windows estará disponible cuando
+                            termine el desarrollo y las pruebas.
+
                         </p>
 
 
                         <span class="download-disabled">
+
                             Descargar próximamente
+
                         </span>
 
                     </div>
@@ -1859,14 +2261,18 @@
 
 
                         <p>
+
                             La versión para Android se
                             preparará en una futura fase
                             del proyecto.
+
                         </p>
 
 
                         <span class="download-disabled">
+
                             Descargar próximamente
+
                         </span>
 
                     </div>
@@ -1897,13 +2303,17 @@
 
 
                         <p>
+
                             La versión para macOS llegará
                             cuando exista una build preparada.
+
                         </p>
 
 
                         <span class="download-disabled">
+
                             Descargar próximamente
+
                         </span>
 
                     </div>
@@ -1934,18 +2344,23 @@
 
 
                         <p>
+
                             ChromeOS estará disponible
                             en una futura versión de RETS.
+
                         </p>
 
 
                         <span class="download-disabled">
+
                             Descargar próximamente
+
                         </span>
 
                     </div>
 
                 </article>
+
 
             </div>
 
@@ -1953,7 +2368,9 @@
 
 
 
-        <!-- INFO -->
+        <!-- =================================================
+             INFO
+        ================================================== -->
 
         <section class="info-grid">
 
@@ -1971,11 +2388,14 @@
 
 
                 <p>
+
                     Prueba RETS antes de su lanzamiento
-                    público y descubre las nuevas funciones.
+                    público y descubre nuevas funciones.
+
                 </p>
 
             </article>
+
 
 
             <article class="info-card">
@@ -1991,11 +2411,14 @@
 
 
                 <p>
+
                     Tus pruebas pueden ayudarnos a encontrar
                     errores y mejorar la experiencia.
+
                 </p>
 
             </article>
+
 
 
             <article class="info-card">
@@ -2011,8 +2434,10 @@
 
 
                 <p>
+
                     Las futuras builds y novedades aparecerán
                     aquí cuando estén preparadas.
+
                 </p>
 
             </article>
@@ -2022,6 +2447,9 @@
 
     </main>
 
+
+
+    <!-- FOOTER -->
 
     <footer class="hub-footer">
 
@@ -2047,9 +2475,9 @@
 
 <script>
 
-    /* ==================================================
+    /* =========================================================
        ELEMENTOS
-    ================================================== */
+    ========================================================= */
 
     const loginView =
         document.getElementById(
@@ -2087,11 +2515,10 @@
         );
 
 
-    /* ==================================================
-       FORMATO DEL CÓDIGO
+    /* =========================================================
+       FORMATEAR CÓDIGO
        RETS-XXXX-XXXX
-       14 CARACTERES
-    ================================================== */
+    ========================================================= */
 
     function formatCode(
         value
@@ -2123,21 +2550,23 @@
             clean.length <= 4
         ) {
 
-            return `RETS-${clean}`;
+            return (
+                `RETS-${clean}`
+            );
 
         }
 
 
         return (
-            `RETS-${clean.slice(0,4)}-${clean.slice(4,8)}`
+            `RETS-${clean.slice(0, 4)}-${clean.slice(4, 8)}`
         );
 
     }
 
 
-    /* ==================================================
+    /* =========================================================
        INPUT
-    ================================================== */
+    ========================================================= */
 
     input.addEventListener(
         "input",
@@ -2165,9 +2594,9 @@
     );
 
 
-    /* ==================================================
+    /* =========================================================
        STATUS
-    ================================================== */
+    ========================================================= */
 
     function clearStatus() {
 
@@ -2194,9 +2623,10 @@
     }
 
 
-    /* ==================================================
-       VERIFICACIÓN REAL
-    ================================================== */
+    /* =========================================================
+       VALIDACIÓN REAL
+       CONTRA EL WORKER
+    ========================================================= */
 
     async function verifyTesterCode(
         code
@@ -2216,6 +2646,9 @@
                     credentials:
                         "include",
 
+                    cache:
+                        "no-store",
+
                     body:
                         JSON.stringify({
                             code
@@ -2233,6 +2666,7 @@
 
         } catch {}
 
+
         if (!response.ok) {
 
             throw new Error(
@@ -2248,9 +2682,9 @@
     }
 
 
-    /* ==================================================
-       ENTRADA AL TRAILER
-    ================================================== */
+    /* =========================================================
+       ENTRAR AL ÁREA DE TESTERS
+    ========================================================= */
 
     async function enterTesterArea() {
 
@@ -2259,6 +2693,8 @@
                 .trim()
                 .toUpperCase();
 
+
+        /* Formato */
 
         if (
             !/^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
@@ -2293,6 +2729,8 @@
                 );
 
 
+            /* El servidor debe confirmar el código */
+
             if (
                 !result ||
                 result.valid !== true
@@ -2309,18 +2747,18 @@
 
 
             /*
-             * EL SERVIDOR CONFIRMÓ EL CÓDIGO.
-             *
-             * Ahora comienza la animación.
+             * ===============================================
+             * ACCESO CONFIRMADO
+             * ===============================================
              */
+
 
             loginView.style.display =
                 "none";
 
 
             trailerView.classList.add(
-                "show",
-                "play"
+                "show"
             );
 
 
@@ -2331,48 +2769,125 @@
 
 
             /*
-             * Duración aproximada:
-             * 4 segundos de trailer
-             * + transición final.
+             * Reiniciar clases para que la animación
+             * siempre empiece correctamente.
+             */
+
+            trailerView.classList.remove(
+                "play",
+                "transitioning"
+            );
+
+
+            void trailerView.offsetWidth;
+
+
+            trailerView.classList.add(
+                "play"
+            );
+
+
+            /*
+             * ===============================================
+             * PREPARAMOS EL HUB
+             * ===============================================
+             */
+
+            setTimeout(
+                () => {
+
+                    /*
+                     * Mostrar el Hub detrás
+                     * de la animación.
+                     */
+
+                    hubView.classList.add(
+                        "show"
+                    );
+
+
+                    hubView.style.opacity =
+                        "1";
+
+
+                },
+                2860
+            );
+
+
+            /*
+             * ===============================================
+             * LOGO VIAJA HACIA EL HEADER
+             * ===============================================
              */
 
             setTimeout(
                 () => {
 
                     trailerView.classList.add(
-                        "finish"
+                        "transitioning"
                     );
 
-
-                    setTimeout(
-                        () => {
-
-                            trailerView.style.display =
-                                "none";
-
-
-                            hubView.classList.add(
-                                "show"
-                            );
-
-
-                            trailerView.setAttribute(
-                                "aria-hidden",
-                                "true"
-                            );
-
-
-                            window.scrollTo(
-                                0,
-                                0
-                            );
-
-                        },
-                        760
-                    );
 
                 },
-                4100
+                3100
+            );
+
+
+            /*
+             * ===============================================
+             * FINAL DE LA TRANSICIÓN
+             * ===============================================
+             */
+
+            setTimeout(
+                () => {
+
+                    const hubLogo =
+                        document.querySelector(
+                            ".hub-brand img"
+                        );
+
+
+                    /*
+                     * El logo que terminó en la misma
+                     * posición que el del header desaparece
+                     * solo cuando el logo real está listo.
+                     */
+
+                    if (hubLogo) {
+
+                        hubLogo.style.opacity =
+                            "1";
+
+                    }
+
+
+                    trailerView.style.display =
+                        "none";
+
+
+                    trailerView.classList.remove(
+                        "show",
+                        "play",
+                        "transitioning"
+                    );
+
+
+                    trailerView.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    window.scrollTo(
+                        0,
+                        0
+                    );
+
+
+                },
+                4200
             );
 
 
@@ -2402,9 +2917,9 @@
     }
 
 
-    /* ==================================================
+    /* =========================================================
        BOTÓN
-    ================================================== */
+    ========================================================= */
 
     accessButton.addEventListener(
         "click",
@@ -2412,9 +2927,9 @@
     );
 
 
-    /* ==================================================
+    /* =========================================================
        ENTER
-    ================================================== */
+    ========================================================= */
 
     input.addEventListener(
         "keydown",
