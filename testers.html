@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -18,43 +20,55 @@
     <style>
 
         :root {
-            --bg: #03060a;
+
+            --bg: #020508;
             --bg-2: #071019;
 
             --cyan: #39e6ff;
             --cyan-soft: #9af6ff;
 
-            --text: #eefcff;
-            --muted: #8fa5af;
-            --dim: #607782;
+            --text: #effcff;
+            --muted: #8da5af;
+            --dim: #5d7681;
+
+            --green: #72e1ae;
+            --red: #ff9eaa;
 
             --border:
-                rgba(57,230,255,0.15);
+                rgba(57,230,255,.14);
 
             --border-strong:
-                rgba(57,230,255,0.30);
+                rgba(57,230,255,.30);
 
-            --green:
-                #72e1ae;
+            --mx: 0;
+            --my: 0;
 
-            --red:
-                #ff9ca8;
         }
 
 
+        /* =====================================================
+           BASE
+        ===================================================== */
+
         * {
+
             box-sizing: border-box;
+
             margin: 0;
             padding: 0;
+
         }
 
 
         html {
+
             scroll-behavior: smooth;
+
         }
 
 
         body {
+
             min-height: 100vh;
 
             font-family:
@@ -69,13 +83,17 @@
 
             background:
                 radial-gradient(
-                    circle at 20% 10%,
-                    rgba(57,230,255,0.07),
+                    circle at
+                    calc(20% + var(--mx) * 10px)
+                    calc(10% + var(--my) * 10px),
+                    rgba(57,230,255,.075),
                     transparent 30%
                 ),
                 radial-gradient(
-                    circle at 80% 90%,
-                    rgba(60,120,255,0.05),
+                    circle at
+                    calc(85% - var(--mx) * 7px)
+                    calc(90% - var(--my) * 7px),
+                    rgba(68,115,255,.055),
                     transparent 32%
                 ),
                 linear-gradient(
@@ -85,10 +103,12 @@
                 );
 
             overflow-x: hidden;
+
         }
 
 
         body::before {
+
             content: "";
 
             position: fixed;
@@ -98,17 +118,26 @@
             pointer-events: none;
 
             background-image:
+
                 linear-gradient(
-                    rgba(255,255,255,0.013) 1px,
+                    rgba(255,255,255,.012) 1px,
                     transparent 1px
                 ),
+
                 linear-gradient(
                     90deg,
-                    rgba(255,255,255,0.013) 1px,
+                    rgba(255,255,255,.012) 1px,
                     transparent 1px
                 );
 
-            background-size: 64px 64px;
+            background-size:
+                64px 64px;
+
+            transform:
+                translate(
+                    calc(var(--mx) * 3px),
+                    calc(var(--my) * 3px)
+                );
 
             mask-image:
                 linear-gradient(
@@ -117,48 +146,162 @@
                     transparent
                 );
 
-            z-index: -2;
+            z-index: -3;
+
         }
 
 
         body::after {
+
             content: "";
 
             position: fixed;
 
-            width: 300px;
-            height: 300px;
+            width: 360px;
+            height: 360px;
 
-            right: -160px;
-            bottom: -160px;
+            right: -180px;
+            bottom: -180px;
 
             border:
                 1px solid
-                rgba(57,230,255,0.045);
+                rgba(57,230,255,.035);
 
             transform:
                 rotate(45deg);
 
             pointer-events: none;
 
-            z-index: -1;
+            z-index: -2;
+
         }
 
 
         button,
         input {
+
             font: inherit;
+
         }
 
 
         button {
+
             cursor: pointer;
+
         }
 
 
         a {
+
             color: inherit;
+
             text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           FLOATING BACKGROUND TRIANGLES
+        ===================================================== */
+
+        .ambient {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            z-index: -1;
+
+        }
+
+
+        .ambient-triangle {
+
+            position: absolute;
+
+            width: 18px;
+            height: 16px;
+
+            border:
+                1px solid
+                rgba(57,230,255,.075);
+
+            clip-path:
+                polygon(
+                    50% 0,
+                    100% 100%,
+                    0 100%
+                );
+
+            opacity: 0;
+
+            animation:
+                triangleFloat
+                var(--duration)
+                linear
+                infinite;
+
+            animation-delay:
+                var(--delay);
+
+            left:
+                var(--left);
+
+        }
+
+
+        @keyframes triangleFloat {
+
+            0% {
+
+                transform:
+                    translateY(115vh)
+                    translateX(0)
+                    rotate(0deg);
+
+                opacity: 0;
+
+            }
+
+            10% {
+
+                opacity: .45;
+
+            }
+
+            50% {
+
+                transform:
+                    translateY(50vh)
+                    translateX(var(--drift))
+                    rotate(110deg);
+
+                opacity: .20;
+
+            }
+
+            90% {
+
+                opacity: .35;
+
+            }
+
+            100% {
+
+                transform:
+                    translateY(-20vh)
+                    translateX(calc(var(--drift) * -1))
+                    rotate(230deg);
+
+                opacity: 0;
+
+            }
+
         }
 
 
@@ -167,6 +310,7 @@
         ===================================================== */
 
         #loginView {
+
             min-height: 100vh;
 
             display: flex;
@@ -174,11 +318,16 @@
             align-items: center;
             justify-content: center;
 
-            padding: 22px;
+            padding: 24px;
+
+            transition:
+                opacity .45s ease;
+
         }
 
 
         .login-card {
+
             position: relative;
 
             width:
@@ -193,26 +342,63 @@
             border-radius: 27px;
 
             background:
-                rgba(7,15,24,0.90);
+                rgba(7,15,24,.92);
 
             box-shadow:
                 0 35px 110px
-                rgba(0,0,0,0.42);
+                rgba(0,0,0,.42),
+
+                inset
+                0 1px 0
+                rgba(255,255,255,.025);
 
             overflow: hidden;
+
+            animation:
+                loginAppear
+                .8s
+                cubic-bezier(.2,.8,.2,1)
+                both;
+
+        }
+
+
+        @keyframes loginAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(18px)
+                    scale(.98);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
         }
 
 
         .login-card::before {
+
             content: "";
 
             position: absolute;
 
-            top: 16px;
-            left: 16px;
+            top: 15px;
+            left: 15px;
 
-            width: 42px;
-            height: 42px;
+            width: 43px;
+            height: 43px;
 
             border-top:
                 1px solid
@@ -222,20 +408,22 @@
                 1px solid
                 var(--cyan);
 
-            opacity: 0.45;
+            opacity: .48;
+
         }
 
 
         .login-card::after {
+
             content: "";
 
             position: absolute;
 
-            right: 16px;
-            bottom: 16px;
+            right: 15px;
+            bottom: 15px;
 
-            width: 42px;
-            height: 42px;
+            width: 43px;
+            height: 43px;
 
             border-right:
                 1px solid
@@ -245,41 +433,48 @@
                 1px solid
                 var(--cyan);
 
-            opacity: 0.25;
+            opacity: .25;
+
         }
 
 
         .login-decoration {
+
             position: absolute;
 
-            width: 160px;
-            height: 160px;
+            width: 190px;
+            height: 190px;
 
-            right: -65px;
-            top: -70px;
+            right: -85px;
+            top: -85px;
 
             border:
                 1px solid
-                rgba(57,230,255,0.05);
+                rgba(57,230,255,.055);
 
             transform:
                 rotate(45deg);
 
             pointer-events: none;
+
         }
 
 
         .brand {
+
             display: flex;
+
             align-items: center;
 
             gap: 11px;
 
             width: fit-content;
+
         }
 
 
         .brand img {
+
             width: 36px;
             height: 36px;
 
@@ -287,22 +482,26 @@
 
             filter:
                 drop-shadow(
-                    0 0 14px
-                    rgba(57,230,255,0.2)
+                    0 0 15px
+                    rgba(57,230,255,.20)
                 );
+
         }
 
 
         .brand span {
+
             font-size: 13px;
 
             font-weight: 850;
 
-            letter-spacing: 0.12em;
+            letter-spacing: .12em;
+
         }
 
 
         .login-badge {
+
             display: inline-flex;
 
             align-items: center;
@@ -321,7 +520,7 @@
             border-radius: 999px;
 
             background:
-                rgba(57,230,255,0.035);
+                rgba(57,230,255,.035);
 
             color:
                 var(--cyan-soft);
@@ -330,13 +529,15 @@
 
             font-weight: 800;
 
-            letter-spacing: 0.10em;
+            letter-spacing: .10em;
 
             text-transform: uppercase;
+
         }
 
 
         .badge-dot {
+
             width: 6px;
             height: 6px;
 
@@ -346,28 +547,32 @@
                 var(--cyan);
 
             box-shadow:
-                0 0 11px
-                rgba(57,230,255,0.72);
+                0 0 12px
+                rgba(57,230,255,.75);
+
         }
 
 
         .login-card h1 {
+
             margin-top: 20px;
 
             font-size:
                 clamp(40px, 8vw, 60px);
 
-            line-height: 0.96;
+            line-height: .96;
 
-            letter-spacing: -0.06em;
+            letter-spacing: -.06em;
+
         }
 
 
         .login-card h1 span {
+
             background:
                 linear-gradient(
                     120deg,
-                    #ffffff,
+                    #fff,
                     var(--cyan-soft)
                 );
 
@@ -375,45 +580,55 @@
             background-clip: text;
 
             color: transparent;
+
         }
 
 
         .login-description {
-            max-width: 520px;
 
             margin-top: 15px;
 
-            color: var(--muted);
+            max-width: 520px;
+
+            color:
+                var(--muted);
 
             font-size: 14px;
 
             line-height: 1.7;
+
         }
 
 
         .field {
+
             margin-top: 28px;
+
         }
 
 
         .field label {
+
             display: block;
 
             margin-bottom: 8px;
 
-            color: #aec1c9;
+            color:
+                #aec1c9;
 
             font-size: 10px;
 
             font-weight: 800;
 
-            letter-spacing: 0.10em;
+            letter-spacing: .10em;
 
             text-transform: uppercase;
+
         }
 
 
         #testerCode {
+
             width: 100%;
             height: 57px;
 
@@ -422,14 +637,14 @@
 
             border:
                 1px solid
-                rgba(255,255,255,0.08);
+                rgba(255,255,255,.08);
 
             border-radius: 14px;
 
             outline: none;
 
             background:
-                rgba(0,0,0,0.24);
+                rgba(0,0,0,.24);
 
             color:
                 var(--text);
@@ -440,36 +655,43 @@
 
             font-weight: 800;
 
-            letter-spacing: 0.11em;
+            letter-spacing: .11em;
 
             transition:
                 border-color .22s ease,
-                box-shadow .22s ease,
-                background .22s ease;
+                background .22s ease,
+                box-shadow .22s ease;
+
         }
 
 
         #testerCode::placeholder {
-            color: #536d77;
+
+            color:
+                #536d77;
 
             font-weight: 500;
+
         }
 
 
         #testerCode:focus {
+
             border-color:
-                rgba(57,230,255,0.43);
+                rgba(57,230,255,.43);
 
             background:
-                rgba(57,230,255,0.018);
+                rgba(57,230,255,.018);
 
             box-shadow:
                 0 0 0 4px
-                rgba(57,230,255,0.035);
+                rgba(57,230,255,.035);
+
         }
 
 
         #accessButton {
+
             width: 100%;
             height: 52px;
 
@@ -486,7 +708,8 @@
                     #6df0ff
                 );
 
-            color: #021117;
+            color:
+                #021117;
 
             font-size: 13px;
 
@@ -496,31 +719,37 @@
                 transform .2s ease,
                 box-shadow .2s ease,
                 opacity .2s ease;
+
         }
 
 
         #accessButton:hover {
+
             transform:
                 translateY(-2px);
 
             box-shadow:
                 0 15px 36px
-                rgba(57,230,255,0.14);
+                rgba(57,230,255,.15);
+
         }
 
 
         #accessButton:disabled {
+
             cursor: wait;
 
-            opacity: 0.55;
+            opacity: .55;
 
             transform: none;
 
             box-shadow: none;
+
         }
 
 
         #status {
+
             display: none;
 
             margin-top: 13px;
@@ -533,48 +762,60 @@
             font-size: 12px;
 
             line-height: 1.55;
+
         }
 
 
         #status.show {
+
             display: block;
+
         }
 
 
         #status.error {
-            color: var(--red);
+
+            color:
+                var(--red);
 
             background:
-                rgba(255,70,95,0.045);
+                rgba(255,70,95,.045);
 
             border:
                 1px solid
-                rgba(255,70,95,0.15);
+                rgba(255,70,95,.15);
+
         }
 
 
         #status.success {
-            color: var(--cyan-soft);
+
+            color:
+                var(--cyan-soft);
 
             background:
-                rgba(57,230,255,0.035);
+                rgba(57,230,255,.035);
 
             border:
                 1px solid
-                rgba(57,230,255,0.15);
+                rgba(57,230,255,.15);
+
         }
 
 
         .login-note {
+
             margin-top: 16px;
 
-            color: var(--dim);
+            color:
+                var(--dim);
 
             text-align: center;
 
             font-size: 10px;
 
             line-height: 1.6;
+
         }
 
 
@@ -583,6 +824,7 @@
         ===================================================== */
 
         #trailerView {
+
             position: fixed;
 
             inset: 0;
@@ -591,79 +833,114 @@
 
             display: none;
 
-            background:
-                transparent;
-
             overflow: hidden;
 
-            pointer-events: none;
+            background:
+                #020407;
+
         }
 
 
         #trailerView.show {
+
             display: block;
+
         }
 
 
         .trailer-background {
+
             position: absolute;
 
             inset: 0;
 
             background:
                 radial-gradient(
-                    circle at 50% 45%,
-                    rgba(57,230,255,0.025),
-                    transparent 34%
+                    circle at 50% 48%,
+                    rgba(57,230,255,.035),
+                    transparent 35%
                 ),
                 #020407;
 
-            opacity: 1;
-
             z-index: 0;
+
         }
 
 
-        .trailer-lines {
+        .trailer-grid {
+
             position: absolute;
 
-            inset: 0;
+            inset: -10%;
 
-            z-index: 2;
+            background-image:
+
+                linear-gradient(
+                    rgba(57,230,255,.025) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(57,230,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                75px 75px;
+
+            transform:
+                translate(
+                    calc(var(--mx) * 5px),
+                    calc(var(--my) * 5px)
+                );
+
+            z-index: 1;
+
         }
 
 
         .trailer-line {
+
             position: absolute;
 
-            width: 0;
             height: 1px;
+
+            width: 0;
 
             background:
                 linear-gradient(
                     90deg,
                     transparent,
-                    rgba(57,230,255,0.65),
+                    rgba(57,230,255,.7),
                     transparent
                 );
 
             opacity: 0;
+
+            z-index: 3;
+
         }
 
 
         .trailer-line.one {
+
             top: 27%;
             left: 0;
+
         }
 
 
         .trailer-line.two {
-            right: 0;
+
             top: 73%;
+            right: 0;
+
         }
 
 
         .trailer-triangle {
+
             position: absolute;
 
             top: 50%;
@@ -674,27 +951,29 @@
 
             border:
                 1px solid
-                rgba(57,230,255,0.18);
+                rgba(57,230,255,.18);
 
             clip-path:
                 polygon(
-                    50% 0%,
+                    50% 0,
                     100% 100%,
-                    0% 100%
+                    0 100%
                 );
 
             transform:
-                translate(-50%, -50%)
+                translate(-50%,-50%)
                 scale(.72)
                 rotate(0deg);
 
             opacity: 0;
 
-            z-index: 1;
+            z-index: 2;
+
         }
 
 
         .trailer-logo {
+
             position: absolute;
 
             top: 50%;
@@ -708,15 +987,15 @@
             opacity: 0;
 
             transform:
-                translate(-50%, -50%)
+                translate(-50%,-50%)
                 scale(.72);
 
             z-index: 10;
 
             filter:
                 drop-shadow(
-                    0 0 28px
-                    rgba(57,230,255,0.22)
+                    0 0 30px
+                    rgba(57,230,255,.25)
                 );
 
             will-change:
@@ -724,17 +1003,18 @@
                 top,
                 width,
                 height,
-                transform,
-                opacity;
+                transform;
+
         }
 
 
         .trailer-content {
+
             position: absolute;
 
             inset: 0;
 
-            z-index: 5;
+            z-index: 7;
 
             display: flex;
 
@@ -746,33 +1026,38 @@
             text-align: center;
 
             pointer-events: none;
+
         }
 
 
         .trailer-welcome {
+
             margin-top: 150px;
 
-            color: #f2fcff;
+            color:
+                #f2fcff;
 
             font-size:
                 clamp(28px, 6vw, 50px);
 
             font-weight: 850;
 
-            letter-spacing:
-                .075em;
+            letter-spacing: .075em;
 
             opacity: 0;
 
             transform:
                 translateY(18px);
+
         }
 
 
         .trailer-subtitle {
+
             margin-top: 13px;
 
-            color: #88a2ad;
+            color:
+                #89a3ad;
 
             font-size:
                 clamp(12px, 2vw, 15px);
@@ -781,10 +1066,12 @@
 
             transform:
                 translateY(14px);
+
         }
 
 
         .trailer-version {
+
             margin-top: 23px;
 
             color:
@@ -805,14 +1092,18 @@
 
             transform:
                 translateY(12px);
+
         }
 
 
         .trailer-status {
+
             position: absolute;
 
             left: 50%;
             bottom: 50px;
+
+            z-index: 8;
 
             display: flex;
 
@@ -824,7 +1115,8 @@
                 translateX(-50%)
                 translateY(10px);
 
-            color: #617b85;
+            color:
+                #617c86;
 
             font-size: 9px;
 
@@ -835,10 +1127,12 @@
             text-transform: uppercase;
 
             opacity: 0;
+
         }
 
 
         .trailer-status-dot {
+
             width: 5px;
             height: 5px;
 
@@ -848,12 +1142,44 @@
                 var(--cyan);
 
             box-shadow:
-                0 0 10px
-                rgba(57,230,255,0.8);
+                0 0 11px
+                rgba(57,230,255,.8);
+
+            animation:
+                statusPulse
+                1.2s
+                ease-in-out
+                infinite;
+
+        }
+
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+
+                opacity: .65;
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.35);
+
+                opacity: 1;
+
+            }
+
         }
 
 
         .trailer-sweep {
+
             position: absolute;
 
             top: 0;
@@ -861,6 +1187,8 @@
 
             width: 100%;
             height: 1px;
+
+            z-index: 20;
 
             background:
                 linear-gradient(
@@ -871,380 +1199,248 @@
                 );
 
             box-shadow:
-                0 0 16px
-                rgba(57,230,255,0.5);
+                0 0 18px
+                rgba(57,230,255,.55);
 
             opacity: 0;
 
-            z-index: 15;
         }
 
 
         /* =====================================================
-           TRAILER ANIMATIONS
+           TRAILER ENTRANCE
         ===================================================== */
 
         #trailerView.play .trailer-line.one {
+
             animation:
-                trailerLineLeft
+                trailerLine
                 1.05s
                 ease-out
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-line.two {
+
             animation:
-                trailerLineRight
+                trailerLine
                 1.05s
                 ease-out
-                .15s
+                .18s
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-triangle {
+
             animation:
                 trailerTriangleIn
-                1.2s
+                1.25s
                 cubic-bezier(.2,.8,.2,1)
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-logo {
+
             animation:
                 trailerLogoIn
                 1.05s
                 cubic-bezier(.2,.8,.2,1)
-                .32s
+                .3s
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-welcome {
+
             animation:
                 trailerTextIn
-                .85s
+                .82s
                 ease-out
-                1.25s
+                1.23s
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-subtitle {
+
             animation:
                 trailerTextIn
                 .8s
                 ease-out
                 1.48s
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-version {
+
             animation:
                 trailerTextIn
                 .75s
                 ease-out
                 1.78s
                 forwards;
+
         }
 
 
         #trailerView.play .trailer-status {
+
             animation:
                 trailerStatusIn
-                .65s
+                .7s
                 ease-out
-                2.12s
+                2.1s
                 forwards;
+
         }
 
 
-        #trailerView.transitioning .trailer-logo {
-            animation:
-                trailerLogoToHeader
-                1.08s
-                cubic-bezier(.72,0,.18,1)
-                forwards;
-        }
-
-
-        #trailerView.transitioning .trailer-content {
-            animation:
-                trailerContentOut
-                .56s
-                ease-in
-                forwards;
-        }
-
-
-        #trailerView.transitioning .trailer-triangle {
-            animation:
-                trailerTriangleOut
-                .8s
-                ease-in
-                forwards;
-        }
-
-
-        #trailerView.transitioning .trailer-sweep {
-            animation:
-                trailerSweep
-                1s
-                ease-in-out
-                forwards;
-        }
-
-
-        #trailerView.transitioning .trailer-background {
-            animation:
-                trailerBackgroundOut
-                1s
-                ease-in
-                forwards;
-        }
-
-
-        @keyframes trailerLineLeft {
+        @keyframes trailerLine {
 
             0% {
+
                 width: 0;
+
                 opacity: 0;
+
             }
 
-            35% {
+            30% {
+
                 opacity: .7;
+
             }
 
             100% {
+
                 width: 100%;
-                opacity: .13;
-            }
-        }
 
+                opacity: .12;
 
-        @keyframes trailerLineRight {
-
-            0% {
-                width: 0;
-                opacity: 0;
             }
 
-            35% {
-                opacity: .7;
-            }
-
-            100% {
-                width: 100%;
-                opacity: .10;
-            }
         }
 
 
         @keyframes trailerTriangleIn {
 
             0% {
+
                 opacity: 0;
 
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%,-50%)
                     scale(.72)
                     rotate(0deg);
+
             }
 
             40% {
+
                 opacity: .8;
+
             }
 
             100% {
-                opacity: .27;
+
+                opacity: .26;
 
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%,-50%)
                     scale(1)
                     rotate(4deg);
+
             }
+
         }
 
 
         @keyframes trailerLogoIn {
 
             0% {
+
                 opacity: 0;
 
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%,-50%)
                     scale(.72);
+
             }
 
             55% {
+
                 opacity: 1;
+
             }
 
             100% {
+
                 opacity: 1;
 
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%,-50%)
                     scale(1);
+
             }
+
         }
 
 
         @keyframes trailerTextIn {
 
             from {
+
                 opacity: 0;
 
                 transform:
                     translateY(18px);
+
             }
 
             to {
+
                 opacity: 1;
 
                 transform:
                     translateY(0);
+
             }
+
         }
 
 
         @keyframes trailerStatusIn {
 
             from {
+
                 opacity: 0;
 
                 transform:
                     translateX(-50%)
                     translateY(10px);
+
             }
 
             to {
+
                 opacity: 1;
 
                 transform:
                     translateX(-50%)
                     translateY(0);
-            }
-        }
 
-
-        /*
-         * ESTA ES LA TRANSICIÓN PRINCIPAL.
-         *
-         * El mismo logo pasa del centro
-         * hasta la posición del logo del header.
-         */
-
-        @keyframes trailerLogoToHeader {
-
-            0% {
-                left: 50%;
-                top: 50%;
-
-                width: 115px;
-                height: 115px;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
-
-                opacity: 1;
             }
 
-            45% {
-                opacity: 1;
-            }
-
-            100% {
-                left: 32px;
-                top: 23px;
-
-                width: 31px;
-                height: 31px;
-
-                transform:
-                    translate(0, 0)
-                    scale(1);
-
-                opacity: 1;
-            }
-        }
-
-
-        @keyframes trailerContentOut {
-
-            from {
-                opacity: 1;
-
-                transform:
-                    translateY(0);
-            }
-
-            to {
-                opacity: 0;
-
-                transform:
-                    translateY(-12px);
-            }
-        }
-
-
-        @keyframes trailerTriangleOut {
-
-            from {
-                opacity: .27;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1)
-                    rotate(4deg);
-            }
-
-            to {
-                opacity: 0;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1.12)
-                    rotate(8deg);
-            }
-        }
-
-
-        @keyframes trailerSweep {
-
-            0% {
-                opacity: 0;
-
-                transform:
-                    translateY(-5px);
-            }
-
-            12% {
-                opacity: .78;
-            }
-
-            100% {
-                opacity: 0;
-
-                transform:
-                    translateY(100vh);
-            }
-        }
-
-
-        @keyframes trailerBackgroundOut {
-
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
         }
 
 
@@ -1253,6 +1449,7 @@
         ===================================================== */
 
         #hubView {
+
             display: none;
 
             min-height: 100vh;
@@ -1260,18 +1457,22 @@
             opacity: 0;
 
             transition:
-                opacity .7s ease;
+                opacity .75s ease;
+
         }
 
 
         #hubView.show {
+
             display: block;
 
             opacity: 1;
+
         }
 
 
         .hub-header {
+
             position: relative;
 
             min-height: 78px;
@@ -1288,10 +1489,10 @@
 
             border-bottom:
                 1px solid
-                rgba(255,255,255,0.045);
+                rgba(255,255,255,.045);
 
             background:
-                rgba(4,8,13,0.75);
+                rgba(4,8,13,.76);
 
             backdrop-filter:
                 blur(18px);
@@ -1299,20 +1500,24 @@
             -webkit-backdrop-filter:
                 blur(18px);
 
-            z-index: 2;
+            z-index: 20;
+
         }
 
 
         .hub-brand {
+
             display: flex;
 
             align-items: center;
 
             gap: 11px;
+
         }
 
 
         .hub-brand img {
+
             width: 31px;
             height: 31px;
 
@@ -1320,19 +1525,29 @@
 
             opacity: 0;
 
+            filter:
+                drop-shadow(
+                    0 0 12px
+                    rgba(57,230,255,.18)
+                );
+
             transition:
-                opacity .3s ease;
+                opacity .25s ease;
+
         }
 
 
         .hub-brand strong {
+
             font-size: 13px;
 
             letter-spacing: .11em;
+
         }
 
 
         .hub-label {
+
             color:
                 var(--cyan-soft);
 
@@ -1343,10 +1558,16 @@
             letter-spacing: .13em;
 
             text-transform: uppercase;
+
         }
 
 
+        /* =====================================================
+           HUB MAIN
+        ===================================================== */
+
         .hub-main {
+
             width:
                 min(1100px, calc(100% - 36px));
 
@@ -1354,22 +1575,48 @@
                 0 auto;
 
             padding:
-                65px 0 80px;
+                68px 0 85px;
+
         }
 
 
-        /* =====================================================
-           HUB HERO
-        ===================================================== */
-
         .hub-hero {
+
             text-align: center;
 
-            margin-bottom: 52px;
+            margin-bottom: 58px;
+
+            opacity: 0;
+
+            transform:
+                translateY(25px);
+
+            animation:
+                hubHeroIn
+                .9s
+                cubic-bezier(.2,.8,.2,1)
+                .15s
+                forwards;
+
+        }
+
+
+        @keyframes hubHeroIn {
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
         }
 
 
         .tester-chip {
+
             display: inline-flex;
 
             align-items: center;
@@ -1381,12 +1628,12 @@
 
             border:
                 1px solid
-                rgba(113,226,174,0.14);
+                rgba(113,226,174,.14);
 
             border-radius: 999px;
 
             background:
-                rgba(113,226,174,0.03);
+                rgba(113,226,174,.03);
 
             color:
                 #8edcb4;
@@ -1398,10 +1645,12 @@
             letter-spacing: .09em;
 
             text-transform: uppercase;
+
         }
 
 
         .tester-chip::before {
+
             content: "";
 
             width: 6px;
@@ -1414,11 +1663,13 @@
 
             box-shadow:
                 0 0 10px
-                rgba(113,226,174,0.55);
+                rgba(113,226,174,.55);
+
         }
 
 
         .hub-hero h1 {
+
             margin-top: 18px;
 
             font-size:
@@ -1427,14 +1678,16 @@
             line-height: .98;
 
             letter-spacing: -.06em;
+
         }
 
 
         .hub-hero h1 span {
+
             background:
                 linear-gradient(
                     120deg,
-                    #ffffff,
+                    #fff,
                     var(--cyan-soft)
                 );
 
@@ -1442,10 +1695,12 @@
             background-clip: text;
 
             color: transparent;
+
         }
 
 
         .hub-hero p {
+
             max-width: 720px;
 
             margin:
@@ -1457,19 +1712,46 @@
             font-size: 14px;
 
             line-height: 1.7;
+
         }
 
 
         /* =====================================================
-           SECTION TITLE
+           SECTION
         ===================================================== */
 
-        .section-title {
+        .section {
+
+            margin-top: 55px;
+
+        }
+
+
+        .section-heading {
+
             margin-bottom: 21px;
+
+            opacity: 0;
+
+            transform:
+                translateY(20px);
+
+        }
+
+
+        .section-heading.reveal {
+
+            animation:
+                revealUp
+                .75s
+                cubic-bezier(.2,.8,.2,1)
+                forwards;
+
         }
 
 
         .section-eyebrow {
+
             color:
                 var(--cyan-soft);
 
@@ -1480,22 +1762,27 @@
             letter-spacing: .13em;
 
             text-transform: uppercase;
+
         }
 
 
-        .section-title h2 {
+        .section-heading h2 {
+
             margin-top: 8px;
 
-            font-size: 26px;
+            font-size: 27px;
 
-            letter-spacing: -.035em;
+            letter-spacing:
+                -.035em;
+
         }
 
 
-        .section-title p {
-            margin-top: 6px;
+        .section-heading p {
 
-            max-width: 650px;
+            max-width: 680px;
+
+            margin-top: 6px;
 
             color:
                 var(--muted);
@@ -1503,10 +1790,12 @@
             font-size: 12px;
 
             line-height: 1.6;
+
         }
 
 
         .release-note {
+
             display: inline-flex;
 
             margin-top: 13px;
@@ -1520,38 +1809,42 @@
 
             border-radius: 999px;
 
+            background:
+                rgba(57,230,255,.025);
+
             color:
                 #78919b;
-
-            background:
-                rgba(57,230,255,0.025);
 
             font-size: 9px;
 
             letter-spacing: .07em;
 
             text-transform: uppercase;
+
         }
 
 
         /* =====================================================
-           PLATFORMS
+           PLATFORM CARDS
         ===================================================== */
 
         .platform-grid {
+
             display: grid;
 
             grid-template-columns:
                 repeat(2, 1fr);
 
             gap: 15px;
+
         }
 
 
         .platform-card {
+
             position: relative;
 
-            min-height: 195px;
+            min-height: 198px;
 
             padding: 23px;
 
@@ -1561,43 +1854,91 @@
 
             border:
                 1px solid
-                rgba(255,255,255,0.055);
+                rgba(255,255,255,.055);
 
             border-radius: 20px;
 
             background:
                 linear-gradient(
                     145deg,
-                    rgba(10,19,29,0.92),
-                    rgba(6,12,19,0.86)
+                    rgba(10,19,29,.92),
+                    rgba(6,12,19,.86)
                 );
 
             overflow: hidden;
 
+            opacity: 0;
+
+            transform:
+                translateY(22px)
+                scale(.985);
+
             transition:
-                transform .25s ease,
-                border-color .25s ease,
-                background .25s ease;
+                transform .32s ease,
+                border-color .32s ease,
+                background .32s ease,
+                box-shadow .32s ease;
+
         }
 
 
-        .platform-card:hover {
+        .platform-card.reveal {
+
+            animation:
+                cardReveal
+                .72s
+                cubic-bezier(.2,.8,.2,1)
+                forwards;
+
+            animation-delay:
+                var(--delay);
+
+        }
+
+
+        @keyframes cardReveal {
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        .platform-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: -100px;
+            top: -100px;
+
+            border:
+                1px solid
+                rgba(57,230,255,.045);
+
             transform:
-                translateY(-3px);
+                rotate(45deg);
 
-            border-color:
-                var(--border-strong);
+            transition:
+                transform .55s ease,
+                border-color .35s ease;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(11,21,32,0.95),
-                    rgba(7,14,22,0.90)
-                );
         }
 
 
         .platform-card::after {
+
             content: "";
 
             position: absolute;
@@ -1605,24 +1946,61 @@
             width: 100px;
             height: 100px;
 
-            right: -36px;
-            bottom: -36px;
+            right: -35px;
+            bottom: -35px;
 
             border:
                 1px solid
-                rgba(57,230,255,0.055);
+                rgba(57,230,255,.06);
 
             transform:
                 rotate(45deg);
+
+        }
+
+
+        .platform-card:hover {
+
+            transform:
+                translateY(-5px)
+                scale(1.005);
+
+            border-color:
+                rgba(57,230,255,.25);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(11,22,33,.96),
+                    rgba(7,14,22,.91)
+                );
+
+            box-shadow:
+                0 18px 55px
+                rgba(0,0,0,.18);
+
+        }
+
+
+        .platform-card:hover::before {
+
+            transform:
+                rotate(70deg)
+                scale(1.06);
+
+            border-color:
+                rgba(57,230,255,.08);
+
         }
 
 
         .platform-icon {
-            width: 49px;
-            height: 49px;
+
+            width: 50px;
+            height: 50px;
 
             flex:
-                0 0 49px;
+                0 0 50px;
 
             display: grid;
 
@@ -1630,12 +2008,12 @@
 
             border:
                 1px solid
-                rgba(57,230,255,0.11);
+                rgba(57,230,255,.12);
 
-            border-radius: 13px;
+            border-radius: 14px;
 
             background:
-                rgba(57,230,255,0.025);
+                rgba(57,230,255,.025);
 
             color:
                 var(--cyan);
@@ -1643,28 +2021,51 @@
             font-size: 20px;
 
             font-weight: 750;
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+
+        }
+
+
+        .platform-card:hover .platform-icon {
+
+            transform:
+                translateY(-2px)
+                rotate(-3deg);
+
+            box-shadow:
+                0 8px 25px
+                rgba(57,230,255,.08);
+
         }
 
 
         .platform-content {
+
             position: relative;
 
-            z-index: 1;
+            z-index: 2;
+
         }
 
 
         .platform-content h3 {
+
             font-size: 18px;
+
         }
 
 
         .platform-status {
+
             display: inline-block;
 
             margin-top: 5px;
 
             color:
-                #667f89;
+                #67808a;
 
             font-size: 9px;
 
@@ -1673,10 +2074,12 @@
             letter-spacing: .10em;
 
             text-transform: uppercase;
+
         }
 
 
         .platform-content p {
+
             margin-top: 9px;
 
             color:
@@ -1685,13 +2088,16 @@
             font-size: 11px;
 
             line-height: 1.6;
+
         }
 
 
         .download-disabled {
+
             display: inline-flex;
 
             align-items: center;
+
             justify-content: center;
 
             min-height: 38px;
@@ -1703,12 +2109,12 @@
 
             border:
                 1px solid
-                rgba(255,255,255,0.06);
+                rgba(255,255,255,.06);
 
             border-radius: 10px;
 
             background:
-                rgba(255,255,255,0.014);
+                rgba(255,255,255,.014);
 
             color:
                 #627781;
@@ -1719,14 +2125,16 @@
 
             cursor:
                 not-allowed;
+
         }
 
 
         /* =====================================================
-           INFORMATION CARDS
+           INFO
         ===================================================== */
 
         .info-grid {
+
             display: grid;
 
             grid-template-columns:
@@ -1734,40 +2142,65 @@
 
             gap: 13px;
 
-            margin-top: 16px;
         }
 
 
         .info-card {
+
             padding: 20px;
 
             border:
                 1px solid
-                rgba(255,255,255,0.05);
+                rgba(255,255,255,.05);
 
             border-radius: 17px;
 
             background:
-                rgba(255,255,255,0.014);
+                rgba(255,255,255,.014);
+
+            opacity: 0;
+
+            transform:
+                translateY(18px);
 
             transition:
-                transform .25s ease,
-                border-color .25s ease;
+                border-color .3s ease,
+                transform .3s ease,
+                background .3s ease;
+
+        }
+
+
+        .info-card.reveal {
+
+            animation:
+                revealUp
+                .72s
+                cubic-bezier(.2,.8,.2,1)
+                var(--delay)
+                forwards;
+
         }
 
 
         .info-card:hover {
+
             transform:
-                translateY(-2px);
+                translateY(-4px);
 
             border-color:
-                var(--border);
+                rgba(57,230,255,.18);
+
+            background:
+                rgba(57,230,255,.018);
+
         }
 
 
         .info-icon {
-            width: 36px;
-            height: 36px;
+
+            width: 37px;
+            height: 37px;
 
             display: grid;
 
@@ -1783,18 +2216,22 @@
                 var(--cyan);
 
             background:
-                rgba(57,230,255,0.025);
+                rgba(57,230,255,.025);
+
         }
 
 
         .info-card h3 {
+
             margin-top: 12px;
 
             font-size: 14px;
+
         }
 
 
         .info-card p {
+
             margin-top: 6px;
 
             color:
@@ -1803,6 +2240,21 @@
             font-size: 11px;
 
             line-height: 1.6;
+
+        }
+
+
+        @keyframes revealUp {
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
         }
 
 
@@ -1811,27 +2263,98 @@
         ===================================================== */
 
         .hub-footer {
+
             padding:
-                25px 20px 35px;
+                27px 20px 38px;
 
             text-align: center;
 
             color:
-                #5c727d;
+                #5d747e;
 
             font-size: 10px;
+
         }
 
 
         .hub-footer strong {
+
             color:
                 #8299a4;
+
         }
 
 
         .hub-footer em {
+
             color:
                 #677e88;
+
+        }
+
+
+        /* =====================================================
+           EASTER EGG
+        ===================================================== */
+
+        .secret-message {
+
+            position: fixed;
+
+            left: 50%;
+            bottom: 28px;
+
+            z-index: 100;
+
+            transform:
+                translateX(-50%)
+                translateY(15px);
+
+            padding:
+                9px 13px;
+
+            border:
+                1px solid
+                rgba(57,230,255,.12);
+
+            border-radius: 999px;
+
+            background:
+                rgba(5,12,18,.92);
+
+            color:
+                var(--cyan-soft);
+
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Consolas,
+                monospace;
+
+            font-size: 9px;
+
+            letter-spacing: .08em;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
+
+        }
+
+
+        .secret-message.show {
+
+            opacity: 1;
+
+            transform:
+                translateX(-50%)
+                translateY(0);
+
         }
 
 
@@ -1842,35 +2365,81 @@
         @media (max-width: 780px) {
 
             .login-card {
+
                 padding:
                     30px 22px;
+
             }
 
 
             .hub-header {
+
                 padding:
                     0 17px;
+
+            }
+
+
+            .hub-label {
+
+                font-size: 8px;
+
             }
 
 
             .hub-main {
+
                 width:
                     calc(100% - 26px);
 
                 padding-top:
-                    46px;
+                    48px;
+
             }
 
 
             .platform-grid {
+
                 grid-template-columns:
                     1fr;
+
             }
 
 
             .info-grid {
+
                 grid-template-columns:
                     1fr;
+
+            }
+
+
+            .trailer-triangle {
+
+                width: 250px;
+                height: 220px;
+
+            }
+
+
+            .trailer-logo {
+
+                width: 95px;
+                height: 95px;
+
+            }
+
+
+            .trailer-welcome {
+
+                margin-top: 125px;
+
+                padding:
+                    0 16px;
+
+                font-size:
+                    clamp(23px, 7vw, 35px);
+
             }
 
         }
@@ -1881,6 +2450,7 @@
             *,
             *::before,
             *::after {
+
                 animation-duration:
                     .01ms !important;
 
@@ -1892,24 +2462,118 @@
 
                 scroll-behavior:
                     auto !important;
+
             }
 
         }
 
     </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =========================================================
+<!-- ======================================================
+     AMBIENT TRIANGLES
+====================================================== -->
+
+<div class="ambient">
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:7%;
+            --duration:17s;
+            --delay:-3s;
+            --drift:45px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:18%;
+            --duration:23s;
+            --delay:-9s;
+            --drift:-55px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:31%;
+            --duration:19s;
+            --delay:-13s;
+            --drift:35px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:47%;
+            --duration:25s;
+            --delay:-5s;
+            --drift:-40px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:62%;
+            --duration:21s;
+            --delay:-16s;
+            --drift:60px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:74%;
+            --duration:27s;
+            --delay:-7s;
+            --drift:-30px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:88%;
+            --duration:20s;
+            --delay:-12s;
+            --drift:50px;
+        "
+    ></div>
+
+    <div
+        class="ambient-triangle"
+        style="
+            --left:95%;
+            --duration:29s;
+            --delay:-20s;
+            --drift:-65px;
+        "
+    ></div>
+
+</div>
+
+
+
+<!-- ======================================================
      LOGIN
-========================================================= -->
+====================================================== -->
 
 <section id="loginView">
 
+
     <div class="login-card">
+
 
         <div class="login-decoration"></div>
 
@@ -1961,7 +2625,9 @@
         <div class="field">
 
             <label for="testerCode">
+
                 Código de tester
+
             </label>
 
 
@@ -1990,7 +2656,9 @@
                 id="accessButton"
                 type="button"
             >
+
                 Entrar al programa
+
             </button>
 
 
@@ -2016,31 +2684,34 @@
 
 
 
-<!-- =========================================================
+<!-- ======================================================
      TRAILER
-========================================================= -->
+====================================================== -->
 
 <section
     id="trailerView"
     aria-hidden="true"
 >
 
+
     <div class="trailer-background"></div>
 
 
-    <div class="trailer-lines">
+    <div class="trailer-grid"></div>
 
-        <div class="trailer-line one"></div>
 
-        <div class="trailer-line two"></div>
+    <div class="trailer-line one"></div>
 
-    </div>
+    <div class="trailer-line two"></div>
 
 
     <div class="trailer-triangle"></div>
 
 
-    <!-- MISMO LOGO QUE LUEGO LLEGA AL HEADER -->
+    <!--
+        Este es el mismo logo que terminará
+        en el header del Tester Hub.
+    -->
 
     <img
         class="trailer-logo"
@@ -2051,18 +2722,25 @@
 
     <div class="trailer-content">
 
+
         <div class="trailer-welcome">
+
             BIENVENIDO, TESTER
+
         </div>
 
 
         <div class="trailer-subtitle">
+
             Has obtenido acceso anticipado a RETS.
+
         </div>
 
 
         <div class="trailer-version">
+
             RETS v0.1.0 · VERSIÓN PARA TESTERS
+
         </div>
 
     </div>
@@ -2083,9 +2761,9 @@
 
 
 
-<!-- =========================================================
+<!-- ======================================================
      TESTER HUB
-========================================================= -->
+====================================================== -->
 
 <section id="hubView">
 
@@ -2113,7 +2791,9 @@
 
 
         <div class="hub-label">
+
             RETS TESTER PROGRAM
+
         </div>
 
     </header>
@@ -2129,8 +2809,11 @@
 
         <section class="hub-hero">
 
+
             <div class="tester-chip">
+
                 Acceso de tester confirmado
+
             </div>
 
 
@@ -2147,8 +2830,8 @@
 
                 Has entrado en el área privada del
                 programa de testers. Aquí encontrarás
-                las primeras versiones de RETS, novedades
-                y recursos para tus pruebas.
+                las primeras versiones de RETS,
+                novedades y recursos para tus pruebas.
 
             </p>
 
@@ -2156,21 +2839,26 @@
 
 
 
-        <!-- =================================================
+        <!-- ==================================================
              FIRST BUILD
-        ================================================== -->
+        =================================================== -->
 
-        <section>
+        <section class="section">
 
-            <div class="section-title">
+
+            <div class="section-heading">
 
                 <div class="section-eyebrow">
+
                     RETS FIRST BUILD
+
                 </div>
 
 
                 <h2>
+
                     Primera versión
+
                 </h2>
 
 
@@ -2192,17 +2880,20 @@
 
 
 
-            <!-- PLATFORMS -->
-
             <div class="platform-grid">
 
 
                 <!-- WINDOWS -->
 
-                <article class="platform-card">
+                <article
+                    class="platform-card"
+                    style="--delay:.05s"
+                >
 
                     <div class="platform-icon">
+
                         ▣
+
                     </div>
 
 
@@ -2214,15 +2905,18 @@
 
 
                         <span class="platform-status">
+
                             Próximamente
+
                         </span>
 
 
                         <p>
 
-                            La primera versión de RETS para
-                            Windows estará disponible cuando
-                            termine el desarrollo y las pruebas.
+                            La primera versión de RETS
+                            para Windows estará disponible
+                            cuando termine el desarrollo
+                            y las pruebas.
 
                         </p>
 
@@ -2241,10 +2935,15 @@
 
                 <!-- ANDROID -->
 
-                <article class="platform-card">
+                <article
+                    class="platform-card"
+                    style="--delay:.15s"
+                >
 
                     <div class="platform-icon">
+
                         ◉
+
                     </div>
 
 
@@ -2256,7 +2955,9 @@
 
 
                         <span class="platform-status">
+
                             Próximamente
+
                         </span>
 
 
@@ -2283,10 +2984,15 @@
 
                 <!-- MACOS -->
 
-                <article class="platform-card">
+                <article
+                    class="platform-card"
+                    style="--delay:.25s"
+                >
 
                     <div class="platform-icon">
+
                         ⌘
+
                     </div>
 
 
@@ -2298,7 +3004,9 @@
 
 
                         <span class="platform-status">
+
                             Próximamente
+
                         </span>
 
 
@@ -2324,10 +3032,15 @@
 
                 <!-- CHROMEOS -->
 
-                <article class="platform-card">
+                <article
+                    class="platform-card"
+                    style="--delay:.35s"
+                >
 
                     <div class="platform-icon">
+
                         ◇
+
                     </div>
 
 
@@ -2339,7 +3052,9 @@
 
 
                         <span class="platform-status">
+
                             Próximamente
+
                         </span>
 
 
@@ -2368,80 +3083,136 @@
 
 
 
-        <!-- =================================================
+        <!-- ==================================================
              INFO
-        ================================================== -->
+        =================================================== -->
 
-        <section class="info-grid">
+        <section
+            class="section"
+            style="margin-top:45px"
+        >
 
 
-            <article class="info-card">
+            <div class="section-heading">
 
-                <div class="info-icon">
-                    ▲
+                <div class="section-eyebrow">
+
+                    RETS TESTER EXPERIENCE
+
                 </div>
 
 
-                <h3>
-                    Acceso anticipado
-                </h3>
+                <h2>
+
+                    Estás dentro.
+
+                </h2>
 
 
                 <p>
 
-                    Prueba RETS antes de su lanzamiento
-                    público y descubre nuevas funciones.
+                    Este espacio evolucionará junto con
+                    las pruebas y futuras versiones de RETS.
 
                 </p>
 
-            </article>
+            </div>
 
 
 
-            <article class="info-card">
-
-                <div class="info-icon">
-                    ◇
-                </div>
+            <div class="info-grid">
 
 
-                <h3>
-                    Tu opinión importa
-                </h3>
+                <article
+                    class="info-card"
+                    style="--delay:.05s"
+                >
+
+                    <div class="info-icon">
+
+                        ▲
+
+                    </div>
 
 
-                <p>
+                    <h3>
 
-                    Tus pruebas pueden ayudarnos a encontrar
-                    errores y mejorar la experiencia.
+                        Acceso anticipado
 
-                </p>
-
-            </article>
+                    </h3>
 
 
+                    <p>
 
-            <article class="info-card">
+                        Prueba RETS antes de su lanzamiento
+                        público y descubre nuevas funciones.
 
-                <div class="info-icon">
-                    ↻
-                </div>
+                    </p>
 
-
-                <h3>
-                    Nuevas versiones
-                </h3>
+                </article>
 
 
-                <p>
 
-                    Las futuras builds y novedades aparecerán
-                    aquí cuando estén preparadas.
+                <article
+                    class="info-card"
+                    style="--delay:.15s"
+                >
 
-                </p>
+                    <div class="info-icon">
 
-            </article>
+                        ◇
 
+                    </div>
+
+
+                    <h3>
+
+                        Tu opinión importa
+
+                    </h3>
+
+
+                    <p>
+
+                        Tus pruebas pueden ayudar a encontrar
+                        errores y mejorar la experiencia.
+
+                    </p>
+
+                </article>
+
+
+
+                <article
+                    class="info-card"
+                    style="--delay:.25s"
+                >
+
+                    <div class="info-icon">
+
+                        ↻
+
+                    </div>
+
+
+                    <h3>
+
+                        Nuevas versiones
+
+                    </h3>
+
+
+                    <p>
+
+                        Las futuras builds y novedades
+                        aparecerán aquí cuando estén preparadas.
+
+                    </p>
+
+                </article>
+
+
+            </div>
 
         </section>
 
@@ -2473,11 +3244,24 @@
 
 
 
+<!-- ======================================================
+     EASTER EGG
+====================================================== -->
+
+<div
+    id="secretMessage"
+    class="secret-message"
+>
+    ▲ RETS INTERNAL TESTER BUILD
+</div>
+
+
+
 <script>
 
-    /* =========================================================
+    /* =====================================================
        ELEMENTOS
-    ========================================================= */
+    ===================================================== */
 
     const loginView =
         document.getElementById(
@@ -2515,10 +3299,83 @@
         );
 
 
-    /* =========================================================
-       FORMATEAR CÓDIGO
+    const secretMessage =
+        document.getElementById(
+            "secretMessage"
+        );
+
+
+    /* =====================================================
+       PARALLAX DEL MOUSE
+    ===================================================== */
+
+    let targetX = 0;
+    let targetY = 0;
+
+    let currentX = 0;
+    let currentY = 0;
+
+
+    window.addEventListener(
+        "mousemove",
+        event => {
+
+            targetX =
+                (
+                    event.clientX /
+                    window.innerWidth
+                ) * 2 - 1;
+
+
+            targetY =
+                (
+                    event.clientY /
+                    window.innerHeight
+                ) * 2 - 1;
+
+        }
+    );
+
+
+    function animateParallax() {
+
+        currentX +=
+            (targetX - currentX)
+            * .035;
+
+
+        currentY +=
+            (targetY - currentY)
+            * .035;
+
+
+        document.documentElement.style.setProperty(
+            "--mx",
+            currentX
+        );
+
+
+        document.documentElement.style.setProperty(
+            "--my",
+            currentY
+        );
+
+
+        requestAnimationFrame(
+            animateParallax
+        );
+
+    }
+
+
+    animateParallax();
+
+
+
+    /* =====================================================
+       FORMATO
        RETS-XXXX-XXXX
-    ========================================================= */
+    ===================================================== */
 
     function formatCode(
         value
@@ -2542,7 +3399,9 @@
 
 
         if (!clean) {
+
             return "";
+
         }
 
 
@@ -2558,15 +3417,15 @@
 
 
         return (
-            `RETS-${clean.slice(0, 4)}-${clean.slice(4, 8)}`
+            `RETS-${clean.slice(0,4)}-${clean.slice(4,8)}`
         );
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        INPUT
-    ========================================================= */
+    ===================================================== */
 
     input.addEventListener(
         "input",
@@ -2594,9 +3453,10 @@
     );
 
 
-    /* =========================================================
+
+    /* =====================================================
        STATUS
-    ========================================================= */
+    ===================================================== */
 
     function clearStatus() {
 
@@ -2623,10 +3483,10 @@
     }
 
 
-    /* =========================================================
-       VALIDACIÓN REAL
-       CONTRA EL WORKER
-    ========================================================= */
+
+    /* =====================================================
+       API REAL
+    ===================================================== */
 
     async function verifyTesterCode(
         code
@@ -2636,7 +3496,8 @@
             await fetch(
                 "/api/tester-login",
                 {
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
                         "Content-Type":
@@ -2682,9 +3543,191 @@
     }
 
 
-    /* =========================================================
-       ENTRAR AL ÁREA DE TESTERS
-    ========================================================= */
+
+    /* =====================================================
+       LOGO → HEADER
+    ===================================================== */
+
+    async function moveLogoToHeader() {
+
+        const logo =
+            trailerView.querySelector(
+                ".trailer-logo"
+            );
+
+
+        const target =
+            hubView.querySelector(
+                ".hub-brand img"
+            );
+
+
+        if (!logo || !target) {
+
+            return;
+
+        }
+
+
+        /*
+         * Asegurar que el Hub está visible
+         * para obtener la posición REAL del logo.
+         */
+
+        hubView.classList.add(
+            "show"
+        );
+
+
+        hubView.style.opacity =
+            "1";
+
+
+        await new Promise(
+            resolve =>
+                requestAnimationFrame(
+                    resolve
+                )
+        );
+
+
+        /*
+         * Posición actual real del logo.
+         */
+
+        const startRect =
+            logo.getBoundingClientRect();
+
+
+        /*
+         * Posición final REAL del logo
+         * dentro del header.
+         */
+
+        const targetRect =
+            target.getBoundingClientRect();
+
+
+        /*
+         * El logo original queda oculto
+         * mientras el logo del trailer viaja.
+         */
+
+        target.style.opacity =
+            "0";
+
+
+        /*
+         * Convertimos el logo a coordenadas
+         * exactas de pantalla.
+         */
+
+        logo.style.left =
+            `${startRect.left}px`;
+
+
+        logo.style.top =
+            `${startRect.top}px`;
+
+
+        logo.style.width =
+            `${startRect.width}px`;
+
+
+        logo.style.height =
+            `${startRect.height}px`;
+
+
+        logo.style.transform =
+            "none";
+
+
+        /*
+         * IMPORTANTE:
+         * usamos Web Animations API para que
+         * el destino sea la posición REAL del header,
+         * no coordenadas inventadas.
+         */
+
+        const animation =
+            logo.animate(
+                [
+                    {
+
+                        left:
+                            `${startRect.left}px`,
+
+                        top:
+                            `${startRect.top}px`,
+
+                        width:
+                            `${startRect.width}px`,
+
+                        height:
+                            `${startRect.height}px`,
+
+                        filter:
+                            "drop-shadow(0 0 30px rgba(57,230,255,.25))"
+
+                    },
+
+                    {
+
+                        left:
+                            `${targetRect.left}px`,
+
+                        top:
+                            `${targetRect.top}px`,
+
+                        width:
+                            `${targetRect.width}px`,
+
+                        height:
+                            `${targetRect.height}px`,
+
+                        filter:
+                            "drop-shadow(0 0 12px rgba(57,230,255,.12))"
+
+                    }
+
+                ],
+                {
+
+                    duration:
+                        1100,
+
+                    easing:
+                        "cubic-bezier(.72,0,.18,1)",
+
+                    fill:
+                        "forwards"
+
+                }
+            );
+
+
+        await animation.finished;
+
+
+        /*
+         * Revelamos el logo real del header
+         * antes de quitar el trailer.
+         */
+
+        target.style.opacity =
+            "1";
+
+
+        logo.style.opacity =
+            "0";
+
+    }
+
+
+
+    /* =====================================================
+       ENTRADA AL HUB
+    ===================================================== */
 
     async function enterTesterArea() {
 
@@ -2694,7 +3737,9 @@
                 .toUpperCase();
 
 
-        /* Formato */
+        /*
+         * Validación local del formato.
+         */
 
         if (
             !/^RETS-[A-Z0-9]{4}-[A-Z0-9]{4}$/
@@ -2717,19 +3762,22 @@
         accessButton.disabled =
             true;
 
+
         accessButton.textContent =
             "Comprobando...";
 
 
         try {
 
+            /*
+             * VERIFICACIÓN REAL
+             */
+
             const result =
                 await verifyTesterCode(
                     code
                 );
 
-
-            /* El servidor debe confirmar el código */
 
             if (
                 !result ||
@@ -2747,15 +3795,29 @@
 
 
             /*
-             * ===============================================
+             * ===========================================
              * ACCESO CONFIRMADO
-             * ===============================================
+             * ===========================================
              */
 
+            loginView.style.opacity =
+                "0";
 
-            loginView.style.display =
-                "none";
 
+            setTimeout(
+                () => {
+
+                    loginView.style.display =
+                        "none";
+
+                },
+                450
+            );
+
+
+            /*
+             * Mostrar trailer.
+             */
 
             trailerView.classList.add(
                 "show"
@@ -2768,16 +3830,14 @@
             );
 
 
-            /*
-             * Reiniciar clases para que la animación
-             * siempre empiece correctamente.
-             */
-
             trailerView.classList.remove(
-                "play",
-                "transitioning"
+                "play"
             );
 
+
+            /*
+             * Reiniciar animaciones.
+             */
 
             void trailerView.offsetWidth;
 
@@ -2788,80 +3848,174 @@
 
 
             /*
-             * ===============================================
-             * PREPARAMOS EL HUB
-             * ===============================================
+             * ===========================================
+             * MOSTRAR EL HUB ANTES DE TERMINAR
+             * ===========================================
              */
 
             setTimeout(
                 () => {
-
-                    /*
-                     * Mostrar el Hub detrás
-                     * de la animación.
-                     */
 
                     hubView.classList.add(
                         "show"
                     );
 
-
                     hubView.style.opacity =
-                        "1";
+                        "0";
 
 
-                },
-                2860
-            );
+                    requestAnimationFrame(
+                        () => {
 
+                            hubView.style.opacity =
+                                "1";
 
-            /*
-             * ===============================================
-             * LOGO VIAJA HACIA EL HEADER
-             * ===============================================
-             */
-
-            setTimeout(
-                () => {
-
-                    trailerView.classList.add(
-                        "transitioning"
+                        }
                     );
 
-
                 },
-                3100
+                2950
             );
 
 
             /*
-             * ===============================================
-             * FINAL DE LA TRANSICIÓN
-             * ===============================================
+             * ===========================================
+             * EL LOGO VIAJA AL HEADER
+             * ===========================================
              */
 
             setTimeout(
-                () => {
+                async () => {
 
-                    const hubLogo =
-                        document.querySelector(
-                            ".hub-brand img"
+                    trailerView
+                        .querySelector(
+                            ".trailer-content"
+                        )
+                        .animate(
+                            [
+                                {
+                                    opacity: 1,
+                                    transform:
+                                        "translateY(0)"
+                                },
+
+                                {
+                                    opacity: 0,
+                                    transform:
+                                        "translateY(-14px)"
+                                }
+
+                            ],
+                            {
+
+                                duration:
+                                    520,
+
+                                easing:
+                                    "ease-in",
+
+                                fill:
+                                    "forwards"
+
+                            }
+                        );
+
+
+                    trailerView
+                        .querySelector(
+                            ".trailer-triangle"
+                        )
+                        .animate(
+                            [
+                                {
+                                    opacity: .26,
+                                    transform:
+                                        "translate(-50%,-50%) scale(1) rotate(4deg)"
+                                },
+
+                                {
+                                    opacity: 0,
+                                    transform:
+                                        "translate(-50%,-50%) scale(1.12) rotate(8deg)"
+                                }
+
+                            ],
+                            {
+
+                                duration:
+                                    760,
+
+                                easing:
+                                    "ease-in",
+
+                                fill:
+                                    "forwards"
+
+                            }
+                        );
+
+
+                    trailerView
+                        .querySelector(
+                            ".trailer-sweep"
+                        )
+                        .animate(
+                            [
+                                {
+                                    opacity: 0,
+                                    transform:
+                                        "translateY(-5px)"
+                                },
+
+                                {
+                                    opacity: .8,
+                                    transform:
+                                        "translateY(0)"
+                                },
+
+                                {
+                                    opacity: 0,
+                                    transform:
+                                        "translateY(100vh)"
+                                }
+
+                            ],
+                            {
+
+                                duration:
+                                    1050,
+
+                                easing:
+                                    "ease-in-out",
+
+                                fill:
+                                    "forwards"
+
+                            }
                         );
 
 
                     /*
-                     * El logo que terminó en la misma
-                     * posición que el del header desaparece
-                     * solo cuando el logo real está listo.
+                     * AQUÍ SE PRODUCE EL MOVIMIENTO
+                     * REAL DEL LOGO.
                      */
 
-                    if (hubLogo) {
+                    await moveLogoToHeader();
 
-                        hubLogo.style.opacity =
-                            "1";
 
-                    }
+                },
+                3150
+            );
 
+
+            /*
+             * ===========================================
+             * FINAL DEL TRAILER
+             * ===========================================
+             */
+
+            setTimeout(
+                () => {
 
                     trailerView.style.display =
                         "none";
@@ -2869,8 +4023,7 @@
 
                     trailerView.classList.remove(
                         "show",
-                        "play",
-                        "transitioning"
+                        "play"
                     );
 
 
@@ -2886,8 +4039,11 @@
                     );
 
 
+                    startHubReveals();
+
+
                 },
-                4200
+                4550
             );
 
 
@@ -2904,10 +4060,12 @@
                 "No se pudo contactar con el servidor de RETS."
             );
 
+
         } finally {
 
             accessButton.disabled =
                 false;
+
 
             accessButton.textContent =
                 "Entrar al programa";
@@ -2917,9 +4075,10 @@
     }
 
 
-    /* =========================================================
+
+    /* =====================================================
        BOTÓN
-    ========================================================= */
+    ===================================================== */
 
     accessButton.addEventListener(
         "click",
@@ -2927,9 +4086,10 @@
     );
 
 
-    /* =========================================================
+
+    /* =====================================================
        ENTER
-    ========================================================= */
+    ===================================================== */
 
     input.addEventListener(
         "keydown",
@@ -2948,7 +4108,218 @@
         }
     );
 
+
+
+    /* =====================================================
+       SCROLL REVEALS
+    ===================================================== */
+
+    let revealsStarted =
+        false;
+
+
+    function startHubReveals() {
+
+        if (revealsStarted) {
+
+            return;
+
+        }
+
+
+        revealsStarted =
+            true;
+
+
+        const headings =
+            document.querySelectorAll(
+                ".section-heading"
+            );
+
+
+        const cards =
+            document.querySelectorAll(
+                ".platform-card"
+            );
+
+
+        const infoCards =
+            document.querySelectorAll(
+                ".info-card"
+            );
+
+
+        /*
+         * Primera sección.
+         */
+
+        setTimeout(
+            () => {
+
+                headings[0]?.classList.add(
+                    "reveal"
+                );
+
+
+                cards.forEach(
+                    card =>
+                        card.classList.add(
+                            "reveal"
+                        )
+                );
+
+            },
+            100
+        );
+
+
+        /*
+         * Observer para el resto.
+         */
+
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            if (
+                                !entry.isIntersecting
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            entry.target.classList.add(
+                                "reveal"
+                            );
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+                    );
+
+                },
+                {
+                    threshold:
+                        .12
+                }
+            );
+
+
+        headings
+            .forEach(
+                heading =>
+                    observer.observe(
+                        heading
+                    )
+            );
+
+
+        infoCards
+            .forEach(
+                card =>
+                    observer.observe(
+                        card
+                    )
+            );
+
+    }
+
+
+
+    /* =====================================================
+       EASTER EGG
+       3 CLICS EN NEXARIS
+    ===================================================== */
+
+    const hubBrand =
+        document.querySelector(
+            ".hub-brand"
+        );
+
+
+    let logoClicks =
+        0;
+
+
+    let clickTimer = null;
+
+
+    if (hubBrand) {
+
+        hubBrand.addEventListener(
+            "click",
+            event => {
+
+                /*
+                 * Evitamos navegar durante
+                 * la secuencia secreta.
+                 */
+
+                event.preventDefault();
+
+
+                logoClicks++;
+
+
+                clearTimeout(
+                    clickTimer
+                );
+
+
+                clickTimer =
+                    setTimeout(
+                        () => {
+
+                            logoClicks =
+                                0;
+
+                        },
+                        900
+                    );
+
+
+                if (
+                    logoClicks >= 3
+                ) {
+
+                    logoClicks =
+                        0;
+
+
+                    secretMessage.classList.add(
+                        "show"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            secretMessage.classList.remove(
+                                "show"
+                            );
+
+                        },
+                        2200
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
 </script>
 
 </body>
+
 </html>
