@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,9 +9,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>
-    RETS Tester Program — Nexaris
-</title>
+<title>RETS Tester Program — Nexaris</title>
 
 
 <style>
@@ -24,29 +21,19 @@
 
 :root{
 
-    --bg:
-        #02070a;
+    --bg:#02070a;
 
-    --panel:
-        #081319;
+    --panel:#081319;
 
-    --panel-soft:
-        #071015;
+    --cyan:#16e7f5;
 
-    --cyan:
-        #16e7f5;
+    --cyan-soft:#72f4fa;
 
-    --cyan-soft:
-        #72f4fa;
+    --text:#f4fbfc;
 
-    --text:
-        #f4fbfc;
+    --text-soft:#91a7ad;
 
-    --text-soft:
-        #91a7ad;
-
-    --text-dim:
-        #62787f;
+    --text-dim:#62787f;
 
     --border:
         rgba(22,231,245,.14);
@@ -54,14 +41,11 @@
     --border-strong:
         rgba(22,231,245,.35);
 
-    --danger:
-        #ff5e70;
+    --danger:#ff5e70;
 
-    --success:
-        #23e7b5;
+    --success:#23e7b5;
 
-    --radius:
-        14px;
+    --radius:14px;
 }
 
 
@@ -70,13 +54,14 @@
 ========================================================= */
 
 *{
-    box-sizing:
-        border-box;
+    box-sizing:border-box;
 }
 
 
 html{
+
     width:100%;
+
     min-height:100%;
 
     background:
@@ -87,6 +72,7 @@ html{
 body{
 
     width:100%;
+
     min-height:100vh;
 
     margin:0;
@@ -95,6 +81,23 @@ body{
 
     color:
         var(--text);
+
+    font-family:
+
+        Inter,
+
+        ui-sans-serif,
+
+        system-ui,
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        "Segoe UI",
+
+        sans-serif;
+
 
     background:
 
@@ -119,6 +122,7 @@ body{
 
         var(--bg);
 
+
     background-size:
 
         64px 64px,
@@ -126,35 +130,17 @@ body{
         64px 64px,
 
         100% 100%;
-
-    font-family:
-
-        Inter,
-
-        ui-sans-serif,
-
-        system-ui,
-
-        -apple-system,
-
-        BlinkMacSystemFont,
-
-        "Segoe UI",
-
-        sans-serif;
 }
 
 
 button,
 input{
-    font:
-        inherit;
+    font:inherit;
 }
 
 
 button{
-    cursor:
-        pointer;
+    cursor:pointer;
 }
 
 
@@ -170,17 +156,13 @@ button{
 
 #loginView{
 
-    min-height:
-        100vh;
+    min-height:100vh;
 
-    display:
-        flex;
+    display:flex;
 
-    align-items:
-        center;
+    align-items:center;
 
-    justify-content:
-        center;
+    justify-content:center;
 
     padding:
         32px
@@ -196,8 +178,7 @@ button{
             100%
         );
 
-    text-align:
-        center;
+    text-align:center;
 }
 
 
@@ -218,7 +199,12 @@ button{
     filter:
         drop-shadow(
             0 0 12px
-            rgba(22,231,245,.20)
+            rgba(
+                22,
+                231,
+                245,
+                .20
+            )
         );
 }
 
@@ -251,6 +237,7 @@ button{
         0;
 
     font-size:
+
         clamp(
             28px,
             5vw,
@@ -324,8 +311,7 @@ button{
 
 .code-label{
 
-    display:
-        block;
+    display:block;
 
     margin-bottom:
         10px;
@@ -712,7 +698,7 @@ button{
 
 
 /* =========================================================
-   TRAILER TEXT
+   TRAILER TITLE
 ========================================================= */
 
 .trailer-title{
@@ -1124,7 +1110,7 @@ button{
 
 
 /* =========================================================
-   AMBIENT BUTTON
+   AMBIENT CONTROL
 ========================================================= */
 
 .ambient-control{
@@ -1552,7 +1538,7 @@ button{
 
 
 /* =========================================================
-   SECCIÓN BUILD
+   SECTION
 ========================================================= */
 
 .section-header{
@@ -1609,7 +1595,7 @@ button{
 
 
 /* =========================================================
-   PLATAFORMAS
+   PLATFORM GRID
 ========================================================= */
 
 .platform-grid{
@@ -1862,7 +1848,7 @@ button{
 
 
 /* =========================================================
-   AMBIENT INFO
+   AMBIENT PANEL
 ========================================================= */
 
 .ambient-box{
@@ -1871,8 +1857,8 @@ button{
         30px;
 
     padding:
-        17px
-        19px;
+        18px
+        20px;
 
     display:
         flex;
@@ -1935,10 +1921,10 @@ button{
 .ambient-icon{
 
     width:
-        34px;
+        36px;
 
     height:
-        34px;
+        36px;
 
     display:
         grid;
@@ -1946,20 +1932,23 @@ button{
     place-items:
         center;
 
+    color:
+        var(--cyan);
+
     border:
         1px solid
         rgba(
             22,
             231,
             245,
-            .15
+            .18
         );
 
     border-radius:
-        9px;
+        10px;
 
-    color:
-        var(--cyan);
+    font-size:
+        16px;
 }
 
 
@@ -2005,18 +1994,18 @@ button{
         center;
 
     gap:
-        9px;
+        10px;
 }
 
 
 .ambient-toggle{
 
     height:
-        34px;
+        35px;
 
     padding:
         0
-        13px;
+        14px;
 
     color:
         var(--text-soft);
@@ -2050,6 +2039,10 @@ button{
         ease,
 
         color
+        160ms
+        ease,
+
+        background
         160ms
         ease;
 }
@@ -2129,7 +2122,7 @@ button{
 
 
 /* =========================================================
-   ANIMACIONES
+   ANIMATIONS
 ========================================================= */
 
 @keyframes trailerLogoIn{
@@ -2359,6 +2352,7 @@ button{
                 )
             );
     }
+
 }
 
 
@@ -2486,6 +2480,7 @@ button{
         text-align:
             left;
     }
+
 }
 
 
@@ -2504,6 +2499,7 @@ button{
         transition-duration:
             1ms !important;
     }
+
 }
 
 </style>
@@ -2521,7 +2517,6 @@ button{
 <main
     id="loginView"
 >
-
 
 <div
     class="login-shell"
@@ -2746,13 +2741,16 @@ ACCESO CONFIRMADO
     class="topbar-brand"
 >
 
+
 <strong>
     RETS
 </strong>
 
+
 <span>
     Tester Program
 </span>
+
 
 </div>
 
@@ -2776,10 +2774,13 @@ ACCESO CONFIRMADO
     class="ambient-indicator"
 ></span>
 
+
 <span
     id="ambientTopText"
 >
+
     Ambiente OFF
+
 </span>
 
 </button>
@@ -2789,11 +2790,14 @@ ACCESO CONFIRMADO
     class="status-pill"
 >
 
+
 <span
     class="status-dot"
 ></span>
 
+
 ACCESO ANTICIPADO
+
 
 </div>
 
@@ -2859,13 +2863,8 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="info-card"
-
-    style="
-        --delay:250ms;
-    "
-
+    style="--delay:250ms"
 >
 
 <div
@@ -2878,7 +2877,9 @@ ACCESO ANTICIPADO
 <h2
     class="info-title"
 >
+
     Acceso anticipado
+
 </h2>
 
 
@@ -2897,13 +2898,8 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="info-card"
-
-    style="
-        --delay:340ms;
-    "
-
+    style="--delay:340ms"
 >
 
 <div
@@ -2916,7 +2912,9 @@ ACCESO ANTICIPADO
 <h2
     class="info-title"
 >
+
     Tu opinión importa
+
 </h2>
 
 
@@ -2935,13 +2933,8 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="info-card"
-
-    style="
-        --delay:430ms;
-    "
-
+    style="--delay:430ms"
 >
 
 <div
@@ -2954,7 +2947,9 @@ ACCESO ANTICIPADO
 <h2
     class="info-title"
 >
+
     Nuevas versiones
+
 </h2>
 
 
@@ -2976,7 +2971,7 @@ ACCESO ANTICIPADO
 
 
 <!-- =====================================================
-     BUILD HEADER
+     BUILD
 ====================================================== -->
 
 <div
@@ -3023,25 +3018,15 @@ ACCESO ANTICIPADO
 
 
 
-<!-- =====================================================
-     PLATAFORMAS
-====================================================== -->
-
 <div
     class="platform-grid"
 >
 
 
 <article
-
     class="platform-card"
-
-    style="
-        --delay:540ms;
-    "
-
+    style="--delay:540ms"
 >
-
 
 <div
     class="platform-symbol"
@@ -3076,15 +3061,9 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="platform-card"
-
-    style="
-        --delay:620ms;
-    "
-
+    style="--delay:620ms"
 >
-
 
 <div
     class="platform-symbol"
@@ -3119,15 +3098,9 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="platform-card"
-
-    style="
-        --delay:700ms;
-    "
-
+    style="--delay:700ms"
 >
-
 
 <div
     class="platform-symbol"
@@ -3162,15 +3135,9 @@ ACCESO ANTICIPADO
 
 
 <article
-
     class="platform-card"
-
-    style="
-        --delay:780ms;
-    "
-
+    style="--delay:780ms"
 >
-
 
 <div
     class="platform-symbol"
@@ -3236,7 +3203,9 @@ ACCESO ANTICIPADO
 <div
     class="ambient-title"
 >
+
     Ambiente RETS
+
 </div>
 
 
@@ -3315,7 +3284,6 @@ ACCESO ANTICIPADO
 
 
 </div>
-
 
 </section>
 
@@ -3412,7 +3380,9 @@ function initAudio(){
 
 
     const AudioContextClass =
+
         window.AudioContext ||
+
         window.webkitAudioContext;
 
 
@@ -3427,6 +3397,10 @@ function initAudio(){
     masterGain =
         audioContext.createGain();
 
+
+    /*
+       Volumen general de efectos.
+    */
 
     masterGain.gain.value =
         0.24;
@@ -3456,11 +3430,12 @@ async function resumeAudio(){
         }catch{}
 
     }
+
 }
 
 
 /* =========================================================
-   TONO
+   GENERADOR DE TONOS
 ========================================================= */
 
 function makeTone({
@@ -3867,7 +3842,7 @@ function soundTrailerStart(){
 
 
 /* =========================================================
-   WHOOSH DEL LOGO
+   WHOOSH
 ========================================================= */
 
 function soundLogoWhoosh(){
@@ -4056,32 +4031,31 @@ function soundHubReady(){
    AMBIENTE RETS
 ========================================================= */
 
-let ambient = {
+const ambient = {
 
-    active:
-        false,
+    active:false,
 
-    nodes:
-        [],
+    nodes:[],
 
-    gain:
-        null,
+    gain:null,
 
-    timer:
-        null
+    timer:null
 
 };
 
 
 /*
-   El ambiente no usa ningún archivo externo.
+   Este ambiente NO utiliza solamente graves.
 
-   Está formado por drones muy suaves,
-   cambios lentos y una pequeña atmósfera
-   electrónica.
+   Capas:
 
-   Máximo:
-   60 minutos.
+   110 Hz  → base
+   220 Hz  → cuerpo
+   330 Hz  → profundidad
+   440 Hz  → capa audible
+
+   Los cambios son muy lentos para que
+   no parezca una melodía repetitiva.
 */
 
 
@@ -4104,6 +4078,10 @@ function startRETSAmbient(){
         audioContext.currentTime;
 
 
+    /* =====================================================
+       GANANCIA
+    ===================================================== */
+
     const ambientGain =
         audioContext.createGain();
 
@@ -4117,212 +4095,21 @@ function startRETSAmbient(){
     );
 
 
-    ambientGain.gain.linearRampToValueAtTime(
+    /*
+       Entrada de 5 segundos.
+    */
 
-        .045,
+    ambientGain.gain.exponentialRampToValueAtTime(
 
-        now + 4
+        .11,
+
+        now + 5
 
     );
 
 
     ambientGain.connect(
         masterGain
-    );
-
-
-    /* =====================================================
-       DRONE PRINCIPAL
-    ===================================================== */
-
-    const drone1 =
-        audioContext.createOscillator();
-
-
-    const gain1 =
-        audioContext.createGain();
-
-
-    drone1.type =
-        "sine";
-
-
-    drone1.frequency.setValueAtTime(
-
-        55,
-
-        now
-
-    );
-
-
-    gain1.gain.value =
-        .35;
-
-
-    drone1.connect(
-        gain1
-    );
-
-
-    gain1.connect(
-        ambientGain
-    );
-
-
-    /* =====================================================
-       SEGUNDO DRONE
-    ===================================================== */
-
-    const drone2 =
-        audioContext.createOscillator();
-
-
-    const gain2 =
-        audioContext.createGain();
-
-
-    drone2.type =
-        "sine";
-
-
-    drone2.frequency.setValueAtTime(
-
-        73.333,
-
-        now
-
-    );
-
-
-    gain2.gain.value =
-        .20;
-
-
-    drone2.connect(
-        gain2
-    );
-
-
-    gain2.connect(
-        ambientGain
-    );
-
-
-    /* =====================================================
-       TERCER TONO MUY BAJO
-    ===================================================== */
-
-    const drone3 =
-        audioContext.createOscillator();
-
-
-    const gain3 =
-        audioContext.createGain();
-
-
-    drone3.type =
-        "sine";
-
-
-    drone3.frequency.setValueAtTime(
-
-        110,
-
-        now
-
-    );
-
-
-    gain3.gain.value =
-        .055;
-
-
-    drone3.connect(
-        gain3
-    );
-
-
-    gain3.connect(
-        ambientGain
-    );
-
-
-    /* =====================================================
-       LFO 1
-    ===================================================== */
-
-    const lfo1 =
-        audioContext.createOscillator();
-
-
-    const lfoGain1 =
-        audioContext.createGain();
-
-
-    lfo1.type =
-        "sine";
-
-
-    lfo1.frequency.setValueAtTime(
-
-        .075,
-
-        now
-
-    );
-
-
-    lfoGain1.gain.value =
-        4;
-
-
-    lfo1.connect(
-        lfoGain1
-    );
-
-
-    lfoGain1.connect(
-        drone1.frequency
-    );
-
-
-    /* =====================================================
-       LFO 2
-    ===================================================== */
-
-    const lfo2 =
-        audioContext.createOscillator();
-
-
-    const lfoGain2 =
-        audioContext.createGain();
-
-
-    lfo2.type =
-        "sine";
-
-
-    lfo2.frequency.setValueAtTime(
-
-        .055,
-
-        now
-
-    );
-
-
-    lfoGain2.gain.value =
-        3;
-
-
-    lfo2.connect(
-        lfoGain2
-    );
-
-
-    lfoGain2.connect(
-        drone2.frequency
     );
 
 
@@ -4340,7 +4127,7 @@ function startRETSAmbient(){
 
     filter.frequency.setValueAtTime(
 
-        900,
+        2200,
 
         now
 
@@ -4365,8 +4152,281 @@ function startRETSAmbient(){
 
 
     /* =====================================================
-       INICIAR
+       DRONE 1
     ===================================================== */
+
+    const drone1 =
+        audioContext.createOscillator();
+
+
+    const gain1 =
+        audioContext.createGain();
+
+
+    drone1.type =
+        "sine";
+
+
+    drone1.frequency.setValueAtTime(
+
+        110,
+
+        now
+
+    );
+
+
+    gain1.gain.value =
+        .34;
+
+
+    drone1.connect(
+        gain1
+    );
+
+
+    gain1.connect(
+        ambientGain
+    );
+
+
+    /* =====================================================
+       DRONE 2
+    ===================================================== */
+
+    const drone2 =
+        audioContext.createOscillator();
+
+
+    const gain2 =
+        audioContext.createGain();
+
+
+    drone2.type =
+        "sine";
+
+
+    drone2.frequency.setValueAtTime(
+
+        220,
+
+        now
+
+    );
+
+
+    gain2.gain.value =
+        .20;
+
+
+    drone2.connect(
+        gain2
+    );
+
+
+    gain2.connect(
+        ambientGain
+    );
+
+
+    /* =====================================================
+       DRONE 3
+    ===================================================== */
+
+    const drone3 =
+        audioContext.createOscillator();
+
+
+    const gain3 =
+        audioContext.createGain();
+
+
+    drone3.type =
+        "sine";
+
+
+    drone3.frequency.setValueAtTime(
+
+        330,
+
+        now
+
+    );
+
+
+    gain3.gain.value =
+        .11;
+
+
+    drone3.connect(
+        gain3
+    );
+
+
+    gain3.connect(
+        ambientGain
+    );
+
+
+    /* =====================================================
+       DRONE 4
+    ===================================================== */
+
+    const drone4 =
+        audioContext.createOscillator();
+
+
+    const gain4 =
+        audioContext.createGain();
+
+
+    drone4.type =
+        "sine";
+
+
+    drone4.frequency.setValueAtTime(
+
+        440,
+
+        now
+
+    );
+
+
+    gain4.gain.value =
+        .045;
+
+
+    drone4.connect(
+        gain4
+    );
+
+
+    gain4.connect(
+        ambientGain
+    );
+
+
+    /* =====================================================
+       LFO 1
+===================================================== */
+
+    const lfo1 =
+        audioContext.createOscillator();
+
+
+    const lfoGain1 =
+        audioContext.createGain();
+
+
+    lfo1.type =
+        "sine";
+
+
+    lfo1.frequency.setValueAtTime(
+
+        .075,
+
+        now
+
+    );
+
+
+    lfoGain1.gain.value =
+        8;
+
+
+    lfo1.connect(
+        lfoGain1
+    );
+
+
+    lfoGain1.connect(
+        drone2.frequency
+    );
+
+
+    /* =====================================================
+       LFO 2
+===================================================== */
+
+    const lfo2 =
+        audioContext.createOscillator();
+
+
+    const lfoGain2 =
+        audioContext.createGain();
+
+
+    lfo2.type =
+        "sine";
+
+
+    lfo2.frequency.setValueAtTime(
+
+        .045,
+
+        now
+
+    );
+
+
+    lfoGain2.gain.value =
+        6;
+
+
+    lfo2.connect(
+        lfoGain2
+    );
+
+
+    lfoGain2.connect(
+        drone3.frequency
+    );
+
+
+    /* =====================================================
+       LFO 3 — MUY LENTO
+===================================================== */
+
+    const lfo3 =
+        audioContext.createOscillator();
+
+
+    const lfoGain3 =
+        audioContext.createGain();
+
+
+    lfo3.type =
+        "sine";
+
+
+    lfo3.frequency.setValueAtTime(
+
+        .025,
+
+        now
+
+    );
+
+
+    lfoGain3.gain.value =
+        4;
+
+
+    lfo3.connect(
+        lfoGain3
+    );
+
+
+    lfoGain3.connect(
+        drone4.frequency
+    );
+
+
+    /* =====================================================
+       INICIAR
+===================================================== */
 
     drone1.start(
         now
@@ -4383,6 +4443,11 @@ function startRETSAmbient(){
     );
 
 
+    drone4.start(
+        now
+    );
+
+
     lfo1.start(
         now
     );
@@ -4393,8 +4458,21 @@ function startRETSAmbient(){
     );
 
 
+    lfo3.start(
+        now
+    );
+
+
+    /* =====================================================
+       GUARDAR NODOS
+===================================================== */
+
     ambient.active =
         true;
+
+
+    ambient.gain =
+        ambientGain;
 
 
     ambient.nodes = [
@@ -4405,9 +4483,13 @@ function startRETSAmbient(){
 
         drone3,
 
+        drone4,
+
         lfo1,
 
         lfo2,
+
+        lfo3,
 
         gain1,
 
@@ -4415,9 +4497,13 @@ function startRETSAmbient(){
 
         gain3,
 
+        gain4,
+
         lfoGain1,
 
         lfoGain2,
+
+        lfoGain3,
 
         ambientGain,
 
@@ -4426,11 +4512,12 @@ function startRETSAmbient(){
     ];
 
 
-    ambient.gain =
-        ambientGain;
-
+    /* =====================================================
+       MÁXIMO DE 1 HORA
+===================================================== */
 
     ambient.timer =
+
         setTimeout(
 
             () => {
@@ -4449,6 +4536,7 @@ function startRETSAmbient(){
     updateAmbientUI(
         true
     );
+
 }
 
 
@@ -4459,7 +4547,8 @@ function startRETSAmbient(){
 function stopRETSAmbient(){
 
     if(
-        !ambient.active
+        !ambient.active ||
+        !audioContext
     )
         return;
 
@@ -4488,7 +4577,7 @@ function stopRETSAmbient(){
             );
 
 
-            ambient.gain.gain.linearRampToValueAtTime(
+            ambient.gain.gain.exponentialRampToValueAtTime(
 
                 .0001,
 
@@ -4512,7 +4601,6 @@ function stopRETSAmbient(){
                     try{
 
                         if(
-                            node &&
                             typeof node.stop ===
                             "function"
                         ){
@@ -4565,6 +4653,7 @@ function stopRETSAmbient(){
         3200
 
     );
+
 }
 
 
@@ -4572,28 +4661,22 @@ function stopRETSAmbient(){
    TOGGLE AMBIENTE
 ========================================================= */
 
-function toggleAmbient(){
+async function toggleAmbient(){
 
-    resumeAudio()
-        .then(
+    await resumeAudio();
 
-            () => {
 
-                if(
-                    ambient.active
-                ){
+    if(
+        ambient.active
+    ){
 
-                    stopRETSAmbient();
+        stopRETSAmbient();
 
-                }else{
+    }else{
 
-                    startRETSAmbient();
+        startRETSAmbient();
 
-                }
-
-            }
-
-        );
+    }
 
 }
 
@@ -4647,6 +4730,7 @@ function updateAmbientUI(
             "Ambiente OFF";
 
     }
+
 }
 
 
@@ -4695,7 +4779,6 @@ function setLoginMessage(
     loginMessage.textContent =
         text;
 
-
     loginMessage.className =
         type;
 
@@ -4703,7 +4786,7 @@ function setLoginMessage(
 
 
 /* =========================================================
-   FORMATEAR CÓDIGO
+   FORMATO DEL CÓDIGO
 ========================================================= */
 
 testerCodeInput.addEventListener(
@@ -4725,9 +4808,11 @@ testerCodeInput.addEventListener(
 
 
         if(
+
             value.startsWith(
                 "RETS"
             )
+
         ){
 
             value =
@@ -4790,7 +4875,7 @@ testerCodeInput.addEventListener(
 
 
 /* =========================================================
-   VALIDACIÓN FORMATO
+   VALIDACIÓN
 ========================================================= */
 
 function isValidCodeFormat(
@@ -4877,16 +4962,21 @@ async function verifyTesterCode(){
                         "POST",
 
                     headers:{
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     credentials:
                         "include",
 
                     body:
+
                         JSON.stringify({
+
                             code
+
                         })
 
                 }
@@ -4894,7 +4984,8 @@ async function verifyTesterCode(){
             );
 
 
-        let data = null;
+        let data =
+            null;
 
 
         try{
@@ -4909,11 +5000,6 @@ async function verifyTesterCode(){
 
         }
 
-
-        /*
-           Compatibilidad con las
-           distintas respuestas del Worker.
-        */
 
         const approved =
 
@@ -4962,8 +5048,9 @@ async function verifyTesterCode(){
 
 
         /*
-           El ambiente empieza después
-           de la interacción del usuario.
+           El ambiente comienza
+           después de la interacción
+           que desbloqueó el audio.
         */
 
         setTimeout(
@@ -4971,8 +5058,6 @@ async function verifyTesterCode(){
             async () => {
 
                 await resumeAudio();
-
-                startRETSAmbient();
 
                 showTrailer();
 
@@ -5055,7 +5140,7 @@ accessButton.addEventListener(
 
 
 /* =========================================================
-   MOSTRAR TRAILER
+   TRAILER
 ========================================================= */
 
 function showTrailer(){
@@ -5071,17 +5156,16 @@ function showTrailer(){
 
 
     trailerView.setAttribute(
+
         "aria-hidden",
+
         "false"
+
     );
 
 
     soundTrailerStart();
 
-
-    /*
-       Reiniciar animación del logo.
-    */
 
     trailerLogo.style.animation =
         "none";
@@ -5095,8 +5179,10 @@ function showTrailer(){
 
 
     /*
-       Esperar a que termine
-       el momento principal del trailer.
+       El ambiente comienza
+       al llegar al Hub.
+
+       Así no compite con el trailer.
     */
 
     setTimeout(
@@ -5111,15 +5197,10 @@ function showTrailer(){
 
 
 /* =========================================================
-   TRANSICIÓN LOGO
+   LOGO -> HEADER
 ========================================================= */
 
 function startHubTransition(){
-
-    /*
-       Preparar el Hub
-       debajo del trailer.
-    */
 
     hubView.classList.remove(
         "hidden"
@@ -5134,56 +5215,38 @@ function startHubTransition(){
         "0";
 
 
-    /*
-       Posiciones reales.
-    */
-
     const source =
+
         trailerLogo.getBoundingClientRect();
 
 
     const target =
+
         headerLogo.getBoundingClientRect();
 
-
-    /*
-       Centro inicial.
-    */
 
     const sourceCenterX =
 
         source.left +
-        (
-            source.width / 2
-        );
+        source.width / 2;
 
 
     const sourceCenterY =
 
         source.top +
-        (
-            source.height / 2
-        );
+        source.height / 2;
 
-
-    /*
-       Centro final.
-    */
 
     const targetCenterX =
 
         target.left +
-        (
-            target.width / 2
-        );
+        target.width / 2;
 
 
     const targetCenterY =
 
         target.top +
-        (
-            target.height / 2
-        );
+        target.height / 2;
 
 
     const deltaX =
@@ -5216,11 +5279,6 @@ function startHubTransition(){
     trailerLogo.style.animation =
         "none";
 
-
-    /*
-       Una sola animación.
-       No existe loop ni requestAnimationFrame.
-    */
 
     const animation =
 
@@ -5283,7 +5341,7 @@ function startHubTransition(){
 
 
 /* =========================================================
-   FIN TRANSICIÓN
+   FINAL
 ========================================================= */
 
 function finishHubTransition(){
@@ -5294,8 +5352,11 @@ function finishHubTransition(){
 
 
     trailerView.setAttribute(
+
         "aria-hidden",
+
         "true"
+
     );
 
 
@@ -5318,11 +5379,20 @@ function finishHubTransition(){
 
     soundHubReady();
 
+
+    /*
+       Aquí empieza el ambiente.
+
+       Ya no compite con el trailer.
+    */
+
+    startRETSAmbient();
+
 }
 
 
 /* =========================================================
-   INICIO
+   FOCUS INICIAL
 ========================================================= */
 
 window.addEventListener(
