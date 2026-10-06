@@ -82,23 +82,6 @@ body{
     color:
         var(--text);
 
-    font-family:
-
-        Inter,
-
-        ui-sans-serif,
-
-        system-ui,
-
-        -apple-system,
-
-        BlinkMacSystemFont,
-
-        "Segoe UI",
-
-        sans-serif;
-
-
     background:
 
         linear-gradient(
@@ -122,7 +105,6 @@ body{
 
         var(--bg);
 
-
     background-size:
 
         64px 64px,
@@ -130,6 +112,22 @@ body{
         64px 64px,
 
         100% 100%;
+
+    font-family:
+
+        Inter,
+
+        ui-sans-serif,
+
+        system-ui,
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        "Segoe UI",
+
+        sans-serif;
 }
 
 
@@ -197,8 +195,11 @@ button{
         20px;
 
     filter:
+
         drop-shadow(
-            0 0 12px
+            0
+            0
+            12px
             rgba(
                 22,
                 231,
@@ -282,6 +283,7 @@ button{
         24px;
 
     background:
+
         rgba(
             5,
             13,
@@ -297,6 +299,7 @@ button{
         var(--radius);
 
     box-shadow:
+
         0
         16px
         50px
@@ -311,7 +314,8 @@ button{
 
 .code-label{
 
-    display:block;
+    display:
+        block;
 
     margin-bottom:
         10px;
@@ -636,7 +640,7 @@ button{
 
 
 /* =========================================================
-   LOGO
+   LOGO DEL TRAILER
 ========================================================= */
 
 .trailer-logo{
@@ -698,7 +702,7 @@ button{
 
 
 /* =========================================================
-   TRAILER TITLE
+   TEXTOS DEL TRAILER
 ========================================================= */
 
 .trailer-title{
@@ -923,7 +927,7 @@ button{
             22,
             231,
             245,
-            .40
+            .4
         );
 }
 
@@ -1054,7 +1058,7 @@ button{
 
 
 /* =========================================================
-   STATUS
+   ESTADO
 ========================================================= */
 
 .status-pill{
@@ -1110,7 +1114,7 @@ button{
 
 
 /* =========================================================
-   AMBIENT CONTROL
+   CONTROL DE AMBIENTE
 ========================================================= */
 
 .ambient-control{
@@ -1226,6 +1230,7 @@ button{
 .hub-container{
 
     width:
+
         min(
             1100px,
             100%
@@ -1335,7 +1340,7 @@ button{
 
 
 /* =========================================================
-   INFO
+   INFO CARDS
 ========================================================= */
 
 .info-grid{
@@ -1373,6 +1378,7 @@ button{
         hidden;
 
     background:
+
         rgba(
             7,
             16,
@@ -1425,6 +1431,7 @@ button{
         translateY(-3px);
 
     border-color:
+
         rgba(
             22,
             231,
@@ -1538,7 +1545,7 @@ button{
 
 
 /* =========================================================
-   SECTION
+   BUILD SECTION
 ========================================================= */
 
 .section-header{
@@ -1595,7 +1602,7 @@ button{
 
 
 /* =========================================================
-   PLATFORM GRID
+   PLATAFORMAS
 ========================================================= */
 
 .platform-grid{
@@ -1702,6 +1709,7 @@ button{
         translateY(-4px);
 
     border-color:
+
         rgba(
             22,
             231,
@@ -1834,6 +1842,7 @@ button{
         5px;
 
     margin:
+
         0
         7px
         1px
@@ -1873,6 +1882,7 @@ button{
         20px;
 
     background:
+
         rgba(
             7,
             16,
@@ -2122,7 +2132,7 @@ button{
 
 
 /* =========================================================
-   ANIMATIONS
+   ANIMACIONES
 ========================================================= */
 
 @keyframes trailerLogoIn{
@@ -2518,6 +2528,7 @@ button{
     id="loginView"
 >
 
+
 <div
     class="login-shell"
 >
@@ -2547,8 +2558,10 @@ button{
 <p
     class="login-description"
 >
+
     Introduce tu código de tester para acceder
     a la primera versión de RETS.
+
 </p>
 
 
@@ -2783,6 +2796,7 @@ ACCESO CONFIRMADO
 
 </span>
 
+
 </button>
 
 
@@ -2854,7 +2868,7 @@ ACCESO ANTICIPADO
 
 
 <!-- =====================================================
-     INFO CARDS
+     INFO
 ====================================================== -->
 
 <div
@@ -2866,6 +2880,7 @@ ACCESO ANTICIPADO
     class="info-card"
     style="--delay:250ms"
 >
+
 
 <div
     class="info-icon"
@@ -2902,6 +2917,7 @@ ACCESO ANTICIPADO
     style="--delay:340ms"
 >
 
+
 <div
     class="info-icon"
 >
@@ -2936,6 +2952,7 @@ ACCESO ANTICIPADO
     class="info-card"
     style="--delay:430ms"
 >
+
 
 <div
     class="info-icon"
@@ -3028,6 +3045,7 @@ ACCESO ANTICIPADO
     style="--delay:540ms"
 >
 
+
 <div
     class="platform-symbol"
 >
@@ -3064,6 +3082,7 @@ ACCESO ANTICIPADO
     class="platform-card"
     style="--delay:620ms"
 >
+
 
 <div
     class="platform-symbol"
@@ -3102,6 +3121,7 @@ ACCESO ANTICIPADO
     style="--delay:700ms"
 >
 
+
 <div
     class="platform-symbol"
 >
@@ -3138,6 +3158,7 @@ ACCESO ANTICIPADO
     class="platform-card"
     style="--delay:780ms"
 >
+
 
 <div
     class="platform-symbol"
@@ -3239,7 +3260,7 @@ ACCESO ANTICIPADO
 
 >
 
-    Activar ambiente
+    Pausar ambiente
 
 </button>
 
@@ -3375,7 +3396,9 @@ let masterGain =
 
 function initAudio(){
 
-    if(audioContext)
+    if(
+        audioContext
+    )
         return;
 
 
@@ -3386,7 +3409,9 @@ function initAudio(){
         window.webkitAudioContext;
 
 
-    if(!AudioContextClass)
+    if(
+        !AudioContextClass
+    )
         return;
 
 
@@ -3399,7 +3424,8 @@ function initAudio(){
 
 
     /*
-       Volumen general de efectos.
+       Efectos normales de RETS.
+       El ambiente tiene su propia ganancia.
     */
 
     masterGain.gain.value =
@@ -3409,6 +3435,7 @@ function initAudio(){
     masterGain.connect(
         audioContext.destination
     );
+
 }
 
 
@@ -3418,9 +3445,12 @@ async function resumeAudio(){
 
 
     if(
+
         audioContext &&
+
         audioContext.state ===
         "suspended"
+
     ){
 
         try{
@@ -3435,7 +3465,7 @@ async function resumeAudio(){
 
 
 /* =========================================================
-   GENERADOR DE TONOS
+   TONO
 ========================================================= */
 
 function makeTone({
@@ -3456,8 +3486,11 @@ function makeTone({
 
 
     if(
+
         !audioContext ||
+
         !masterGain
+
     )
         return;
 
@@ -3848,8 +3881,11 @@ function soundTrailerStart(){
 function soundLogoWhoosh(){
 
     if(
+
         !audioContext ||
+
         !masterGain
+
     )
         return;
 
@@ -4033,37 +4069,42 @@ function soundHubReady(){
 
 const ambient = {
 
-    active:false,
+    active:
+        false,
 
-    nodes:[],
+    nodes:
+        [],
 
-    gain:null,
+    gain:
+        null,
 
-    timer:null
+    timer:
+        null
 
 };
 
 
 /*
-   Este ambiente NO utiliza solamente graves.
+   Capas del ambiente:
 
-   Capas:
+   220 Hz  -> base
+   330 Hz  -> profundidad
+   440 Hz  -> protagonista
+   550 Hz  -> capa muy suave
 
-   110 Hz  → base
-   220 Hz  → cuerpo
-   330 Hz  → profundidad
-   440 Hz  → capa audible
-
-   Los cambios son muy lentos para que
-   no parezca una melodía repetitiva.
+   Cada una tiene una modulación muy lenta.
+   Así no queda un zumbido constante.
 */
 
 
 function startRETSAmbient(){
 
     if(
+
         !audioContext ||
+
         !masterGain
+
     )
         return;
 
@@ -4088,7 +4129,7 @@ function startRETSAmbient(){
 
     ambientGain.gain.setValueAtTime(
 
-        .0001,
+        0.0001,
 
         now
 
@@ -4096,12 +4137,12 @@ function startRETSAmbient(){
 
 
     /*
-       Entrada de 5 segundos.
+       Fade in de 5 segundos.
     */
 
     ambientGain.gain.exponentialRampToValueAtTime(
 
-        .11,
+        0.11,
 
         now + 5
 
@@ -4127,7 +4168,7 @@ function startRETSAmbient(){
 
     filter.frequency.setValueAtTime(
 
-        2200,
+        1800,
 
         now
 
@@ -4135,7 +4176,7 @@ function startRETSAmbient(){
 
 
     filter.Q.value =
-        .35;
+        0.30;
 
 
     ambientGain.disconnect();
@@ -4152,61 +4193,22 @@ function startRETSAmbient(){
 
 
     /* =====================================================
-       DRONE 1
-    ===================================================== */
+       220 Hz
+===================================================== */
 
-    const drone1 =
+    const drone220 =
         audioContext.createOscillator();
 
 
-    const gain1 =
+    const gain220 =
         audioContext.createGain();
 
 
-    drone1.type =
+    drone220.type =
         "sine";
 
 
-    drone1.frequency.setValueAtTime(
-
-        110,
-
-        now
-
-    );
-
-
-    gain1.gain.value =
-        .34;
-
-
-    drone1.connect(
-        gain1
-    );
-
-
-    gain1.connect(
-        ambientGain
-    );
-
-
-    /* =====================================================
-       DRONE 2
-    ===================================================== */
-
-    const drone2 =
-        audioContext.createOscillator();
-
-
-    const gain2 =
-        audioContext.createGain();
-
-
-    drone2.type =
-        "sine";
-
-
-    drone2.frequency.setValueAtTime(
+    drone220.frequency.setValueAtTime(
 
         220,
 
@@ -4215,37 +4217,37 @@ function startRETSAmbient(){
     );
 
 
-    gain2.gain.value =
-        .20;
+    gain220.gain.value =
+        0.24;
 
 
-    drone2.connect(
-        gain2
+    drone220.connect(
+        gain220
     );
 
 
-    gain2.connect(
+    gain220.connect(
         ambientGain
     );
 
 
     /* =====================================================
-       DRONE 3
-    ===================================================== */
+       330 Hz
+===================================================== */
 
-    const drone3 =
+    const drone330 =
         audioContext.createOscillator();
 
 
-    const gain3 =
+    const gain330 =
         audioContext.createGain();
 
 
-    drone3.type =
+    drone330.type =
         "sine";
 
 
-    drone3.frequency.setValueAtTime(
+    drone330.frequency.setValueAtTime(
 
         330,
 
@@ -4254,37 +4256,38 @@ function startRETSAmbient(){
     );
 
 
-    gain3.gain.value =
-        .11;
+    gain330.gain.value =
+        0.12;
 
 
-    drone3.connect(
-        gain3
+    drone330.connect(
+        gain330
     );
 
 
-    gain3.connect(
+    gain330.connect(
         ambientGain
     );
 
 
     /* =====================================================
-       DRONE 4
-    ===================================================== */
+       440 Hz
+       PROTAGONISTA
+===================================================== */
 
-    const drone4 =
+    const drone440 =
         audioContext.createOscillator();
 
 
-    const gain4 =
+    const gain440 =
         audioContext.createGain();
 
 
-    drone4.type =
+    drone440.type =
         "sine";
 
 
-    drone4.frequency.setValueAtTime(
+    drone440.frequency.setValueAtTime(
 
         440,
 
@@ -4293,172 +4296,257 @@ function startRETSAmbient(){
     );
 
 
-    gain4.gain.value =
-        .045;
+    gain440.gain.value =
+        0.20;
 
 
-    drone4.connect(
-        gain4
+    drone440.connect(
+        gain440
     );
 
 
-    gain4.connect(
+    gain440.connect(
         ambientGain
     );
 
 
     /* =====================================================
-       LFO 1
+       550 Hz
+       MUY SUAVE
 ===================================================== */
 
-    const lfo1 =
+    const drone550 =
         audioContext.createOscillator();
 
 
-    const lfoGain1 =
+    const gain550 =
         audioContext.createGain();
 
 
-    lfo1.type =
+    drone550.type =
         "sine";
 
 
-    lfo1.frequency.setValueAtTime(
+    drone550.frequency.setValueAtTime(
 
-        .075,
+        550,
 
         now
 
     );
 
 
-    lfoGain1.gain.value =
-        8;
+    gain550.gain.value =
+        0.035;
 
 
-    lfo1.connect(
-        lfoGain1
+    drone550.connect(
+        gain550
     );
 
 
-    lfoGain1.connect(
-        drone2.frequency
+    gain550.connect(
+        ambientGain
     );
 
 
     /* =====================================================
-       LFO 2
+       LFO 220
 ===================================================== */
 
-    const lfo2 =
+    const lfo220 =
         audioContext.createOscillator();
 
 
-    const lfoGain2 =
+    const lfoGain220 =
         audioContext.createGain();
 
 
-    lfo2.type =
+    lfo220.type =
         "sine";
 
 
-    lfo2.frequency.setValueAtTime(
+    lfo220.frequency.setValueAtTime(
 
-        .045,
+        0.035,
 
         now
 
     );
 
 
-    lfoGain2.gain.value =
-        6;
+    lfoGain220.gain.value =
+        0.035;
 
 
-    lfo2.connect(
-        lfoGain2
+    lfo220.connect(
+        lfoGain220
     );
 
 
-    lfoGain2.connect(
-        drone3.frequency
+    lfoGain220.connect(
+        gain220.gain
     );
 
 
     /* =====================================================
-       LFO 3 — MUY LENTO
+       LFO 330
 ===================================================== */
 
-    const lfo3 =
+    const lfo330 =
         audioContext.createOscillator();
 
 
-    const lfoGain3 =
+    const lfoGain330 =
         audioContext.createGain();
 
 
-    lfo3.type =
+    lfo330.type =
         "sine";
 
 
-    lfo3.frequency.setValueAtTime(
+    lfo330.frequency.setValueAtTime(
 
-        .025,
+        0.052,
 
         now
 
     );
 
 
-    lfoGain3.gain.value =
-        4;
+    lfoGain330.gain.value =
+        0.020;
 
 
-    lfo3.connect(
-        lfoGain3
+    lfo330.connect(
+        lfoGain330
     );
 
 
-    lfoGain3.connect(
-        drone4.frequency
+    lfoGain330.connect(
+        gain330.gain
     );
 
 
     /* =====================================================
-       INICIAR
+       LFO 440
+       CAMBIO MÁS LENTO
 ===================================================== */
 
-    drone1.start(
+    const lfo440 =
+        audioContext.createOscillator();
+
+
+    const lfoGain440 =
+        audioContext.createGain();
+
+
+    lfo440.type =
+        "sine";
+
+
+    lfo440.frequency.setValueAtTime(
+
+        0.027,
+
+        now
+
+    );
+
+
+    lfoGain440.gain.value =
+        0.035;
+
+
+    lfo440.connect(
+        lfoGain440
+    );
+
+
+    lfoGain440.connect(
+        gain440.gain
+    );
+
+
+    /* =====================================================
+       LFO 550
+===================================================== */
+
+    const lfo550 =
+        audioContext.createOscillator();
+
+
+    const lfoGain550 =
+        audioContext.createGain();
+
+
+    lfo550.type =
+        "sine";
+
+
+    lfo550.frequency.setValueAtTime(
+
+        0.041,
+
+        now
+
+    );
+
+
+    lfoGain550.gain.value =
+        0.012;
+
+
+    lfo550.connect(
+        lfoGain550
+    );
+
+
+    lfoGain550.connect(
+        gain550.gain
+    );
+
+
+    /* =====================================================
+       INICIAR OSCILADORES
+===================================================== */
+
+    drone220.start(
         now
     );
 
 
-    drone2.start(
+    drone330.start(
         now
     );
 
 
-    drone3.start(
+    drone440.start(
         now
     );
 
 
-    drone4.start(
+    drone550.start(
         now
     );
 
 
-    lfo1.start(
+    lfo220.start(
         now
     );
 
 
-    lfo2.start(
+    lfo330.start(
         now
     );
 
 
-    lfo3.start(
+    lfo440.start(
+        now
+    );
+
+
+    lfo550.start(
         now
     );
 
@@ -4477,33 +4565,37 @@ function startRETSAmbient(){
 
     ambient.nodes = [
 
-        drone1,
+        drone220,
 
-        drone2,
+        drone330,
 
-        drone3,
+        drone440,
 
-        drone4,
+        drone550,
 
-        lfo1,
+        lfo220,
 
-        lfo2,
+        lfo330,
 
-        lfo3,
+        lfo440,
 
-        gain1,
+        lfo550,
 
-        gain2,
+        gain220,
 
-        gain3,
+        gain330,
 
-        gain4,
+        gain440,
 
-        lfoGain1,
+        gain550,
 
-        lfoGain2,
+        lfoGain220,
 
-        lfoGain3,
+        lfoGain330,
+
+        lfoGain440,
+
+        lfoGain550,
 
         ambientGain,
 
@@ -4513,7 +4605,7 @@ function startRETSAmbient(){
 
 
     /* =====================================================
-       MÁXIMO DE 1 HORA
+       LÍMITE DE UNA HORA
 ===================================================== */
 
     ambient.timer =
@@ -4547,8 +4639,11 @@ function startRETSAmbient(){
 function stopRETSAmbient(){
 
     if(
+
         !ambient.active ||
+
         !audioContext
+
     )
         return;
 
@@ -4579,7 +4674,7 @@ function stopRETSAmbient(){
 
             ambient.gain.gain.exponentialRampToValueAtTime(
 
-                .0001,
+                0.0001,
 
                 now + 3
 
@@ -4601,8 +4696,10 @@ function stopRETSAmbient(){
                     try{
 
                         if(
+
                             typeof node.stop ===
                             "function"
+
                         ){
 
                             node.stop();
@@ -4682,7 +4779,7 @@ async function toggleAmbient(){
 
 
 /* =========================================================
-   UI AMBIENTE
+   UI DEL AMBIENTE
 ========================================================= */
 
 function updateAmbientUI(
@@ -4735,7 +4832,7 @@ function updateAmbientUI(
 
 
 /* =========================================================
-   EVENTOS AMBIENTE
+   BOTONES DEL AMBIENTE
 ========================================================= */
 
 ambientToggle.addEventListener(
@@ -4778,6 +4875,7 @@ function setLoginMessage(
 
     loginMessage.textContent =
         text;
+
 
     loginMessage.className =
         type;
@@ -5047,17 +5145,9 @@ async function verifyTesterCode(){
         soundSuccess();
 
 
-        /*
-           El ambiente comienza
-           después de la interacción
-           que desbloqueó el audio.
-        */
-
         setTimeout(
 
-            async () => {
-
-                await resumeAudio();
+            () => {
 
                 showTrailer();
 
@@ -5178,13 +5268,6 @@ function showTrailer(){
         "";
 
 
-    /*
-       El ambiente comienza
-       al llegar al Hub.
-
-       Así no compite con el trailer.
-    */
-
     setTimeout(
 
         startHubTransition,
@@ -5197,7 +5280,7 @@ function showTrailer(){
 
 
 /* =========================================================
-   LOGO -> HEADER
+   TRANSICIÓN DEL LOGO
 ========================================================= */
 
 function startHubTransition(){
@@ -5216,12 +5299,10 @@ function startHubTransition(){
 
 
     const source =
-
         trailerLogo.getBoundingClientRect();
 
 
     const target =
-
         headerLogo.getBoundingClientRect();
 
 
@@ -5341,7 +5422,7 @@ function startHubTransition(){
 
 
 /* =========================================================
-   FINAL
+   FINAL DEL TRAILER
 ========================================================= */
 
 function finishHubTransition(){
@@ -5381,9 +5462,8 @@ function finishHubTransition(){
 
 
     /*
-       Aquí empieza el ambiente.
-
-       Ya no compite con el trailer.
+       El ambiente empieza ahora,
+       ya fuera del trailer.
     */
 
     startRETSAmbient();
