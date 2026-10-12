@@ -1,1198 +1,3364 @@
-```html
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>RETS — Navegador de SimetriOS</title>
-
-<style>
-/* =========================================================
-   RETS — SITIO OFICIAL
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #05090b;
-    color: #f2f7f7;
-    overflow-x: hidden;
-}
-
-/* =========================================================
-   FONDO DE TRIÁNGULOS
-   ========================================================= */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -3;
-
-    background:
-        linear-gradient(30deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
-        linear-gradient(150deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
-        linear-gradient(30deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114),
-        linear-gradient(150deg, #071114 12%, transparent 12.5%, transparent 87%, #071114 87.5%, #071114);
-
-    background-size: 90px 156px;
-    background-position:
-        0 0,
-        0 0,
-        45px 78px,
-        45px 78px;
-
-    opacity: 0.75;
-}
-
-/* Brillo ambiental */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(71, 230, 230, 0.13),
-            transparent 32%
-        ),
-        linear-gradient(
-            to bottom,
-            transparent 65%,
-            #05090b 100%
-        );
-}
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 82px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 7%;
-
-    background: rgba(3, 8, 10, 0.88);
-    backdrop-filter: blur(12px);
-
-    border-bottom: 1px solid rgba(111, 224, 224, 0.08);
-
-    z-index: 1000;
-
-    animation: headerAppear 0.8s ease forwards;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexaris — Created for you.</title>
+
+    <meta
+        name="description"
+        content="Nexaris — Created for you. Discover RETS, Rapid Exploration & Technology Suite."
+    >
+
+    <style>
+        :root {
+            --bg: #05080d;
+            --panel: rgba(10, 18, 28, 0.74);
+
+            --cyan: #39e6ff;
+            --cyan-soft: #7cf0ff;
+
+            --text: #f2fbff;
+            --text-soft: #99aeb9;
+
+            --border: rgba(80, 220, 255, 0.16);
+
+            --max-width: 1180px;
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(35, 213, 255, 0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 35%,
+                    rgba(73, 145, 255, 0.07),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: -1;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 64px 64px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(
+                var(--max-width),
+                calc(100% - 40px)
+            );
 
-.logo-small {
-    display: flex;
-    align-items: center;
-    gap: 13px;
+            margin: 0 auto;
+        }
 
-    color: white;
-    text-decoration: none;
+        /* ========================================
+           NAVBAR
+        ======================================== */
 
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: 8px;
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
 
-    transition: 0.3s ease;
-}
+            width: 100%;
+            z-index: 1000;
 
-.logo-small:hover {
-    color: #70e5e5;
-    text-shadow: 0 0 18px rgba(91, 231, 231, 0.5);
-}
+            background:
+                rgba(5, 8, 13, 0.76);
 
-.logo-small img {
-    width: 27px;
-    height: 27px;
-    object-fit: contain;
-}
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
 
-/* Navegación */
+            border-bottom:
+                1px solid rgba(255,255,255,0.05);
+        }
 
-nav {
-    display: flex;
-    align-items: center;
-    gap: 38px;
-}
+        .nav {
+            height: 78px;
 
-nav a {
-    position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-    color: #a9b2b5;
-    text-decoration: none;
+            gap: 24px;
+        }
 
-    font-size: 14px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
 
-    transition: 0.3s ease;
-}
+            font-weight: 800;
+            letter-spacing: 0.08em;
 
-nav a::after {
-    content: "";
-    position: absolute;
+            flex-shrink: 0;
+        }
 
-    left: 50%;
-    bottom: -8px;
+        .brand-mark {
+            width: 34px;
+            height: 34px;
 
-    width: 0;
-    height: 1px;
+            object-fit: contain;
 
-    background: #67dddd;
+            filter:
+                drop-shadow(
+                    0 0 12px rgba(57,230,255,0.28)
+                );
+        }
 
-    transform: translateX(-50%);
-    transition: 0.3s ease;
-}
+        .brand-name {
+            font-size: 15px;
+        }
 
-nav a:hover {
-    color: white;
-}
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
 
-nav a:hover::after {
-    width: 100%;
-}
+        nav a {
+            color: var(--text-soft);
 
-/* Botón descargar */
+            font-size: 14px;
 
-.download-btn {
-    padding: 11px 22px;
+            transition: 0.25s ease;
+        }
 
-    border: 1px solid #58d7d7;
-    border-radius: 8px;
+        nav a:hover {
+            color: var(--text);
+        }
 
-    color: #78e8e8;
-    text-decoration: none;
+        .nav-button {
+            padding: 10px 16px;
 
-    transition: 0.3s ease;
-}
+            border:
+                1px solid var(--border);
 
-.download-btn:hover {
-    color: #061011;
-    background: #68dddd;
+            border-radius: 999px;
 
-    box-shadow:
-        0 0 20px rgba(104, 221, 221, 0.25),
-        inset 0 0 10px rgba(255,255,255,0.15);
-}
+            background:
+                rgba(57,230,255,0.05);
 
-/* =========================================================
-   SECCIONES
-   ========================================================= */
+            color: var(--cyan-soft);
+        }
 
-section {
-    position: relative;
-    min-height: 100vh;
+        /* ========================================
+           LANGUAGE SELECTOR
+        ======================================== */
 
-    padding: 130px 8% 100px;
+        .language-wrapper {
+            position: relative;
+        }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+        .language-select {
+            appearance: none;
+            -webkit-appearance: none;
 
-    text-align: center;
-}
+            min-width: 118px;
 
-/* =========================================================
-   HERO
-   ========================================================= */
+            padding:
+                9px 34px 9px 13px;
 
-.hero {
-    padding-top: 140px;
-}
+            border:
+                1px solid var(--border);
 
-.hero-logo {
-    width: 190px;
-    max-width: 40vw;
+            border-radius: 999px;
 
-    margin-bottom: 35px;
+            color: var(--text);
 
-    filter:
-        drop-shadow(0 0 10px rgba(70, 235, 235, 0.75))
-        drop-shadow(0 0 28px rgba(70, 235, 235, 0.35));
+            background:
+                rgba(57,230,255,0.045);
 
-    animation:
-        logoAppear 1.2s ease forwards,
-        logoFloat 5s ease-in-out 1.3s infinite;
-}
+            cursor: pointer;
 
-.hero-title {
-    font-size: clamp(80px, 12vw, 150px);
-    line-height: 0.9;
+            outline: none;
 
-    font-weight: 800;
-    letter-spacing: 12px;
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
 
-    color: #f5f8f8;
+        .language-select:hover,
+        .language-select:focus {
+            border-color:
+                rgba(57,230,255,0.38);
 
-    text-shadow:
-        0 0 12px rgba(255,255,255,0.08);
+            background:
+                rgba(57,230,255,0.08);
+        }
 
-    animation: titleAppear 1s ease 0.35s both;
-}
+        .language-wrapper::after {
+            content: "⌄";
 
-.hero-subtitle {
-    margin-top: 30px;
+            position: absolute;
 
-    font-size: 25px;
-    color: #67dddd;
+            right: 13px;
+            top: 50%;
 
-    animation: fadeUp 1s ease 0.65s both;
-}
+            transform:
+                translateY(-58%);
 
-.hero-description {
-    max-width: 760px;
+            color: var(--cyan-soft);
 
-    margin-top: 25px;
+            pointer-events: none;
+        }
 
-    color: #aab5b8;
-    font-size: 17px;
-    line-height: 1.8;
+        .language-select option {
+            background: #081018;
+            color: white;
+        }
 
-    animation: fadeUp 1s ease 0.85s both;
-}
+        /* ========================================
+           HERO
+        ======================================== */
 
-/* Botones */
+        .hero {
+            min-height: 100vh;
 
-.hero-buttons {
-    display: flex;
-    gap: 15px;
+            padding-top: 78px;
 
-    margin-top: 42px;
+            display: flex;
+            align-items: center;
+        }
 
-    animation: fadeUp 1s ease 1s both;
-}
+        .hero-grid {
+            display: grid;
 
-.btn {
-    padding: 15px 28px;
+            grid-template-columns:
+                1.05fr 0.95fr;
 
-    border-radius: 9px;
+            align-items: center;
 
-    font-weight: bold;
-    text-decoration: none;
+            gap: 60px;
+        }
 
-    transition: 0.3s ease;
-}
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
 
-.btn-primary {
-    color: #041012;
-    background: #69dddd;
-}
+            gap: 10px;
 
-.btn-primary:hover {
-    transform: translateY(-3px);
+            padding: 8px 13px;
 
-    box-shadow:
-        0 0 25px rgba(105, 221, 221, 0.35);
-}
+            border:
+                1px solid var(--border);
 
-.btn-secondary {
-    color: white;
+            border-radius: 999px;
 
-    border: 1px solid rgba(105, 221, 221, 0.35);
-}
+            color: var(--cyan-soft);
 
-.btn-secondary:hover {
-    background: rgba(105, 221, 221, 0.08);
+            background:
+                rgba(57,230,255,0.045);
 
-    border-color: #69dddd;
+            font-size: 12px;
 
-    transform: translateY(-3px);
-}
+            letter-spacing: 0.09em;
 
-/* Indicador */
+            text-transform: uppercase;
+        }
 
-.scroll-indicator {
-    position: absolute;
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
 
-    bottom: 28px;
+            border-radius: 50%;
 
-    color: #536064;
+            background: var(--cyan);
 
-    font-size: 11px;
-    letter-spacing: 5px;
+            box-shadow:
+                0 0 12px rgba(57,230,255,0.8);
+        }
 
-    animation:
-        fadeUp 1s ease 1.3s both,
-        pulse 2.5s ease-in-out infinite;
-}
+        .hero h1 {
+            margin-top: 24px;
 
-/* =========================================================
-   TÍTULOS DE SECCIÓN
-   ========================================================= */
+            font-size:
+                clamp(52px, 8vw, 102px);
 
-.section-label {
-    color: #63dddd;
+            line-height: 0.94;
 
-    font-size: 12px;
-    letter-spacing: 5px;
+            letter-spacing: -0.055em;
 
-    margin-bottom: 15px;
-}
+            font-weight: 850;
+        }
 
-.section-title {
-    font-size: clamp(38px, 5vw, 65px);
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    120deg,
+                    var(--text),
+                    var(--cyan-soft)
+                );
 
-    margin-bottom: 20px;
+            -webkit-background-clip: text;
+            background-clip: text;
 
-    color: white;
-}
+            color: transparent;
+        }
 
-.section-description {
-    max-width: 700px;
+        .hero-tagline {
+            margin-top: 17px;
 
-    color: #9ba7aa;
+            color: var(--cyan-soft);
 
-    line-height: 1.8;
-}
+            font-size:
+                clamp(19px, 3vw, 27px);
 
-/* =========================================================
-   CARDS DE FUNCIONES
-   ========================================================= */
+            font-weight: 600;
 
-.features {
-    display: grid;
+            letter-spacing: -0.02em;
+        }
 
-    grid-template-columns:
-        repeat(3, minmax(220px, 1fr));
+        .hero-description {
+            margin-top: 25px;
 
-    gap: 20px;
+            max-width: 610px;
 
-    width: 100%;
-    max-width: 1050px;
+            color: var(--text-soft);
 
-    margin-top: 55px;
-}
+            font-size: 18px;
 
-.card {
-    position: relative;
+            line-height: 1.7;
+        }
 
-    padding: 30px;
+        .hero-actions {
+            margin-top: 34px;
 
-    text-align: left;
+            display: flex;
+            flex-wrap: wrap;
 
-    background: rgba(9, 17, 20, 0.78);
+            gap: 14px;
+        }
 
-    border: 1px solid rgba(111, 224, 224, 0.1);
+        .button {
+            display: inline-flex;
 
-    border-radius: 14px;
+            align-items: center;
+            justify-content: center;
 
-    overflow: hidden;
+            min-height: 48px;
 
-    transition:
-        transform 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
-}
+            padding: 0 20px;
 
-.card::before {
-    content: "";
+            border-radius: 14px;
 
-    position: absolute;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease;
+        }
 
-    top: 0;
-    left: -100%;
+        .button-primary {
+            background: var(--cyan);
 
-    width: 100%;
-    height: 1px;
+            color: #041016;
 
-    background: #69dddd;
+            font-weight: 800;
 
-    transition: 0.5s ease;
-}
+            box-shadow:
+                0 0 30px rgba(57,230,255,0.16);
+        }
 
-.card:hover {
-    transform: translateY(-8px);
+        .button-primary:hover {
+            transform: translateY(-2px);
 
-    border-color: rgba(105, 221, 221, 0.35);
+            box-shadow:
+                0 0 40px rgba(57,230,255,0.23);
+        }
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.25);
-}
+        .button-secondary {
+            border:
+                1px solid var(--border);
 
-.card:hover::before {
-    left: 100%;
-}
+            background:
+                rgba(255,255,255,0.025);
 
-.card-icon {
-    width: 45px;
-    height: 45px;
+            color: var(--text);
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .button-secondary:hover {
+            transform: translateY(-2px);
 
-    margin-bottom: 20px;
+            border-color:
+                rgba(57,230,255,0.35);
 
-    border: 1px solid rgba(105,221,221,0.3);
-    border-radius: 10px;
+            background:
+                rgba(57,230,255,0.05);
+        }
 
-    color: #6fe1e1;
+        .hero-meta {
+            margin-top: 30px;
 
-    font-size: 20px;
-}
+            display: flex;
+            flex-wrap: wrap;
 
-.card h3 {
-    margin-bottom: 12px;
+            gap: 22px;
 
-    color: white;
-    font-size: 20px;
-}
+            color: #6f8994;
 
-.card p {
-    color: #899598;
+            font-size: 13px;
+        }
 
-    font-size: 14px;
-    line-height: 1.7;
-}
+        .hero-meta strong {
+            color: var(--text-soft);
+        }
 
-/* =========================================================
-   PLATAFORMAS
-   ========================================================= */
+        /* ========================================
+           HERO VISUAL
+        ======================================== */
 
-.platforms {
-    width: 100%;
-    max-width: 1000px;
+        .hero-visual {
+            min-height: 520px;
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+            position: relative;
 
-    gap: 18px;
+            display: grid;
+            place-items: center;
+        }
 
-    margin-top: 50px;
-}
+        .triangle-orbit {
+            width: min(460px, 82vw);
 
-.platform {
-    padding: 28px;
+            aspect-ratio: 1;
 
-    background: rgba(8,15,18,0.75);
+            position: relative;
 
-    border: 1px solid rgba(105,221,221,0.1);
-    border-radius: 12px;
+            display: grid;
+            place-items: center;
+        }
 
-    transition: 0.35s ease;
-}
+        .triangle {
+            position: absolute;
 
-.platform:hover {
-    transform: translateY(-5px);
+            inset: 10%;
 
-    border-color: rgba(105,221,221,0.4);
-}
+            clip-path:
+                polygon(
+                    50% 4%,
+                    96% 94%,
+                    4% 94%
+                );
 
-.platform h3 {
-    margin-bottom: 8px;
-}
+            border:
+                1px solid rgba(57,230,255,0.18);
 
-.platform p {
-    color: #899598;
-    font-size: 14px;
-}
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,230,255,0.08),
+                    rgba(57,230,255,0.01)
+                );
 
-/* =========================================================
-   DESCARGAS
-   ========================================================= */
+            animation:
+                floatTriangle 7s ease-in-out infinite;
+        }
 
-.downloads {
-    width: 100%;
-    max-width: 850px;
+        .triangle-2 {
+            inset: 17%;
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+            opacity: 0.72;
 
-    gap: 20px;
+            transform: rotate(180deg);
 
-    margin-top: 50px;
-}
+            animation:
+                floatTriangleReverse 8s ease-in-out infinite;
+        }
 
-.download-card {
-    padding: 30px;
+        .triangle-3 {
+            inset: 25%;
 
-    text-align: left;
+            opacity: 0.5;
 
-    background: rgba(8,15,18,0.82);
+            animation:
+                floatTriangle 10s ease-in-out infinite reverse;
+        }
 
-    border: 1px solid rgba(105,221,221,0.12);
+        .orbit-circle {
+            position: absolute;
 
-    border-radius: 14px;
+            inset: 3%;
 
-    transition: 0.35s ease;
-}
+            border:
+                1px solid rgba(57,230,255,0.08);
 
-.download-card:hover {
-    border-color: rgba(105,221,221,0.4);
+            border-radius: 50%;
 
-    transform: translateY(-5px);
-}
+            animation:
+                spin 24s linear infinite;
+        }
 
-.download-card h3 {
-    margin-bottom: 8px;
-}
+        .orbit-circle::before,
+        .orbit-circle::after {
+            content: "";
 
-.download-card p {
-    color: #8f9a9d;
+            position: absolute;
 
-    margin-bottom: 20px;
+            width: 8px;
+            height: 8px;
 
-    font-size: 14px;
-}
+            border-radius: 50%;
 
-.download-link {
-    display: inline-block;
+            background:
+                var(--cyan);
 
-    padding: 10px 18px;
+            box-shadow:
+                0 0 22px rgba(57,230,255,0.9);
+        }
 
-    border-radius: 7px;
+        .orbit-circle::before {
+            top: 8%;
+            left: 18%;
+        }
 
-    background: #69dddd;
-    color: #041012;
+        .orbit-circle::after {
+            right: 11%;
+            bottom: 15%;
+        }
 
-    text-decoration: none;
+        .hero-logo {
+            width: 130px;
+            height: 130px;
 
-    font-size: 14px;
-    font-weight: bold;
+            object-fit: contain;
 
-    transition: 0.3s ease;
-}
+            filter:
+                drop-shadow(
+                    0 0 16px rgba(57,230,255,0.25)
+                )
+                drop-shadow(
+                    0 0 50px rgba(57,230,255,0.12)
+                );
 
-.download-link:hover {
-    box-shadow: 0 0 18px rgba(105,221,221,0.25);
-}
+            animation:
+                floating 4s ease-in-out infinite;
+        }
 
-/* =========================================================
-   CRÉDITOS / EXTRA
-   ========================================================= */
+        .visual-caption {
+            position: absolute;
 
-.credits-box {
-    max-width: 750px;
+            bottom: 16px;
 
-    padding: 40px;
+            color: #6f8994;
 
-    margin-top: 45px;
+            font-size: 11px;
 
-    background: rgba(8,15,18,0.7);
+            letter-spacing: 0.12em;
 
-    border: 1px solid rgba(105,221,221,0.1);
+            text-transform: uppercase;
+        }
 
-    border-radius: 15px;
-}
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-.credits-box p {
-    color: #929ea1;
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
 
-    line-height: 1.8;
-}
+            50% {
+                transform: translateY(-12px);
+            }
+        }
 
-.extra {
-    margin-top: 25px;
+        @keyframes floatTriangle {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
 
-    color: #69dddd;
+            50% {
+                transform:
+                    translateY(-10px)
+                    rotate(2deg);
+            }
+        }
 
-    font-size: 14px;
-}
+        @keyframes floatTriangleReverse {
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    rotate(180deg);
+            }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+            50% {
+                transform:
+                    translateY(9px)
+                    rotate(178deg);
+            }
+        }
 
-footer {
-    padding: 35px 8%;
+        /* ========================================
+           SECTIONS
+        ======================================== */
 
-    text-align: center;
+        section {
+            padding: 110px 0;
+        }
 
-    border-top: 1px solid rgba(105,221,221,0.08);
+        .section-heading {
+            max-width: 760px;
 
-    color: #596467;
+            margin-bottom: 52px;
+        }
 
-    font-size: 13px;
-}
+        .section-kicker {
+            color: var(--cyan-soft);
 
-footer span {
-    color: #69dddd;
-}
+            font-size: 12px;
 
-/* =========================================================
-   ANIMACIONES
-   ========================================================= */
+            letter-spacing: 0.11em;
 
-@keyframes headerAppear {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
+            text-transform: uppercase;
+        }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .section-heading h2 {
+            margin-top: 12px;
 
-@keyframes logoAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.65) translateY(25px);
-    }
+            font-size:
+                clamp(34px, 5vw, 58px);
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
+            line-height: 1.05;
 
-@keyframes logoFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
+            letter-spacing: -0.045em;
+        }
 
-    50% {
-        transform: translateY(-8px);
-    }
-}
+        .section-heading p {
+            margin-top: 18px;
 
-@keyframes titleAppear {
-    from {
-        opacity: 0;
-        transform: translateY(35px);
-        letter-spacing: 25px;
-    }
+            color: var(--text-soft);
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        letter-spacing: 12px;
-    }
-}
+            line-height: 1.75;
 
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
+            font-size: 16px;
+        }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        /* ========================================
+           RETS
+        ======================================== */
 
-@keyframes pulse {
-    0%, 100% {
-        opacity: 0.35;
-    }
+        .rets-section {
+            border-top:
+                1px solid rgba(255,255,255,0.04);
 
-    50% {
-        opacity: 0.8;
-    }
-}
+            border-bottom:
+                1px solid rgba(255,255,255,0.04);
+        }
 
-/* =========================================================
-   ANIMACIÓN AL HACER SCROLL
-   ========================================================= */
+        .rets-card {
+            display: grid;
 
-.reveal {
-    opacity: 0;
+            grid-template-columns:
+                0.85fr 1.15fr;
 
-    transform: translateY(35px);
+            gap: 40px;
 
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-}
+            padding: 42px;
 
-.reveal.visible {
-    opacity: 1;
+            border:
+                1px solid var(--border);
 
-    transform: translateY(0);
-}
+            border-radius: 28px;
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,230,255,0.06),
+                    rgba(255,255,255,0.01)
+                );
+        }
 
-@media (max-width: 800px) {
+        .rets-brand {
+            display: flex;
 
-    header {
-        padding: 0 5%;
-    }
+            flex-direction: column;
 
-    nav {
-        gap: 15px;
-    }
+            justify-content: center;
+        }
 
-    nav a:not(.download-btn) {
-        display: none;
-    }
+        .rets-brand img {
+            width: 74px;
+            height: 74px;
 
-    .hero-title {
-        letter-spacing: 7px;
-    }
+            object-fit: contain;
 
-    .features,
-    .platforms,
-    .downloads {
-        grid-template-columns: 1fr;
-    }
+            margin-bottom: 22px;
 
-    .hero-buttons {
-        flex-direction: column;
-        width: 80%;
-    }
+            filter:
+                drop-shadow(
+                    0 0 18px rgba(57,230,255,0.22)
+                );
+        }
 
-    .btn {
-        width: 100%;
-    }
-}
-</style>
+        .rets-brand h3 {
+            font-size: 48px;
+
+            letter-spacing: -0.05em;
+        }
+
+        .rets-brand .tagline {
+            margin-top: 8px;
+
+            color: var(--cyan-soft);
+
+            font-size: 13px;
+
+            letter-spacing: 0.07em;
+        }
+
+        .rets-description {
+            align-self: center;
+
+            color: var(--text-soft);
+
+            line-height: 1.8;
+
+            font-size: 16px;
+        }
+
+        .rets-description strong {
+            color: var(--text);
+        }
+
+        /* ========================================
+           FEATURES
+        ======================================== */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .feature-card {
+            min-height: 230px;
+
+            padding: 28px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: var(--radius);
+
+            background: var(--panel);
+
+            transition:
+                transform 0.28s ease,
+                border-color 0.28s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(57,230,255,0.2);
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            color: var(--cyan);
+
+            background:
+                rgba(57,230,255,0.04);
+
+            font-size: 18px;
+        }
+
+        .feature-card h3 {
+            margin-top: 20px;
+
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            margin-top: 10px;
+
+            color: var(--text-soft);
+
+            line-height: 1.65;
+
+            font-size: 14px;
+        }
+
+        /* ========================================
+           NEXARIS
+        ======================================== */
+
+        .company-layout {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 26px;
+        }
+
+        .company-panel {
+            padding: 34px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.025),
+                    rgba(255,255,255,0.01)
+                );
+        }
+
+        .company-panel h3 {
+            font-size: 27px;
+        }
+
+        .company-panel p {
+            margin-top: 14px;
+
+            color: var(--text-soft);
+
+            line-height: 1.75;
+        }
+
+        .company-name {
+            margin-top: 20px;
+
+            font-size:
+                clamp(44px, 7vw, 72px);
+
+            font-weight: 850;
+
+            letter-spacing: -0.06em;
+        }
+
+        .company-name span {
+            color: var(--cyan);
+        }
+
+        .company-tagline {
+            margin-top: 8px;
+
+            color: var(--cyan-soft);
+
+            font-size: 18px;
+
+            font-weight: 600;
+        }
+
+        .quote {
+            margin-top: 24px;
+
+            padding-left: 18px;
+
+            border-left:
+                2px solid rgba(57,230,255,0.4);
+
+            color: var(--text);
+
+            font-size: 18px;
+
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           TIMELINE
+        ======================================== */
+
+        .timeline {
+            display: grid;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: grid;
+
+            grid-template-columns:
+                150px 1fr;
+
+            gap: 26px;
+
+            padding: 24px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.018);
+        }
+
+        .timeline-date {
+            color: var(--cyan-soft);
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            letter-spacing: 0.08em;
+        }
+
+        .timeline-item h3 {
+            font-size: 18px;
+        }
+
+        .timeline-item p {
+            margin-top: 7px;
+
+            color: var(--text-soft);
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+        /* ========================================
+           LAUNCH
+        ======================================== */
+
+        .launch {
+            text-align: center;
+        }
+
+        .launch-card {
+            padding: 76px 30px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 30px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(57,230,255,0.09),
+                    transparent 45%
+                ),
+                var(--panel);
+        }
+
+        .launch-card::after {
+            content: "▲";
+
+            position: absolute;
+
+            right: -30px;
+            bottom: -85px;
+
+            font-size: 280px;
+
+            line-height: 1;
+
+            color:
+                rgba(57,230,255,0.025);
+
+            pointer-events: none;
+        }
+
+        .launch-card h2 {
+            position: relative;
+            z-index: 1;
+
+            font-size:
+                clamp(44px, 8vw, 88px);
+
+            letter-spacing: -0.06em;
+        }
+
+        .launch-date {
+            position: relative;
+            z-index: 1;
+
+            margin-top: 14px;
+
+            color: var(--cyan-soft);
+
+            font-size:
+                clamp(24px, 4vw, 38px);
+
+            font-weight: 800;
+        }
+
+        .launch-text {
+            position: relative;
+            z-index: 1;
+
+            margin: 18px auto 0;
+
+            max-width: 580px;
+
+            color: var(--text-soft);
+
+            line-height: 1.7;
+        }
+
+        .launch-card .button {
+            position: relative;
+            z-index: 1;
+
+            margin-top: 28px;
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        footer {
+            padding: 50px 0 35px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-top {
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+        .footer-brand p {
+            margin-top: 14px;
+
+            color: var(--text-soft);
+
+            line-height: 1.65;
+
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+
+            gap: 26px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-soft);
+
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            margin-top: 42px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.04);
+
+            color: #627681;
+
+            font-size: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        /* ========================================
+           REVEAL
+        ======================================== */
+
+        .reveal {
+            opacity: 0;
+
+            transform:
+                translateY(24px);
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 1000px) {
+
+            nav {
+                gap: 14px;
+            }
+
+            nav a:not(.nav-button) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .hero-grid,
+            .rets-card,
+            .company-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 110px;
+            }
+
+            .hero-visual {
+                min-height: 390px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width:
+                    calc(100% - 28px);
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .nav {
+                height: 70px;
+            }
+
+            .brand-name {
+                display: none;
+            }
+
+            .language-select {
+                min-width: 104px;
+                font-size: 12px;
+            }
+
+            .hero h1 {
+                font-size: 58px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-visual {
+                min-height: 330px;
+            }
+
+            .hero-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .rets-card {
+                padding: 28px;
+            }
+
+            .rets-brand h3 {
+                font-size: 40px;
+            }
+
+            .launch-card {
+                padding: 58px 20px;
+            }
+
+            .footer-top {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
+    <!-- ========================================
+         NAVBAR
+    ======================================== -->
 
-<header>
+    <header>
 
-    <a href="#inicio" class="logo-small">
-        <img src="image.png" alt="RETS">
-        <span>RETS</span>
-    </a>
+        <div class="container nav">
 
-    <nav>
-        <a href="#funciones">Funciones</a>
-        <a href="#plataformas">Plataformas</a>
-        <a href="#descargar" class="download-btn">Descargar</a>
-    </nav>
+            <a
+                href="#inicio"
+                class="brand"
+            >
 
-</header>
+                <img
+                    src="image.png"
+                    alt="Nexaris"
+                    class="brand-mark"
+                >
 
+                <span class="brand-name">
+                    NEXARIS
+                </span>
 
-<!-- =====================================================
-     HERO
-     ===================================================== -->
-
-<section class="hero" id="inicio">
-
-    <img
-        src="image.png"
-        alt="Logo oficial de RETS"
-        class="hero-logo"
-    >
-
-    <h1 class="hero-title">RETS</h1>
-
-    <h2 class="hero-subtitle">
-        Navegador de SimetriOS
-    </h2>
-
-    <p class="hero-description">
-        Más que navegar. Un navegador diseñado para convertir
-        la web en un espacio más rápido, inteligente,
-        personal y útil.
-    </p>
-
-    <div class="hero-buttons">
-
-        <a href="#descargar" class="btn btn-primary">
-            Descargar RETS
-        </a>
-
-        <a href="#funciones" class="btn btn-secondary">
-            Explorar RETS
-        </a>
-
-    </div>
-
-    <div class="scroll-indicator">
-        ↓ &nbsp; DESCUBRE RETS
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FUNCIONES
-     ===================================================== -->
-
-<section id="funciones">
-
-    <div class="reveal">
-
-        <div class="section-label">
-            EL NAVEGADOR
-        </div>
-
-        <h2 class="section-title">
-            Todo en un solo lugar.
-        </h2>
-
-        <p class="section-description">
-            RETS combina navegación, herramientas y funciones
-            inteligentes en una interfaz creada para ser
-            rápida, limpia y personal.
-        </p>
-
-    </div>
-
-
-    <div class="features">
-
-        <div class="card reveal">
-
-            <div class="card-icon">◈</div>
-
-            <h3>RETS Vision</h3>
-
-            <p>
-                Analiza lo que aparece en tu pantalla y convierte
-                imágenes y contenido visual en información útil.
-            </p>
-
-        </div>
-
-
-        <div class="card reveal">
-
-            <div class="card-icon">⌘</div>
-
-            <h3>Command Center</h3>
-
-            <p>
-                Controla RETS rápidamente con comandos y acciones
-                desde un único espacio.
-            </p>
-
-        </div>
-
-
-        <div class="card reveal">
-
-            <div class="card-icon">▣</div>
-
-            <h3>RETS Vault</h3>
-
-            <p>
-                Un espacio pensado para mantener tus archivos
-                importantes organizados dentro del navegador.
-            </p>
-
-        </div>
-
-
-        <div class="card reveal">
-
-            <div class="card-icon">◌</div>
-
-            <h3>Sesión privada</h3>
-
-            <p>
-                Navega en una sesión independiente cuando
-                necesites mantener separado tu entorno.
-            </p>
-
-        </div>
-
-
-        <div class="card reveal">
-
-            <div class="card-icon">⚡</div>
-
-            <h3>Optimizado</h3>
-
-            <p>
-                Diseñado pensando especialmente en equipos
-                con recursos limitados.
-            </p>
-
-        </div>
-
-
-        <div class="card reveal">
-
-            <div class="card-icon">◉</div>
-
-            <h3>Interfaz RETS</h3>
-
-            <p>
-                Una interfaz moderna, oscura y minimalista
-                diseñada alrededor de la experiencia RETS.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PLATAFORMAS
-     ===================================================== -->
-
-<section id="plataformas">
-
-    <div class="reveal">
-
-        <div class="section-label">
-            COMPATIBILIDAD
-        </div>
-
-        <h2 class="section-title">
-            Diseñado para diferentes equipos.
-        </h2>
-
-        <p class="section-description">
-            RETS busca ofrecer una experiencia consistente
-            sin exigir demasiado hardware.
-        </p>
-
-    </div>
-
-
-    <div class="platforms">
-
-        <div class="platform reveal">
-
-            <h3>Windows</h3>
-
-            <p>
-                Experiencia principal de RETS.
-            </p>
-
-        </div>
-
-
-        <div class="platform reveal">
-
-            <h3>Equipos de bajos recursos</h3>
-
-            <p>
-                Interfaz pensada para mantener un funcionamiento
-                ligero.
-            </p>
-
-        </div>
-
-
-        <div class="platform reveal">
-
-            <h3>Más plataformas</h3>
-
-            <p>
-                Nuevas versiones y plataformas podrán llegar
-                posteriormente.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     DESCARGAS
-     ===================================================== -->
-
-<section id="descargar">
-
-    <div class="reveal">
-
-        <div class="section-label">
-            DESCARGAS
-        </div>
-
-        <h2 class="section-title">
-            Consigue RETS.
-        </h2>
-
-        <p class="section-description">
-            Elige la versión correspondiente a tu dispositivo.
-        </p>
-
-    </div>
-
-
-    <div class="downloads">
-
-        <div class="download-card reveal">
-
-            <h3>RETS para Windows</h3>
-
-            <p>
-                Instalador oficial de RETS para Windows.
-            </p>
-
-            <!-- Cambia # por el enlace real cuando tengas
-                 publicado el instalador -->
-
-            <a href="#" class="download-link">
-                Próximamente
             </a>
 
+
+            <nav>
+
+                <a
+                    href="#rets"
+                    data-i18n="nav.rets"
+                >
+                    RETS
+                </a>
+
+                <a
+                    href="#features"
+                    data-i18n="nav.features"
+                >
+                    Features
+                </a>
+
+                <a
+                    href="#nexaris"
+                    data-i18n="nav.nexaris"
+                >
+                    Nexaris
+                </a>
+
+                <a
+                    href="#roadmap"
+                    data-i18n="nav.evolution"
+                >
+                    Evolution
+                </a>
+
+                <a
+                    href="#launch"
+                    class="nav-button"
+                    data-i18n="nav.launch"
+                >
+                    Launch
+                </a>
+
+
+                <div class="language-wrapper">
+
+                    <select
+                        id="languageSelect"
+                        class="language-select"
+                        aria-label="Language"
+                    >
+
+                        <option value="en">
+                            🇺🇸 English
+                        </option>
+
+                        <option value="es">
+                            🇪🇸 Español
+                        </option>
+
+                        <option value="pt">
+                            🇧🇷 Português
+                        </option>
+
+                        <option value="ru">
+                            🇷🇺 Русский
+                        </option>
+
+                        <option value="fr">
+                            🇫🇷 Français
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </nav>
+
         </div>
 
+    </header>
 
-        <div class="download-card reveal">
 
-            <h3>Otras plataformas</h3>
+    <main>
 
-            <p>
-                Más versiones de RETS estarán disponibles
-                próximamente.
-            </p>
+        <!-- ========================================
+             HERO
+        ======================================== -->
 
-            <a href="#" class="download-link">
-                Próximamente
-            </a>
+        <section
+            class="hero"
+            id="inicio"
+        >
+
+            <div class="container hero-grid">
+
+                <div class="hero-content reveal">
+
+                    <div class="eyebrow">
+
+                        <span class="eyebrow-dot"></span>
+
+                        <span data-i18n="hero.eyebrow">
+                            NEXARIS × RETS
+                        </span>
+
+                    </div>
+
+
+                    <h1>
+                        <span>
+                            NEXARIS
+                        </span>
+                    </h1>
+
+
+                    <div
+                        class="hero-tagline"
+                        data-i18n="hero.tagline"
+                    >
+                        Created for you.
+                    </div>
+
+
+                    <p
+                        class="hero-description"
+                        data-i18n="hero.description"
+                    >
+                        Technology and digital experiences
+                        created with a simple idea:
+                        technology should adapt to people.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#rets"
+                            class="button button-primary"
+                            data-i18n="hero.discover"
+                        >
+                            Discover RETS
+                        </a>
+
+                        <a
+                            href="#nexaris"
+                            class="button button-secondary"
+                            data-i18n="hero.about"
+                        >
+                            About Nexaris
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-meta">
+
+                        <span>
+                            <strong>RETS</strong>
+                            —
+                            <span data-i18n="hero.mainProduct">
+                                Main product
+                            </span>
+                        </span>
+
+                        <span>
+                            <strong>2026</strong>
+                            —
+                            <span data-i18n="hero.generation">
+                                First generation
+                            </span>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-visual reveal">
+
+                    <div class="triangle-orbit">
+
+                        <div class="orbit-circle"></div>
+
+                        <div class="triangle"></div>
+
+                        <div class="triangle triangle-2"></div>
+
+                        <div class="triangle triangle-3"></div>
+
+                        <img
+                            src="image.png"
+                            alt="RETS"
+                            class="hero-logo"
+                        >
+
+                    </div>
+
+                    <div class="visual-caption">
+                        NEXARIS × RETS
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             RETS
+        ======================================== -->
+
+        <section
+            class="rets-section"
+            id="rets"
+        >
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="rets.kicker"
+                    >
+                        Product
+                    </div>
+
+
+                    <h2
+                        data-i18n="rets.title"
+                    >
+                        Meet RETS.
+                    </h2>
+
+
+                    <p
+                        data-i18n="rets.intro"
+                    >
+                        A browser built around one idea:
+                        creating a more personal way to
+                        experience technology.
+                    </p>
+
+                </div>
+
+
+                <div class="rets-card reveal">
+
+                    <div class="rets-brand">
+
+                        <img
+                            src="image.png"
+                            alt="RETS"
+                        >
+
+                        <h3>
+                            RETS
+                        </h3>
+
+                        <div class="tagline">
+                            Rapid Exploration &amp;
+                            Technology Suite
+                        </div>
+
+                    </div>
+
+
+                    <div class="rets-description">
+
+                        <p>
+                            <strong>RETS</strong>
+
+                            <span data-i18n="rets.description1">
+                                is the main product from Nexaris:
+                                a browser with its own interface,
+                                integrated tools and a focus on
+                                making the most of available resources.
+                            </span>
+                        </p>
+
+
+                        <br>
+
+
+                        <p
+                            data-i18n="rets.description2"
+                        >
+                            More than just browsing, RETS brings
+                            useful tools together in one place
+                            for exploring, working and creating.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             FEATURES
+        ======================================== -->
+
+        <section id="features">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="features.kicker"
+                    >
+                        Inside RETS
+                    </div>
+
+
+                    <h2
+                        data-i18n="features.title"
+                    >
+                        Tools built for RETS.
+                    </h2>
+
+
+                    <p
+                        data-i18n="features.intro"
+                    >
+                        Features designed to become part
+                        of the browser itself.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-grid">
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ▲
+                        </div>
+
+                        <h3>
+                            RETS HUD
+                        </h3>
+
+                        <p
+                            data-i18n="feature.hud"
+                        >
+                            A command center designed to give
+                            you quick control over different
+                            browser functions.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ◈
+                        </div>
+
+                        <h3>
+                            RETS Vision
+                        </h3>
+
+                        <p
+                            data-i18n="feature.vision"
+                        >
+                            Capture a region of your screen
+                            and let RETS analyze it through
+                            its vision system.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ◆
+                        </div>
+
+                        <h3>
+                            RETS Vault
+                        </h3>
+
+                        <p
+                            data-i18n="feature.vault"
+                        >
+                            A private space designed for
+                            protecting files separately
+                            from regular storage.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ↻
+                        </div>
+
+                        <h3>
+                            RETS Recovery
+                        </h3>
+
+                        <p
+                            data-i18n="feature.recovery"
+                        >
+                            Restore your previous session
+                            after an unexpected browser
+                            shutdown.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ◌
+                        </div>
+
+                        <h3
+                            data-i18n="feature.privateTitle"
+                        >
+                            Private Session
+                        </h3>
+
+                        <p
+                            data-i18n="feature.private"
+                        >
+                            A separate browsing session designed
+                            to keep normal browsing activity
+                            more isolated.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ◫
+                        </div>
+
+                        <h3
+                            data-i18n="feature.optimizationTitle"
+                        >
+                            Optimization
+                        </h3>
+
+                        <p
+                            data-i18n="feature.optimization"
+                        >
+                            An interface and architecture focused
+                            on making the most of the resources
+                            available.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             NEXARIS
+        ======================================== -->
+
+        <section id="nexaris">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="company.kicker"
+                    >
+                        The project
+                    </div>
+
+
+                    <h2
+                        data-i18n="company.title"
+                    >
+                        Meet Nexaris.
+                    </h2>
+
+
+                    <p
+                        data-i18n="company.intro"
+                    >
+                        An independent project created around
+                        the idea of building technology differently.
+                    </p>
+
+                </div>
+
+
+                <div class="company-layout">
+
+
+                    <div class="company-panel reveal">
+
+                        <h3>
+                            NEXARIS
+                        </h3>
+
+
+                        <div class="company-name">
+                            Nexaris<span>.</span>
+                        </div>
+
+
+                        <div
+                            class="company-tagline"
+                            data-i18n="company.tagline"
+                        >
+                            Created for you.
+                        </div>
+
+
+                        <p
+                            data-i18n="company.description"
+                        >
+                            Nexaris is an independent project
+                            focused on creating its own digital
+                            experiences and tools.
+                        </p>
+
+                    </div>
+
+
+                    <div class="company-panel reveal">
+
+                        <h3
+                            data-i18n="company.storyTitle"
+                        >
+                            It started with an idea.
+                        </h3>
+
+
+                        <p
+                            data-i18n="company.story1"
+                        >
+                            Nexaris grew alongside RETS,
+                            a browser created to explore a
+                            different approach to everyday
+                            technology.
+                        </p>
+
+
+                        <p
+                            data-i18n="company.story2"
+                        >
+                            The project continues to evolve
+                            through new ideas, experiments,
+                            tools and improvements.
+                        </p>
+
+
+                        <p>
+                            <strong
+                                data-i18n="company.beginning"
+                            >
+                                RETS is the beginning.
+                            </strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             EVOLUTION
+        ======================================== -->
+
+        <section id="roadmap">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="evolution.kicker"
+                    >
+                        Evolution
+                    </div>
+
+
+                    <h2
+                        data-i18n="evolution.title"
+                    >
+                        From an idea to a product.
+                    </h2>
+
+
+                    <p
+                        data-i18n="evolution.intro"
+                    >
+                        RETS continues to evolve through
+                        new features, optimization and
+                        improvements.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline">
+
+
+                    <div class="timeline-item reveal">
+
+                        <div
+                            class="timeline-date"
+                            data-i18n="timeline.year"
+                        >
+                            2026
+                        </div>
+
+                        <div>
+
+                            <h3
+                                data-i18n="timeline.beginTitle"
+                            >
+                                The beginning
+                            </h3>
+
+                            <p
+                                data-i18n="timeline.beginText"
+                            >
+                                RETS started as an idea:
+                                creating a browser of its own.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item reveal">
+
+                        <div
+                            class="timeline-date"
+                            data-i18n="timeline.developmentDate"
+                        >
+                            DEVELOPMENT
+                        </div>
+
+                        <div>
+
+                            <h3
+                                data-i18n="timeline.developmentTitle"
+                            >
+                                Building RETS
+                            </h3>
+
+                            <p
+                                data-i18n="timeline.developmentText"
+                            >
+                                Interface, tabs, tools,
+                                storage, navigation,
+                                sounds and new features.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item reveal">
+
+                        <div
+                            class="timeline-date"
+                            data-i18n="timeline.testingDate"
+                        >
+                            TESTING
+                        </div>
+
+                        <div>
+
+                            <h3
+                                data-i18n="timeline.testingTitle"
+                            >
+                                Testing and optimization
+                            </h3>
+
+                            <p
+                                data-i18n="timeline.testingText"
+                            >
+                                Bug fixing, device testing
+                                and preparation for the
+                                final version.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item reveal">
+
+                        <div class="timeline-date">
+                            31.10.2026
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                RETS v1.0
+                            </h3>
+
+                            <p
+                                data-i18n="timeline.launchText"
+                            >
+                                Official launch of the first
+                                public version of RETS.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             LAUNCH
+        ======================================== -->
+
+        <section
+            class="launch"
+            id="launch"
+        >
+
+            <div class="container">
+
+                <div class="launch-card reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="launch.kicker"
+                    >
+                        Launch
+                    </div>
+
+
+                    <h2>
+                        RETS v1.0
+                    </h2>
+
+
+                    <div class="launch-date">
+                        31 OCTOBER 2026
+                    </div>
+
+
+                    <p
+                        class="launch-text"
+                        data-i18n="launch.text"
+                    >
+                        A new experience is about to begin.
+                    </p>
+
+
+                    <a
+                        href="#inicio"
+                        class="button button-primary"
+                        data-i18n="launch.button"
+                    >
+                        Back to top
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-top">
+
+                <div class="footer-brand">
+
+                    <a
+                        href="#inicio"
+                        class="brand"
+                    >
+
+                        <img
+                            src="image.png"
+                            alt="Nexaris"
+                            class="brand-mark"
+                        >
+
+                        <span class="brand-name">
+                            NEXARIS
+                        </span>
+
+                    </a>
+
+
+                    <p>
+                        <span data-i18n="footer.tagline">
+                            Created for you.
+                        </span>
+
+                        <br>
+
+                        <span data-i18n="footer.description">
+                            RETS is the first project
+                            created under Nexaris.
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a
+                        href="#rets"
+                        data-i18n="nav.rets"
+                    >
+                        RETS
+                    </a>
+
+                    <a
+                        href="#features"
+                        data-i18n="nav.features"
+                    >
+                        Features
+                    </a>
+
+                    <a
+                        href="#nexaris"
+                        data-i18n="nav.nexaris"
+                    >
+                        Nexaris
+                    </a>
+
+                    <a
+                        href="#roadmap"
+                        data-i18n="nav.evolution"
+                    >
+                        Evolution
+                    </a>
+
+                    <a
+                        href="#launch"
+                        data-i18n="nav.launch"
+                    >
+                        Launch
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © <span id="year"></span>
+                    Nexaris.
+                    <span data-i18n="footer.rights">
+                        All rights reserved.
+                    </span>
+                </span>
+
+
+                <span
+                    data-i18n="footer.product"
+                >
+                    RETS is a product by Nexaris.
+                </span>
+
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </footer>
 
 
-<!-- =====================================================
-     CRÉDITOS
-     ===================================================== -->
+    <!-- ========================================
+         TRANSLATION SYSTEM
+    ======================================== -->
 
-<section id="creditos">
+    <script>
 
-    <div class="reveal">
+        const translations = {
 
-        <div class="section-label">
-            RETS PROJECT
-        </div>
+            /* ====================================
+               ENGLISH
+            ==================================== */
 
-        <h2 class="section-title">
-            Hecho para explorar.
-        </h2>
+            en: {
 
-        <div class="credits-box">
+                "nav.rets":
+                    "RETS",
 
-            <p>
-                RETS es un proyecto independiente enfocado en
-                crear una experiencia de navegación diferente,
-                combinando simplicidad, herramientas inteligentes
-                y una interfaz propia.
-            </p>
+                "nav.features":
+                    "Features",
 
-            <p class="extra">
-                Gracias por formar parte del proyecto RETS.
-            </p>
+                "nav.nexaris":
+                    "Nexaris",
 
-        </div>
+                "nav.evolution":
+                    "Evolution",
 
-    </div>
-
-</section>
+                "nav.launch":
+                    "Launch",
 
 
-<!-- =====================================================
-     FOOTER
-     ===================================================== -->
+                "hero.eyebrow":
+                    "NEXARIS × RETS",
 
-<footer>
+                "hero.tagline":
+                    "Created for you.",
 
-    RETS © 2026 ·
-    <span>Navegador de SimetriOS</span>
+                "hero.description":
+                    "Technology and digital experiences created with a simple idea: technology should adapt to people.",
 
-</footer>
+                "hero.discover":
+                    "Discover RETS",
+
+                "hero.about":
+                    "About Nexaris",
+
+                "hero.mainProduct":
+                    "Main product",
+
+                "hero.generation":
+                    "First generation",
 
 
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
+                "rets.kicker":
+                    "Product",
 
-<script>
+                "rets.title":
+                    "Meet RETS.",
 
-/*
- * Animación de aparición al hacer scroll.
- */
+                "rets.intro":
+                    "A browser built around one idea: creating a more personal way to experience technology.",
 
-const revealElements =
-    document.querySelectorAll(".reveal");
+                "rets.description1":
+                    "is the main product from Nexaris: a browser with its own interface, integrated tools and a focus on making the most of available resources.",
 
-const observer =
-    new IntersectionObserver(
-        (entries) => {
+                "rets.description2":
+                    "More than just browsing, RETS brings useful tools together in one place for exploring, working and creating.",
 
-            entries.forEach((entry) => {
 
-                if (entry.isIntersecting) {
+                "features.kicker":
+                    "Inside RETS",
 
-                    entry.target.classList.add("visible");
+                "features.title":
+                    "Tools built for RETS.",
+
+                "features.intro":
+                    "Features designed to become part of the browser itself.",
+
+                "feature.hud":
+                    "A command center designed to give you quick control over different browser functions.",
+
+                "feature.vision":
+                    "Capture a region of your screen and let RETS analyze it through its vision system.",
+
+                "feature.vault":
+                    "A private space designed for protecting files separately from regular storage.",
+
+                "feature.recovery":
+                    "Restore your previous session after an unexpected browser shutdown.",
+
+                "feature.privateTitle":
+                    "Private Session",
+
+                "feature.private":
+                    "A separate browsing session designed to keep normal browsing activity more isolated.",
+
+                "feature.optimizationTitle":
+                    "Optimization",
+
+                "feature.optimization":
+                    "An interface and architecture focused on making the most of the resources available.",
+
+
+                "company.kicker":
+                    "The project",
+
+                "company.title":
+                    "Meet Nexaris.",
+
+                "company.intro":
+                    "An independent project created around the idea of building technology differently.",
+
+                "company.tagline":
+                    "Created for you.",
+
+                "company.description":
+                    "Nexaris is an independent project focused on creating its own digital experiences and tools.",
+
+                "company.storyTitle":
+                    "It started with an idea.",
+
+                "company.story1":
+                    "Nexaris grew alongside RETS, a browser created to explore a different approach to everyday technology.",
+
+                "company.story2":
+                    "The project continues to evolve through new ideas, experiments, tools and improvements.",
+
+                "company.beginning":
+                    "RETS is the beginning.",
+
+
+                "evolution.kicker":
+                    "Evolution",
+
+                "evolution.title":
+                    "From an idea to a product.",
+
+                "evolution.intro":
+                    "RETS continues to evolve through new features, optimization and improvements.",
+
+
+                "timeline.year":
+                    "2026",
+
+                "timeline.beginTitle":
+                    "The beginning",
+
+                "timeline.beginText":
+                    "RETS started as an idea: creating a browser of its own.",
+
+                "timeline.developmentDate":
+                    "DEVELOPMENT",
+
+                "timeline.developmentTitle":
+                    "Building RETS",
+
+                "timeline.developmentText":
+                    "Interface, tabs, tools, storage, navigation, sounds and new features.",
+
+                "timeline.testingDate":
+                    "TESTING",
+
+                "timeline.testingTitle":
+                    "Testing and optimization",
+
+                "timeline.testingText":
+                    "Bug fixing, device testing and preparation for the final version.",
+
+                "timeline.launchText":
+                    "Official launch of the first public version of RETS.",
+
+
+                "launch.kicker":
+                    "Launch",
+
+                "launch.text":
+                    "A new experience is about to begin.",
+
+                "launch.button":
+                    "Back to top",
+
+
+                "footer.tagline":
+                    "Created for you.",
+
+                "footer.description":
+                    "RETS is the first project created under Nexaris.",
+
+                "footer.rights":
+                    "All rights reserved.",
+
+                "footer.product":
+                    "RETS is a product by Nexaris."
+            },
+
+
+            /* ====================================
+               ESPAÑOL
+            ==================================== */
+
+            es: {
+
+                "nav.rets":
+                    "RETS",
+
+                "nav.features":
+                    "Funciones",
+
+                "nav.nexaris":
+                    "Nexaris",
+
+                "nav.evolution":
+                    "Evolución",
+
+                "nav.launch":
+                    "Lanzamiento",
+
+
+                "hero.eyebrow":
+                    "NEXARIS × RETS",
+
+                "hero.tagline":
+                    "Creado para ti.",
+
+                "hero.description":
+                    "Tecnología y experiencias digitales creadas con una idea sencilla: la tecnología debe adaptarse a las personas.",
+
+                "hero.discover":
+                    "Descubrir RETS",
+
+                "hero.about":
+                    "Sobre Nexaris",
+
+                "hero.mainProduct":
+                    "Producto principal",
+
+                "hero.generation":
+                    "Primera generación",
+
+
+                "rets.kicker":
+                    "Producto",
+
+                "rets.title":
+                    "Conoce RETS.",
+
+                "rets.intro":
+                    "Un navegador construido alrededor de una idea: crear una forma más personal de experimentar la tecnología.",
+
+                "rets.description1":
+                    "es el producto principal de Nexaris: un navegador con una interfaz propia, herramientas integradas y un enfoque en aprovechar al máximo los recursos disponibles.",
+
+                "rets.description2":
+                    "Más que navegar, RETS reúne herramientas útiles en un solo lugar para explorar, trabajar y crear.",
+
+
+                "features.kicker":
+                    "Dentro de RETS",
+
+                "features.title":
+                    "Herramientas creadas para RETS.",
+
+                "features.intro":
+                    "Funciones diseñadas para formar parte del propio navegador.",
+
+                "feature.hud":
+                    "Un centro de comandos diseñado para darte un control rápido sobre diferentes funciones del navegador.",
+
+                "feature.vision":
+                    "Captura una región de tu pantalla y deja que RETS la analice mediante su sistema de visión.",
+
+                "feature.vault":
+                    "Un espacio privado diseñado para proteger archivos y mantenerlos separados del almacenamiento habitual.",
+
+                "feature.recovery":
+                    "Restaura tu sesión anterior después de un cierre inesperado del navegador.",
+
+                "feature.privateTitle":
+                    "Sesión privada",
+
+                "feature.private":
+                    "Una sesión de navegación separada diseñada para mantener más aislada la actividad normal de navegación.",
+
+                "feature.optimizationTitle":
+                    "Optimización",
+
+                "feature.optimization":
+                    "Una interfaz y arquitectura enfocadas en aprovechar al máximo los recursos disponibles.",
+
+
+                "company.kicker":
+                    "El proyecto",
+
+                "company.title":
+                    "Conoce Nexaris.",
+
+                "company.intro":
+                    "Un proyecto independiente creado alrededor de la idea de construir tecnología de una manera diferente.",
+
+                "company.tagline":
+                    "Creado para ti.",
+
+                "company.description":
+                    "Nexaris es un proyecto independiente enfocado en crear sus propias experiencias y herramientas digitales.",
+
+                "company.storyTitle":
+                    "Todo comenzó con una idea.",
+
+                "company.story1":
+                    "Nexaris creció junto a RETS, un navegador creado para explorar una forma diferente de experimentar la tecnología cotidiana.",
+
+                "company.story2":
+                    "El proyecto continúa evolucionando mediante nuevas ideas, experimentos, herramientas y mejoras.",
+
+                "company.beginning":
+                    "RETS es el comienzo.",
+
+
+                "evolution.kicker":
+                    "Evolución",
+
+                "evolution.title":
+                    "De una idea a un producto.",
+
+                "evolution.intro":
+                    "RETS continúa evolucionando mediante nuevas funciones, optimización y mejoras.",
+
+
+                "timeline.year":
+                    "2026",
+
+                "timeline.beginTitle":
+                    "El comienzo",
+
+                "timeline.beginText":
+                    "RETS comenzó como una idea: crear un navegador propio.",
+
+                "timeline.developmentDate":
+                    "DESARROLLO",
+
+                "timeline.developmentTitle":
+                    "Construyendo RETS",
+
+                "timeline.developmentText":
+                    "Interfaz, pestañas, herramientas, almacenamiento, navegación, sonidos y nuevas funciones.",
+
+                "timeline.testingDate":
+                    "PRUEBAS",
+
+                "timeline.testingTitle":
+                    "Pruebas y optimización",
+
+                "timeline.testingText":
+                    "Corrección de errores, pruebas en dispositivos y preparación de la versión final.",
+
+                "timeline.launchText":
+                    "Lanzamiento oficial de la primera versión pública de RETS.",
+
+
+                "launch.kicker":
+                    "Lanzamiento",
+
+                "launch.text":
+                    "Una nueva experiencia está a punto de comenzar.",
+
+                "launch.button":
+                    "Volver arriba",
+
+
+                "footer.tagline":
+                    "Creado para ti.",
+
+                "footer.description":
+                    "RETS es el primer proyecto creado bajo Nexaris.",
+
+                "footer.rights":
+                    "Todos los derechos reservados.",
+
+                "footer.product":
+                    "RETS es un producto de Nexaris."
+            },
+
+
+            /* ====================================
+               PORTUGUÊS
+            ==================================== */
+
+            pt: {
+
+                "nav.rets":
+                    "RETS",
+
+                "nav.features":
+                    "Recursos",
+
+                "nav.nexaris":
+                    "Nexaris",
+
+                "nav.evolution":
+                    "Evolução",
+
+                "nav.launch":
+                    "Lançamento",
+
+
+                "hero.eyebrow":
+                    "NEXARIS × RETS",
+
+                "hero.tagline":
+                    "Criado para você.",
+
+                "hero.description":
+                    "Tecnologia e experiências digitais criadas com uma ideia simples: a tecnologia deve se adaptar às pessoas.",
+
+                "hero.discover":
+                    "Conheça o RETS",
+
+                "hero.about":
+                    "Sobre a Nexaris",
+
+                "hero.mainProduct":
+                    "Produto principal",
+
+                "hero.generation":
+                    "Primeira geração",
+
+
+                "rets.kicker":
+                    "Produto",
+
+                "rets.title":
+                    "Conheça o RETS.",
+
+                "rets.intro":
+                    "Um navegador construído em torno de uma ideia: criar uma forma mais pessoal de experimentar a tecnologia.",
+
+                "rets.description1":
+                    "é o principal produto da Nexaris: um navegador com sua própria interface, ferramentas integradas e foco em aproveitar ao máximo os recursos disponíveis.",
+
+                "rets.description2":
+                    "Mais do que navegar, o RETS reúne ferramentas úteis em um só lugar para explorar, trabalhar e criar.",
+
+
+                "features.kicker":
+                    "Dentro do RETS",
+
+                "features.title":
+                    "Ferramentas criadas para o RETS.",
+
+                "features.intro":
+                    "Recursos projetados para fazer parte do próprio navegador.",
+
+                "feature.hud":
+                    "Um centro de comandos criado para oferecer controle rápido sobre diferentes funções do navegador.",
+
+                "feature.vision":
+                    "Capture uma região da sua tela e deixe o RETS analisá-la por meio do sistema de visão.",
+
+                "feature.vault":
+                    "Um espaço privado criado para proteger arquivos separadamente do armazenamento normal.",
+
+                "feature.recovery":
+                    "Restaure sua sessão anterior após um encerramento inesperado do navegador.",
+
+                "feature.privateTitle":
+                    "Sessão privada",
+
+                "feature.private":
+                    "Uma sessão de navegação separada criada para manter a atividade normal de navegação mais isolada.",
+
+                "feature.optimizationTitle":
+                    "Otimização",
+
+                "feature.optimization":
+                    "Uma interface e arquitetura focadas em aproveitar ao máximo os recursos disponíveis.",
+
+
+                "company.kicker":
+                    "O projeto",
+
+                "company.title":
+                    "Conheça a Nexaris.",
+
+                "company.intro":
+                    "Um projeto independente criado em torno da ideia de construir tecnologia de uma maneira diferente.",
+
+                "company.tagline":
+                    "Criado para você.",
+
+                "company.description":
+                    "A Nexaris é um projeto independente focado em criar suas próprias experiências e ferramentas digitais.",
+
+                "company.storyTitle":
+                    "Tudo começou com uma ideia.",
+
+                "company.story1":
+                    "A Nexaris cresceu junto com o RETS, um navegador criado para explorar uma maneira diferente de experimentar a tecnologia do dia a dia.",
+
+                "company.story2":
+                    "O projeto continua evoluindo com novas ideias, experimentos, ferramentas e melhorias.",
+
+                "company.beginning":
+                    "RETS é o começo.",
+
+
+                "evolution.kicker":
+                    "Evolução",
+
+                "evolution.title":
+                    "De uma ideia a um produto.",
+
+                "evolution.intro":
+                    "O RETS continua evoluindo por meio de novos recursos, otimização e melhorias.",
+
+
+                "timeline.year":
+                    "2026",
+
+                "timeline.beginTitle":
+                    "O começo",
+
+                "timeline.beginText":
+                    "O RETS começou como uma ideia: criar um navegador próprio.",
+
+                "timeline.developmentDate":
+                    "DESENVOLVIMENTO",
+
+                "timeline.developmentTitle":
+                    "Construindo o RETS",
+
+                "timeline.developmentText":
+                    "Interface, abas, ferramentas, armazenamento, navegação, sons e novos recursos.",
+
+                "timeline.testingDate":
+                    "TESTES",
+
+                "timeline.testingTitle":
+                    "Testes e otimização",
+
+                "timeline.testingText":
+                    "Correção de erros, testes em dispositivos e preparação para a versão final.",
+
+                "timeline.launchText":
+                    "Lançamento oficial da primeira versão pública do RETS.",
+
+
+                "launch.kicker":
+                    "Lançamento",
+
+                "launch.text":
+                    "Uma nova experiência está prestes a começar.",
+
+                "launch.button":
+                    "Voltar ao topo",
+
+
+                "footer.tagline":
+                    "Criado para você.",
+
+                "footer.description":
+                    "RETS é o primeiro projeto criado sob a Nexaris.",
+
+                "footer.rights":
+                    "Todos os direitos reservados.",
+
+                "footer.product":
+                    "RETS é um produto da Nexaris."
+            },
+
+
+            /* ====================================
+               РУССКИЙ
+            ==================================== */
+
+            ru: {
+
+                "nav.rets":
+                    "RETS",
+
+                "nav.features":
+                    "Функции",
+
+                "nav.nexaris":
+                    "Nexaris",
+
+                "nav.evolution":
+                    "Развитие",
+
+                "nav.launch":
+                    "Запуск",
+
+
+                "hero.eyebrow":
+                    "NEXARIS × RETS",
+
+                "hero.tagline":
+                    "Создано для вас.",
+
+                "hero.description":
+                    "Технологии и цифровые решения, созданные с простой идеей: технологии должны адаптироваться к людям.",
+
+                "hero.discover":
+                    "Открыть RETS",
+
+                "hero.about":
+                    "О Nexaris",
+
+                "hero.mainProduct":
+                    "Основной продукт",
+
+                "hero.generation":
+                    "Первое поколение",
+
+
+                "rets.kicker":
+                    "Продукт",
+
+                "rets.title":
+                    "Знакомьтесь: RETS.",
+
+                "rets.intro":
+                    "Браузер, созданный вокруг одной идеи: сделать взаимодействие с технологиями более персональным.",
+
+                "rets.description1":
+                    "— основной продукт Nexaris: браузер с собственным интерфейсом, встроенными инструментами и вниманием к эффективному использованию доступных ресурсов.",
+
+                "rets.description2":
+                    "RETS — это не просто браузер. Он объединяет полезные инструменты в одном месте для работы, исследований и творчества.",
+
+
+                "features.kicker":
+                    "Внутри RETS",
+
+                "features.title":
+                    "Инструменты, созданные для RETS.",
+
+                "features.intro":
+                    "Функции, разработанные как часть самого браузера.",
+
+                "feature.hud":
+                    "Центр команд, позволяющий быстро управлять различными функциями браузера.",
+
+                "feature.vision":
+                    "Выберите область экрана и позвольте RETS проанализировать её с помощью системы компьютерного зрения.",
+
+                "feature.vault":
+                    "Приватное пространство для защиты файлов отдельно от обычного хранилища.",
+
+                "feature.recovery":
+                    "Восстановление предыдущей сессии после неожиданного закрытия браузера.",
+
+                "feature.privateTitle":
+                    "Приватная сессия",
+
+                "feature.private":
+                    "Отдельная сессия просмотра, созданная для более изолированного хранения обычной активности.",
+
+                "feature.optimizationTitle":
+                    "Оптимизация",
+
+                "feature.optimization":
+                    "Интерфейс и архитектура, ориентированные на эффективное использование доступных ресурсов.",
+
+
+                "company.kicker":
+                    "Проект",
+
+                "company.title":
+                    "Познакомьтесь с Nexaris.",
+
+                "company.intro":
+                    "Независимый проект, созданный вокруг идеи создавать технологии по-другому.",
+
+                "company.tagline":
+                    "Создано для вас.",
+
+                "company.description":
+                    "Nexaris — независимый проект, посвящённый созданию собственных цифровых инструментов и решений.",
+
+                "company.storyTitle":
+                    "Всё началось с идеи.",
+
+                "company.story1":
+                    "Nexaris развивался вместе с RETS — браузером, созданным для поиска нового подхода к повседневным технологиям.",
+
+                "company.story2":
+                    "Проект продолжает развиваться благодаря новым идеям, экспериментам, инструментам и улучшениям.",
+
+                "company.beginning":
+                    "RETS — это начало.",
+
+
+                "evolution.kicker":
+                    "Развитие",
+
+                "evolution.title":
+                    "От идеи к продукту.",
+
+                "evolution.intro":
+                    "RETS продолжает развиваться благодаря новым функциям, оптимизации и улучшениям.",
+
+
+                "timeline.year":
+                    "2026",
+
+                "timeline.beginTitle":
+                    "Начало",
+
+                "timeline.beginText":
+                    "RETS начался как идея: создать собственный браузер.",
+
+                "timeline.developmentDate":
+                    "РАЗРАБОТКА",
+
+                "timeline.developmentTitle":
+                    "Создание RETS",
+
+                "timeline.developmentText":
+                    "Интерфейс, вкладки, инструменты, хранилище, навигация, звуки и новые функции.",
+
+                "timeline.testingDate":
+                    "ТЕСТИРОВАНИЕ",
+
+                "timeline.testingTitle":
+                    "Тестирование и оптимизация",
+
+                "timeline.testingText":
+                    "Исправление ошибок, тестирование на устройствах и подготовка финальной версии.",
+
+                "timeline.launchText":
+                    "Официальный запуск первой публичной версии RETS.",
+
+
+                "launch.kicker":
+                    "Запуск",
+
+                "launch.text":
+                    "Новый опыт уже близко.",
+
+                "launch.button":
+                    "Наверх",
+
+
+                "footer.tagline":
+                    "Создано для вас.",
+
+                "footer.description":
+                    "RETS — первый проект, созданный в рамках Nexaris.",
+
+                "footer.rights":
+                    "Все права защищены.",
+
+                "footer.product":
+                    "RETS — продукт Nexaris."
+            },
+
+
+            /* ====================================
+               FRANÇAIS
+            ==================================== */
+
+            fr: {
+
+                "nav.rets":
+                    "RETS",
+
+                "nav.features":
+                    "Fonctionnalités",
+
+                "nav.nexaris":
+                    "Nexaris",
+
+                "nav.evolution":
+                    "Évolution",
+
+                "nav.launch":
+                    "Lancement",
+
+
+                "hero.eyebrow":
+                    "NEXARIS × RETS",
+
+                "hero.tagline":
+                    "Créé pour vous.",
+
+                "hero.description":
+                    "Technologies et expériences numériques conçues autour d'une idée simple : la technologie doit s'adapter aux personnes.",
+
+                "hero.discover":
+                    "Découvrir RETS",
+
+                "hero.about":
+                    "À propos de Nexaris",
+
+                "hero.mainProduct":
+                    "Produit principal",
+
+                "hero.generation":
+                    "Première génération",
+
+
+                "rets.kicker":
+                    "Produit",
+
+                "rets.title":
+                    "Découvrez RETS.",
+
+                "rets.intro":
+                    "Un navigateur construit autour d'une idée : créer une manière plus personnelle d'utiliser la technologie.",
+
+                "rets.description1":
+                    "est le produit principal de Nexaris : un navigateur doté de sa propre interface, d'outils intégrés et conçu pour tirer le meilleur parti des ressources disponibles.",
+
+                "rets.description2":
+                    "Plus qu'un simple navigateur, RETS réunit des outils utiles au même endroit pour explorer, travailler et créer.",
+
+
+                "features.kicker":
+                    "Dans RETS",
+
+                "features.title":
+                    "Des outils conçus pour RETS.",
+
+                "features.intro":
+                    "Des fonctionnalités conçues pour faire partie intégrante du navigateur.",
+
+                "feature.hud":
+                    "Un centre de commandes conçu pour vous permettre de contrôler rapidement différentes fonctions du navigateur.",
+
+                "feature.vision":
+                    "Capturez une zone de votre écran et laissez RETS l'analyser grâce à son système de vision.",
+
+                "feature.vault":
+                    "Un espace privé conçu pour protéger les fichiers séparément du stockage habituel.",
+
+                "feature.recovery":
+                    "Restaurez votre session précédente après une fermeture inattendue du navigateur.",
+
+                "feature.privateTitle":
+                    "Session privée",
+
+                "feature.private":
+                    "Une session de navigation séparée conçue pour isoler davantage l'activité de navigation normale.",
+
+                "feature.optimizationTitle":
+                    "Optimisation",
+
+                "feature.optimization":
+                    "Une interface et une architecture conçues pour tirer le meilleur parti des ressources disponibles.",
+
+
+                "company.kicker":
+                    "Le projet",
+
+                "company.title":
+                    "Découvrez Nexaris.",
+
+                "company.intro":
+                    "Un projet indépendant créé autour de l'idée de construire la technologie différemment.",
+
+                "company.tagline":
+                    "Créé pour vous.",
+
+                "company.description":
+                    "Nexaris est un projet indépendant consacré à la création de ses propres expériences et outils numériques.",
+
+                "company.storyTitle":
+                    "Tout a commencé par une idée.",
+
+                "company.story1":
+                    "Nexaris s'est développé avec RETS, un navigateur créé pour explorer une nouvelle approche de la technologie du quotidien.",
+
+                "company.story2":
+                    "Le projet continue d'évoluer grâce à de nouvelles idées, expériences, outils et améliorations.",
+
+                "company.beginning":
+                    "RETS est le début.",
+
+
+                "evolution.kicker":
+                    "Évolution",
+
+                "evolution.title":
+                    "D'une idée à un produit.",
+
+                "evolution.intro":
+                    "RETS continue d'évoluer grâce à de nouvelles fonctionnalités, à l'optimisation et aux améliorations.",
+
+
+                "timeline.year":
+                    "2026",
+
+                "timeline.beginTitle":
+                    "Le début",
+
+                "timeline.beginText":
+                    "RETS a commencé comme une idée : créer son propre navigateur.",
+
+                "timeline.developmentDate":
+                    "DÉVELOPPEMENT",
+
+                "timeline.developmentTitle":
+                    "Construire RETS",
+
+                "timeline.developmentText":
+                    "Interface, onglets, outils, stockage, navigation, sons et nouvelles fonctionnalités.",
+
+                "timeline.testingDate":
+                    "TESTS",
+
+                "timeline.testingTitle":
+                    "Tests et optimisation",
+
+                "timeline.testingText":
+                    "Correction des bugs, tests sur différents appareils et préparation de la version finale.",
+
+                "timeline.launchText":
+                    "Lancement officiel de la première version publique de RETS.",
+
+
+                "launch.kicker":
+                    "Lancement",
+
+                "launch.text":
+                    "Une nouvelle expérience est sur le point de commencer.",
+
+                "launch.button":
+                    "Retour en haut",
+
+
+                "footer.tagline":
+                    "Créé pour vous.",
+
+                "footer.description":
+                    "RETS est le premier projet créé sous Nexaris.",
+
+                "footer.rights":
+                    "Tous droits réservés.",
+
+                "footer.product":
+                    "RETS est un produit de Nexaris."
+            }
+
+        };
+
+
+        /* ========================================
+           CHANGE LANGUAGE
+        ======================================== */
+
+        function setLanguage(language) {
+
+            const dictionary =
+                translations[language] || translations.en;
+
+            document.documentElement.lang = language;
+
+            document
+                .querySelectorAll("[data-i18n]")
+                .forEach((element) => {
+
+                    const key =
+                        element.getAttribute("data-i18n");
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            dictionary,
+                            key
+                        )
+                    ) {
+
+                        element.textContent =
+                            dictionary[key];
+
+                    }
+
+                });
+
+
+            const languageSelect =
+                document.getElementById(
+                    "languageSelect"
+                );
+
+            languageSelect.value = language;
+
+
+            localStorage.setItem(
+                "nexaris-language",
+                language
+            );
+
+
+            updatePageTitle(language);
+        }
+
+
+        /* ========================================
+           PAGE TITLE
+        ======================================== */
+
+        function updatePageTitle(language) {
+
+            const titles = {
+
+                en:
+                    "Nexaris — Created for you.",
+
+                es:
+                    "Nexaris — Creado para ti.",
+
+                pt:
+                    "Nexaris — Criado para você.",
+
+                ru:
+                    "Nexaris — Создано для вас.",
+
+                fr:
+                    "Nexaris — Créé pour vous."
+            };
+
+            document.title =
+                titles[language] || titles.en;
+        }
+
+
+        /* ========================================
+           AUTO DETECT BROWSER LANGUAGE
+        ======================================== */
+
+        function detectLanguage() {
+
+            const saved =
+                localStorage.getItem(
+                    "nexaris-language"
+                );
+
+            if (saved && translations[saved]) {
+                return saved;
+            }
+
+
+            const browserLanguage =
+                (
+                    navigator.language ||
+                    navigator.userLanguage ||
+                    "en"
+                ).toLowerCase();
+
+
+            if (browserLanguage.startsWith("es")) {
+                return "es";
+            }
+
+            if (browserLanguage.startsWith("pt")) {
+                return "pt";
+            }
+
+            if (browserLanguage.startsWith("ru")) {
+                return "ru";
+            }
+
+            if (browserLanguage.startsWith("fr")) {
+                return "fr";
+            }
+
+            return "en";
+        }
+
+
+        /* ========================================
+           LANGUAGE SELECT EVENT
+        ======================================== */
+
+        document
+            .getElementById("languageSelect")
+            .addEventListener(
+                "change",
+                (event) => {
+
+                    setLanguage(
+                        event.target.value
+                    );
 
                 }
-
-            });
-
-        },
-        {
-            threshold: 0.12
-        }
-    );
+            );
 
 
-revealElements.forEach((element) => {
+        /* ========================================
+           YEAR
+        ======================================== */
 
-    observer.observe(element);
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
 
-});
+
+        /* ========================================
+           SCROLL REVEAL
+        ======================================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
 
 
-/*
- * Pequeño efecto en el header al desplazarse.
- */
+        const revealObserver =
+            new IntersectionObserver(
+                (entries) => {
 
-const header =
-    document.querySelector("header");
+                    entries.forEach((entry) => {
 
-window.addEventListener("scroll", () => {
+                        if (entry.isIntersecting) {
 
-    if (window.scrollY > 30) {
+                            entry.target.classList.add(
+                                "visible"
+                            );
 
-        header.style.background =
-            "rgba(3, 8, 10, 0.96)";
+                            revealObserver.unobserve(
+                                entry.target
+                            );
+                        }
 
-        header.style.boxShadow =
-            "0 8px 30px rgba(0,0,0,0.18)";
+                    });
 
-    } else {
+                },
+                {
+                    threshold: 0.12
+                }
+            );
 
-        header.style.background =
-            "rgba(3, 8, 10, 0.88)";
 
-        header.style.boxShadow =
-            "none";
+        revealElements.forEach((element) => {
 
-    }
+            revealObserver.observe(element);
 
-});
+        });
 
-</script>
+
+        /* ========================================
+           INITIALIZE LANGUAGE
+        ======================================== */
+
+        const initialLanguage =
+            detectLanguage();
+
+        setLanguage(initialLanguage);
+
+    </script>
 
 </body>
 </html>
-```
