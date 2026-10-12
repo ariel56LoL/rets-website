@@ -140,7 +140,27 @@
     .product-top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
     .product-symbol { color: var(--cyan); width: 37px; height: 37px; }
     .tag { padding: 5px 9px; border-radius: 999px; border: 1px solid rgba(153,177,199,.16); color: #a8b7c7; font-size: 10px; font-weight: 750; letter-spacing: .06em; }
+    .tag-dev { color: var(--cyan-bright); border-color: rgba(84,228,222,.25); background: rgba(84,228,222,.045); }
     .product-card h3 { font-size: 20px; }
+    /* Platform downloads: cards remain visibly upcoming until real builds are published. */
+    .downloads-section { padding-top: 52px; }
+    .download-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .download-card {
+      min-height: 230px; padding: 24px; display: flex; flex-direction: column; align-items: flex-start;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(20,29,40,.78), rgba(11,16,23,.8));
+      position: relative; overflow: hidden; transition: border-color .22s ease, transform .22s ease, background .22s ease;
+    }
+    .download-card::after { content: ""; position: absolute; width: 140px; height: 140px; right: -78px; top: -90px; border-radius: 50%; background: rgba(84,228,222,.09); filter: blur(22px); pointer-events: none; }
+    .download-card:hover { border-color: rgba(84,228,222,.34); transform: translateY(-3px); }
+    .download-card-top { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+    .download-platform-icon { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; border: 1px solid rgba(84,228,222,.18); color: var(--cyan); background: rgba(84,228,222,.055); flex: 0 0 auto; }
+    .download-platform-icon svg { width: 25px; height: 25px; }
+    .tag-coming { color: var(--cyan-bright); border-color: rgba(84,228,222,.27); background: rgba(84,228,222,.055); white-space: nowrap; }
+    .download-card h3 { font-size: 19px; letter-spacing: -.025em; margin: 0 0 7px; }
+    .download-card p { color: var(--muted); font-size: 13px; line-height: 1.7; margin: 0; }
+    .download-card-bottom { margin-top: auto; padding-top: 20px; width: 100%; display: flex; align-items: center; gap: 8px; color: var(--subtle); font-size: 11px; }
+    .download-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); opacity: .8; box-shadow: 0 0 10px rgba(84,228,222,.35); flex: 0 0 auto; }
     .text-link { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding-top: 23px; font-size: 12px; font-weight: 750; color: var(--cyan); }
     .text-link svg { width: 14px; height: 14px; transition: transform .2s ease; }
     .text-link:hover svg { transform: translateX(3px); }
@@ -208,6 +228,8 @@
       .principle { min-height: auto; }
       .principle .mini-icon { margin-bottom: 18px; }
       .product-grid { grid-template-columns: 1fr; }
+      .download-grid { grid-template-columns: 1fr; }
+      .download-card { min-height: 205px; }
       .product-card, .product-card:last-child { grid-column: auto; min-height: 230px; }
       .launch-wrap { padding: 8px 0 72px; }
       .launch-grid { grid-template-columns: 1fr; gap: 23px; }
@@ -472,26 +494,94 @@
       <div class="container">
         <div class="section-head reveal" id="funciones">
           <div class="section-label">El ecosistema</div>
-          <h2>Conoce RETS.</h2>
-          <p>RETS es el producto principal de NEXARIS: una base para explorar herramientas de navegación, asistencia y productividad en una experiencia unificada.</p>
+          <h2>Funciones que construyen RETS.</h2>
+          <p>RETS reúne herramientas de navegación, asistencia y productividad. Las funciones marcadas como <strong>En desarrollo</strong> forman parte de la hoja de ruta y todavía no se anuncian como disponibles.</p>
         </div>
         <div class="product-grid">
-          <article class="product-card reveal" id="descargas">
+          <article class="product-card reveal">
             <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="32" height="25" rx="4"/><path d="M13 35h14M20 30v5M8 11h24"/><circle cx="10" cy="8" r=".6" fill="currentColor"/></svg><span class="tag">PRODUCTO PRINCIPAL</span></div>
-            <h3>RETS Browser</h3><p>El punto de partida del ecosistema RETS, con una interfaz moderna y herramientas pensadas para que navegar sea más cómodo.</p>
+            <h3>RETS Browser</h3><p>El punto de partida del ecosistema RETS: una experiencia de navegación con una interfaz moderna y herramientas diseñadas para hacerla más cómoda.</p>
             <a class="text-link" href="#lanzamiento">Estado del lanzamiento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </article>
           <article class="product-card reveal">
-            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="30" height="30" rx="8"/><circle cx="17" cy="17" r="5"/><path d="m21 21 7 7M25 11h4M27 9v4"/></svg><span class="tag">EN DESARROLLO</span></div>
-            <h3>RETS Vision</h3><p>Una idea de asistencia visual para explorar información de imágenes y ayudar a comprender lo que tienes delante.</p>
+            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="30" height="30" rx="8"/><circle cx="17" cy="17" r="5"/><path d="m21 21 7 7M25 11h4M27 9v4"/></svg><span class="tag tag-dev">EN DESARROLLO</span></div>
+            <h3>RETS Vision</h3><p>Una herramienta de asistencia visual pensada para analizar imágenes y ayudar a comprender información de lo que estás viendo.</p>
             <a class="text-link" href="#evolucion">Ver evolución <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </article>
           <article class="product-card reveal">
-            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4 23.5 15.5 36 20l-12.5 4.5L20 36l-4.5-11.5L4 20l11.5-4.5z"/><circle cx="29" cy="10" r="2"/></svg><span class="tag">EN DESARROLLO</span></div>
-            <h3>Nox AI</h3><p>La visión de un asistente que pueda entender peticiones y facilitar tareas compatibles con las preferencias del usuario.</p>
+            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4 23.5 15.5 36 20l-12.5 4.5L20 36l-4.5-11.5L4 20l11.5-4.5z"/><circle cx="29" cy="10" r="2"/></svg><span class="tag tag-dev">EN DESARROLLO</span></div>
+            <h3>Nox AI</h3><p>Un asistente en desarrollo para interpretar peticiones, ayudar con tareas y conectar herramientas compatibles mediante acciones validadas por RETS.</p>
+            <a class="text-link" href="#evolucion">Ver evolución <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="7" width="31" height="26" rx="6"/><path d="M12 15h6l-4 5 4 5M22 25h6"/><circle cx="30" cy="12" r="1" fill="currentColor"/></svg><span class="tag tag-dev">EN DESARROLLO</span></div>
+            <h3>RETS HUD</h3><p>Un centro de comandos flotante que se abrirá con <strong>Ctrl + Espacio</strong> para pedir acciones en lenguaje natural. La idea es interpretar primero de forma local y recurrir a Nox cuando haga falta.</p>
+            <a class="text-link" href="#evolucion">Ver evolución <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-top"><svg class="product-symbol" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="17" width="30" height="18" rx="4"/><path d="M11 17v-5a9 9 0 0 1 18 0v5"/><circle cx="20" cy="25" r="2.5"/><path d="M20 27.5V30"/></svg><span class="tag tag-dev">EN DESARROLLO</span></div>
+            <h3>RETS Vault</h3><p>Un espacio privado pensado para organizar descargas seleccionadas dentro de RETS, con acceso protegido. El sistema de almacenamiento y protección aún está en diseño.</p>
             <a class="text-link" href="#evolucion">Ver evolución <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section downloads-section" id="descargas" aria-labelledby="downloads-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Centro de descargas</div>
+          <h2 id="downloads-title">RETS llegará a tus dispositivos.</h2>
+          <p>Estamos preparando las versiones para cada plataforma. Las descargas se habilitarán cuando cada versión esté lista y haya pasado sus comprobaciones básicas.</p>
+        </div>
+        <div class="download-grid">
+          <article class="download-card reveal">
+            <div class="download-card-top">
+              <span class="download-platform-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 3.5 10.5 2.4v8.3H2.5zM12 2.2l9.5-1.3v9.8H12zM2.5 12.2h8v8.4l-8-1.1zM12 12.2h9.5v9.9L12 20.8z" stroke-linejoin="round"/></svg></span>
+              <span class="tag tag-coming">PRÓXIMAMENTE</span>
+            </div>
+            <h3>Windows</h3>
+            <p>La versión de RETS para ordenadores con Windows.</p>
+            <div class="download-card-bottom"><span class="download-status-dot"></span> En preparación</div>
+          </article>
+          <article class="download-card reveal">
+            <div class="download-card-top">
+              <span class="download-platform-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8 5.5 5.5M17 8l1.5-2.5M6 13.5v4.2A1.3 1.3 0 0 0 7.3 19H8v2M18 13.5v4.2a1.3 1.3 0 0 1-1.3 1.3H16v2M5 13.2c0-4 3.1-6.7 7-6.7s7 2.7 7 6.7z"/><circle cx="9" cy="10.5" r=".7" fill="currentColor"/><circle cx="15" cy="10.5" r=".7" fill="currentColor"/></svg></span>
+              <span class="tag tag-coming">PRÓXIMAMENTE</span>
+            </div>
+            <h3>Android</h3>
+            <p>Versión móvil de RETS para teléfonos y tabletas Android.</p>
+            <div class="download-card-bottom"><span class="download-status-dot"></span> En preparación</div>
+          </article>
+          <article class="download-card reveal">
+            <div class="download-card-top">
+              <span class="download-platform-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.2" width="11" height="19.6" rx="2.3"/><path d="M10 5h4M10.5 18.5h3"/></svg></span>
+              <span class="tag tag-coming">PRÓXIMAMENTE</span>
+            </div>
+            <h3>iOS</h3>
+            <p>Versión móvil de RETS para iPhone y dispositivos compatibles con iOS.</p>
+            <div class="download-card-bottom"><span class="download-status-dot"></span> En preparación</div>
+          </article>
+          <article class="download-card reveal">
+            <div class="download-card-top">
+              <span class="download-platform-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.2" width="18" height="13.8" rx="1.8"/><path d="M1.8 20.5h20.4l-1.7-3.5H3.5zM9 20.5h6"/></svg></span>
+              <span class="tag tag-coming">PRÓXIMAMENTE</span>
+            </div>
+            <h3>macOS</h3>
+            <p>Versión de RETS para ordenadores Mac, con compatibilidad por validar.</p>
+            <div class="download-card-bottom"><span class="download-status-dot"></span> En preparación</div>
+          </article>
+          <article class="download-card reveal">
+            <div class="download-card-top">
+              <span class="download-platform-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="14" rx="1.8"/><path d="M1.5 21h21M8 17.5l-1.5 3.5m9.5-3.5 1.5 3.5"/><circle cx="12" cy="10.5" r="3.2"/><path d="M12 7.3v6.4M8.8 10.5h6.4" opacity=".75"/></svg></span>
+              <span class="tag tag-coming">PRÓXIMAMENTE</span>
+            </div>
+            <h3>ChromeOS</h3>
+            <p>Versión de RETS pensada para dispositivos Chromebook con ChromeOS.</p>
+            <div class="download-card-bottom"><span class="download-status-dot"></span> En preparación</div>
+          </article>
+        </div>
+        <p class="note reveal">Aviso: todavía no hay instaladores disponibles en esta sección. No publicaremos enlaces de descarga hasta que las versiones correspondientes estén preparadas.</p>
       </div>
     </section>
 
@@ -548,6 +638,7 @@
       <nav class="footer-links" aria-label="Enlaces del pie de página">
         <a href="#nexaris">Acerca de</a>
         <a href="#rets">RETS</a>
+        <a href="#descargas">Descargas</a>
         <a href="#lanzamiento">Lanzamiento</a>
         <a href="https://github.com/ariel56LoL/rets-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </nav>
