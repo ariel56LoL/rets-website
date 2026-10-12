@@ -14,16 +14,14 @@
     <style>
         :root {
             --bg: #05080d;
+            --bg-soft: #081018;
             --panel: rgba(10, 18, 28, 0.74);
-
             --cyan: #39e6ff;
             --cyan-soft: #7cf0ff;
-
             --text: #f2fbff;
             --text-soft: #99aeb9;
-
+            --muted: #617681;
             --border: rgba(80, 220, 255, 0.16);
-
             --max-width: 1180px;
             --radius: 22px;
         }
@@ -171,7 +169,7 @@
         nav {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
         }
 
         nav a {
@@ -201,7 +199,7 @@
         }
 
         /* ========================================
-           LANGUAGE SELECTOR
+           LANGUAGE
         ======================================== */
 
         .language-wrapper {
@@ -212,10 +210,9 @@
             appearance: none;
             -webkit-appearance: none;
 
-            min-width: 118px;
+            min-width: 120px;
 
-            padding:
-                9px 34px 9px 13px;
+            padding: 9px 34px 9px 13px;
 
             border:
                 1px solid var(--border);
@@ -228,7 +225,6 @@
                 rgba(57,230,255,0.045);
 
             cursor: pointer;
-
             outline: none;
 
             transition:
@@ -375,7 +371,6 @@
             color: var(--text-soft);
 
             font-size: 18px;
-
             line-height: 1.7;
         }
 
@@ -623,7 +618,9 @@
 
         @keyframes floatTriangle {
             0%, 100% {
-                transform: translateY(0) rotate(0deg);
+                transform:
+                    translateY(0)
+                    rotate(0deg);
             }
 
             50% {
@@ -806,7 +803,8 @@
 
             transition:
                 transform 0.28s ease,
-                border-color 0.28s ease;
+                border-color 0.28s ease,
+                background 0.28s ease;
         }
 
         .feature-card:hover {
@@ -814,6 +812,9 @@
 
             border-color:
                 rgba(57,230,255,0.2);
+
+            background:
+                rgba(11,22,34,0.86);
         }
 
         .feature-icon {
@@ -850,6 +851,145 @@
             line-height: 1.65;
 
             font-size: 14px;
+        }
+
+        /* ========================================
+           DOWNLOADS
+        ======================================== */
+
+        .downloads-section {
+            border-top:
+                1px solid rgba(255,255,255,0.04);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.04);
+        }
+
+        .download-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .download-card {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+
+            min-height: 270px;
+
+            padding: 30px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.025),
+                    rgba(57,230,255,0.015)
+                );
+
+            transition:
+                transform 0.28s ease,
+                border-color 0.28s ease,
+                background 0.28s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(57,230,255,0.2);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(57,230,255,0.05),
+                    rgba(255,255,255,0.015)
+                );
+        }
+
+        .platform-icon {
+            width: 52px;
+            height: 52px;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 15px;
+
+            color: var(--cyan);
+
+            background:
+                rgba(57,230,255,0.045);
+
+            font-size: 20px;
+
+            margin-bottom: 22px;
+        }
+
+        .download-card h3 {
+            font-size: 24px;
+
+            letter-spacing: -0.025em;
+        }
+
+        .download-card p {
+            margin-top: 8px;
+
+            color: var(--text-soft);
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+        .platform-status {
+            margin-top: 14px;
+
+            color: var(--cyan-soft);
+
+            font-size: 12px;
+
+            letter-spacing: 0.07em;
+
+            text-transform: uppercase;
+        }
+
+        .download-button {
+            margin-top: auto;
+
+            width: 100%;
+        }
+
+        .download-button.disabled {
+            opacity: 0.45;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+        }
+
+        .download-note {
+            margin-top: 28px;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            text-align: center;
         }
 
         /* ========================================
@@ -918,27 +1058,13 @@
             font-weight: 600;
         }
 
-        .quote {
-            margin-top: 24px;
-
-            padding-left: 18px;
-
-            border-left:
-                2px solid rgba(57,230,255,0.4);
-
-            color: var(--text);
-
-            font-size: 18px;
-
-            line-height: 1.6;
-        }
-
         /* ========================================
            TIMELINE
         ======================================== */
 
         .timeline {
             display: grid;
+
             gap: 16px;
         }
 
@@ -1123,6 +1249,8 @@
             color: var(--text-soft);
 
             font-size: 13px;
+
+            transition: 0.2s ease;
         }
 
         .footer-links a:hover {
@@ -1137,7 +1265,7 @@
             border-top:
                 1px solid rgba(255,255,255,0.04);
 
-            color: #627681;
+            color: var(--muted);
 
             font-size: 12px;
 
@@ -1176,14 +1304,14 @@
            RESPONSIVE
         ======================================== */
 
-        @media (max-width: 1000px) {
-
-            nav {
-                gap: 14px;
-            }
+        @media (max-width: 1050px) {
 
             nav a:not(.nav-button) {
                 display: none;
+            }
+
+            nav {
+                gap: 12px;
             }
         }
 
@@ -1203,7 +1331,8 @@
                 min-height: 390px;
             }
 
-            .feature-grid {
+            .feature-grid,
+            .download-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1233,7 +1362,7 @@
             }
 
             .language-select {
-                min-width: 104px;
+                min-width: 108px;
                 font-size: 12px;
             }
 
@@ -1287,7 +1416,6 @@
                 href="#inicio"
                 class="brand"
             >
-
                 <img
                     src="image.png"
                     alt="Nexaris"
@@ -1297,7 +1425,6 @@
                 <span class="brand-name">
                     NEXARIS
                 </span>
-
             </a>
 
 
@@ -1315,6 +1442,13 @@
                     data-i18n="nav.features"
                 >
                     Features
+                </a>
+
+                <a
+                    href="#downloads"
+                    data-i18n="nav.downloads"
+                >
+                    Downloads
                 </a>
 
                 <a
@@ -1424,9 +1558,7 @@
                         class="hero-description"
                         data-i18n="hero.description"
                     >
-                        Technology and digital experiences
-                        created with a simple idea:
-                        technology should adapt to people.
+                        Technology and digital experiences created with a simple idea: technology should adapt to people.
                     </p>
 
 
@@ -1441,11 +1573,11 @@
                         </a>
 
                         <a
-                            href="#nexaris"
+                            href="#downloads"
                             class="button button-secondary"
-                            data-i18n="hero.about"
+                            data-i18n="hero.download"
                         >
-                            About Nexaris
+                            Download RETS
                         </a>
 
                     </div>
@@ -1482,9 +1614,13 @@
 
                         <div class="triangle"></div>
 
-                        <div class="triangle triangle-2"></div>
+                        <div
+                            class="triangle triangle-2"
+                        ></div>
 
-                        <div class="triangle triangle-3"></div>
+                        <div
+                            class="triangle triangle-3"
+                        ></div>
 
                         <img
                             src="image.png"
@@ -1525,20 +1661,16 @@
                         Product
                     </div>
 
-
                     <h2
                         data-i18n="rets.title"
                     >
                         Meet RETS.
                     </h2>
 
-
                     <p
                         data-i18n="rets.intro"
                     >
-                        A browser built around one idea:
-                        creating a more personal way to
-                        experience technology.
+                        A browser built around one idea: creating a more personal way to experience technology.
                     </p>
 
                 </div>
@@ -1568,14 +1700,13 @@
                     <div class="rets-description">
 
                         <p>
+
                             <strong>RETS</strong>
 
                             <span data-i18n="rets.description1">
-                                is the main product from Nexaris:
-                                a browser with its own interface,
-                                integrated tools and a focus on
-                                making the most of available resources.
+                                is the main product from Nexaris: a browser with its own interface, integrated tools and a focus on making the most of available resources.
                             </span>
+
                         </p>
 
 
@@ -1585,9 +1716,7 @@
                         <p
                             data-i18n="rets.description2"
                         >
-                            More than just browsing, RETS brings
-                            useful tools together in one place
-                            for exploring, working and creating.
+                            More than just browsing, RETS brings useful tools together in one place for exploring, working and creating.
                         </p>
 
                     </div>
@@ -1616,19 +1745,16 @@
                         Inside RETS
                     </div>
 
-
                     <h2
                         data-i18n="features.title"
                     >
                         Tools built for RETS.
                     </h2>
 
-
                     <p
                         data-i18n="features.intro"
                     >
-                        Features designed to become part
-                        of the browser itself.
+                        Features designed to become part of the browser itself.
                     </p>
 
                 </div>
@@ -1650,9 +1776,7 @@
                         <p
                             data-i18n="feature.hud"
                         >
-                            A command center designed to give
-                            you quick control over different
-                            browser functions.
+                            A command center designed to give you quick control over different browser functions.
                         </p>
 
                     </article>
@@ -1671,9 +1795,7 @@
                         <p
                             data-i18n="feature.vision"
                         >
-                            Capture a region of your screen
-                            and let RETS analyze it through
-                            its vision system.
+                            Capture a region of your screen and let RETS analyze it through its vision system.
                         </p>
 
                     </article>
@@ -1692,9 +1814,7 @@
                         <p
                             data-i18n="feature.vault"
                         >
-                            A private space designed for
-                            protecting files separately
-                            from regular storage.
+                            A private space designed for protecting files separately from regular storage.
                         </p>
 
                     </article>
@@ -1713,9 +1833,7 @@
                         <p
                             data-i18n="feature.recovery"
                         >
-                            Restore your previous session
-                            after an unexpected browser
-                            shutdown.
+                            Restore your previous session after an unexpected browser shutdown.
                         </p>
 
                     </article>
@@ -1736,9 +1854,7 @@
                         <p
                             data-i18n="feature.private"
                         >
-                            A separate browsing session designed
-                            to keep normal browsing activity
-                            more isolated.
+                            A separate browsing session designed to keep normal browsing activity more isolated.
                         </p>
 
                     </article>
@@ -1759,14 +1875,212 @@
                         <p
                             data-i18n="feature.optimization"
                         >
-                            An interface and architecture focused
-                            on making the most of the resources
-                            available.
+                            An interface and architecture focused on making the most of the resources available.
                         </p>
 
                     </article>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             DOWNLOADS
+        ======================================== -->
+
+        <section
+            class="downloads-section"
+            id="downloads"
+        >
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div
+                        class="section-kicker"
+                        data-i18n="downloads.kicker"
+                    >
+                        Downloads
+                    </div>
+
+                    <h2
+                        data-i18n="downloads.title"
+                    >
+                        Get RETS.
+                    </h2>
+
+                    <p
+                        data-i18n="downloads.intro"
+                    >
+                        Choose your platform and get ready for the RETS experience.
+                    </p>
+
+                </div>
+
+
+                <div class="download-grid">
+
+
+                    <!-- WINDOWS -->
+
+                    <article class="download-card reveal">
+
+                        <div class="platform-icon">
+                            ⊞
+                        </div>
+
+                        <h3>
+                            Windows
+                        </h3>
+
+                        <p
+                            data-i18n="download.windows"
+                        >
+                            RETS for Windows.
+                        </p>
+
+                        <div
+                            class="platform-status"
+                            data-status="windows"
+                        >
+                            Coming soon
+                        </div>
+
+                        <a
+                            href="#"
+                            class="button button-primary download-button"
+                            data-platform="windows"
+                            data-i18n="download.button"
+                        >
+                            Download
+                        </a>
+
+                    </article>
+
+
+                    <!-- ANDROID -->
+
+                    <article class="download-card reveal">
+
+                        <div class="platform-icon">
+                            ◫
+                        </div>
+
+                        <h3>
+                            Android
+                        </h3>
+
+                        <p
+                            data-i18n="download.android"
+                        >
+                            RETS for Android.
+                        </p>
+
+                        <div
+                            class="platform-status"
+                            data-status="android"
+                        >
+                            Coming soon
+                        </div>
+
+                        <a
+                            href="#"
+                            class="button button-primary download-button"
+                            data-platform="android"
+                            data-i18n="download.button"
+                        >
+                            Download
+                        </a>
+
+                    </article>
+
+
+                    <!-- IOS -->
+
+                    <article class="download-card reveal">
+
+                        <div class="platform-icon">
+                            
+                        </div>
+
+                        <h3>
+                            iOS
+                        </h3>
+
+                        <p
+                            data-i18n="download.ios"
+                        >
+                            RETS for iPhone and iPad.
+                        </p>
+
+                        <div
+                            class="platform-status"
+                            data-status="ios"
+                        >
+                            Coming soon
+                        </div>
+
+                        <a
+                            href="#"
+                            class="button button-primary download-button"
+                            data-platform="ios"
+                            data-i18n="download.button"
+                        >
+                            Download
+                        </a>
+
+                    </article>
+
+
+                    <!-- MACOS -->
+
+                    <article class="download-card reveal">
+
+                        <div class="platform-icon">
+                            ◉
+                        </div>
+
+                        <h3>
+                            macOS
+                        </h3>
+
+                        <p
+                            data-i18n="download.macos"
+                        >
+                            RETS for Mac.
+                        </p>
+
+                        <div
+                            class="platform-status"
+                            data-status="macos"
+                        >
+                            Coming soon
+                        </div>
+
+                        <a
+                            href="#"
+                            class="button button-primary download-button"
+                            data-platform="macos"
+                            data-i18n="download.button"
+                        >
+                            Download
+                        </a>
+
+                    </article>
+
+                </div>
+
+
+                <p
+                    class="download-note reveal"
+                    data-i18n="downloads.note"
+                >
+                    Download links will become available as each platform is released.
+                </p>
 
             </div>
 
@@ -1790,19 +2104,16 @@
                         The project
                     </div>
 
-
                     <h2
                         data-i18n="company.title"
                     >
                         Meet Nexaris.
                     </h2>
 
-
                     <p
                         data-i18n="company.intro"
                     >
-                        An independent project created around
-                        the idea of building technology differently.
+                        An independent project created around the idea of building technology differently.
                     </p>
 
                 </div>
@@ -1817,11 +2128,9 @@
                             NEXARIS
                         </h3>
 
-
                         <div class="company-name">
                             Nexaris<span>.</span>
                         </div>
-
 
                         <div
                             class="company-tagline"
@@ -1830,13 +2139,10 @@
                             Created for you.
                         </div>
 
-
                         <p
                             data-i18n="company.description"
                         >
-                            Nexaris is an independent project
-                            focused on creating its own digital
-                            experiences and tools.
+                            Nexaris is an independent project focused on creating its own digital experiences and tools.
                         </p>
 
                     </div>
@@ -1850,25 +2156,17 @@
                             It started with an idea.
                         </h3>
 
-
                         <p
                             data-i18n="company.story1"
                         >
-                            Nexaris grew alongside RETS,
-                            a browser created to explore a
-                            different approach to everyday
-                            technology.
+                            Nexaris grew alongside RETS, a browser created to explore a different approach to everyday technology.
                         </p>
-
 
                         <p
                             data-i18n="company.story2"
                         >
-                            The project continues to evolve
-                            through new ideas, experiments,
-                            tools and improvements.
+                            The project continues to evolve through new ideas, experiments, tools and improvements.
                         </p>
-
 
                         <p>
                             <strong
@@ -1904,20 +2202,16 @@
                         Evolution
                     </div>
 
-
                     <h2
                         data-i18n="evolution.title"
                     >
                         From an idea to a product.
                     </h2>
 
-
                     <p
                         data-i18n="evolution.intro"
                     >
-                        RETS continues to evolve through
-                        new features, optimization and
-                        improvements.
+                        RETS continues to evolve through new features, optimization and improvements.
                     </p>
 
                 </div>
@@ -1946,8 +2240,7 @@
                             <p
                                 data-i18n="timeline.beginText"
                             >
-                                RETS started as an idea:
-                                creating a browser of its own.
+                                RETS started as an idea: creating a browser of its own.
                             </p>
 
                         </div>
@@ -1975,9 +2268,7 @@
                             <p
                                 data-i18n="timeline.developmentText"
                             >
-                                Interface, tabs, tools,
-                                storage, navigation,
-                                sounds and new features.
+                                Interface, tabs, tools, storage, navigation, sounds and new features.
                             </p>
 
                         </div>
@@ -2005,9 +2296,7 @@
                             <p
                                 data-i18n="timeline.testingText"
                             >
-                                Bug fixing, device testing
-                                and preparation for the
-                                final version.
+                                Bug fixing, device testing and preparation for the final version.
                             </p>
 
                         </div>
@@ -2030,8 +2319,7 @@
                             <p
                                 data-i18n="timeline.launchText"
                             >
-                                Official launch of the first
-                                public version of RETS.
+                                Official launch of the first public version of RETS.
                             </p>
 
                         </div>
@@ -2065,16 +2353,13 @@
                         Launch
                     </div>
 
-
                     <h2>
                         RETS v1.0
                     </h2>
 
-
                     <div class="launch-date">
                         31 OCTOBER 2026
                     </div>
-
 
                     <p
                         class="launch-text"
@@ -2083,13 +2368,12 @@
                         A new experience is about to begin.
                     </p>
 
-
                     <a
-                        href="#inicio"
+                        href="#downloads"
                         class="button button-primary"
                         data-i18n="launch.button"
                     >
-                        Back to top
+                        Go to downloads
                     </a>
 
                 </div>
@@ -2132,16 +2416,21 @@
 
 
                     <p>
-                        <span data-i18n="footer.tagline">
+
+                        <span
+                            data-i18n="footer.tagline"
+                        >
                             Created for you.
                         </span>
 
                         <br>
 
-                        <span data-i18n="footer.description">
-                            RETS is the first project
-                            created under Nexaris.
+                        <span
+                            data-i18n="footer.description"
+                        >
+                            RETS is the first project created under Nexaris.
                         </span>
+
                     </p>
 
                 </div>
@@ -2164,6 +2453,13 @@
                     </a>
 
                     <a
+                        href="#downloads"
+                        data-i18n="nav.downloads"
+                    >
+                        Downloads
+                    </a>
+
+                    <a
                         href="#nexaris"
                         data-i18n="nav.nexaris"
                     >
@@ -2175,13 +2471,6 @@
                         data-i18n="nav.evolution"
                     >
                         Evolution
-                    </a>
-
-                    <a
-                        href="#launch"
-                        data-i18n="nav.launch"
-                    >
-                        Launch
                     </a>
 
                 </div>
@@ -2214,16 +2503,40 @@
 
 
     <!-- ========================================
-         TRANSLATION SYSTEM
+         JAVASCRIPT
     ======================================== -->
 
     <script>
 
+        /* ========================================
+           DOWNLOAD LINKS
+           
+           Put the real URLs here later.
+           Leave "" while a platform is unavailable.
+        ======================================== */
+
+        const downloadLinks = {
+
+            windows: "",
+
+            android: "",
+
+            ios: "",
+
+            macos: ""
+
+        };
+
+
+        /* ========================================
+           TRANSLATIONS
+        ======================================== */
+
         const translations = {
 
-            /* ====================================
+            /* ------------------------------------
                ENGLISH
-            ==================================== */
+            ------------------------------------ */
 
             en: {
 
@@ -2232,6 +2545,9 @@
 
                 "nav.features":
                     "Features",
+
+                "nav.downloads":
+                    "Downloads",
 
                 "nav.nexaris":
                     "Nexaris",
@@ -2255,8 +2571,8 @@
                 "hero.discover":
                     "Discover RETS",
 
-                "hero.about":
-                    "About Nexaris",
+                "hero.download":
+                    "Download RETS",
 
                 "hero.mainProduct":
                     "Main product",
@@ -2313,6 +2629,40 @@
 
                 "feature.optimization":
                     "An interface and architecture focused on making the most of the resources available.",
+
+
+                "downloads.kicker":
+                    "Downloads",
+
+                "downloads.title":
+                    "Get RETS.",
+
+                "downloads.intro":
+                    "Choose your platform and get ready for the RETS experience.",
+
+                "download.windows":
+                    "RETS for Windows.",
+
+                "download.android":
+                    "RETS for Android.",
+
+                "download.ios":
+                    "RETS for iPhone and iPad.",
+
+                "download.macos":
+                    "RETS for Mac.",
+
+                "download.button":
+                    "Download",
+
+                "download.coming":
+                    "Coming soon",
+
+                "download.available":
+                    "Available",
+
+                "downloads.note":
+                    "Download links will become available as each platform is released.",
 
 
                 "company.kicker":
@@ -2391,7 +2741,7 @@
                     "A new experience is about to begin.",
 
                 "launch.button":
-                    "Back to top",
+                    "Go to downloads",
 
 
                 "footer.tagline":
@@ -2408,9 +2758,9 @@
             },
 
 
-            /* ====================================
+            /* ------------------------------------
                ESPAÑOL
-            ==================================== */
+            ------------------------------------ */
 
             es: {
 
@@ -2419,6 +2769,9 @@
 
                 "nav.features":
                     "Funciones",
+
+                "nav.downloads":
+                    "Descargas",
 
                 "nav.nexaris":
                     "Nexaris",
@@ -2442,8 +2795,8 @@
                 "hero.discover":
                     "Descubrir RETS",
 
-                "hero.about":
-                    "Sobre Nexaris",
+                "hero.download":
+                    "Descargar RETS",
 
                 "hero.mainProduct":
                     "Producto principal",
@@ -2500,6 +2853,40 @@
 
                 "feature.optimization":
                     "Una interfaz y arquitectura enfocadas en aprovechar al máximo los recursos disponibles.",
+
+
+                "downloads.kicker":
+                    "Descargas",
+
+                "downloads.title":
+                    "Obtén RETS.",
+
+                "downloads.intro":
+                    "Elige tu plataforma y prepárate para la experiencia RETS.",
+
+                "download.windows":
+                    "RETS para Windows.",
+
+                "download.android":
+                    "RETS para Android.",
+
+                "download.ios":
+                    "RETS para iPhone y iPad.",
+
+                "download.macos":
+                    "RETS para Mac.",
+
+                "download.button":
+                    "Descargar",
+
+                "download.coming":
+                    "Próximamente",
+
+                "download.available":
+                    "Disponible",
+
+                "downloads.note":
+                    "Los enlaces de descarga estarán disponibles a medida que se publique cada plataforma.",
 
 
                 "company.kicker":
@@ -2578,7 +2965,7 @@
                     "Una nueva experiencia está a punto de comenzar.",
 
                 "launch.button":
-                    "Volver arriba",
+                    "Ir a descargas",
 
 
                 "footer.tagline":
@@ -2595,9 +2982,9 @@
             },
 
 
-            /* ====================================
+            /* ------------------------------------
                PORTUGUÊS
-            ==================================== */
+            ------------------------------------ */
 
             pt: {
 
@@ -2606,6 +2993,9 @@
 
                 "nav.features":
                     "Recursos",
+
+                "nav.downloads":
+                    "Downloads",
 
                 "nav.nexaris":
                     "Nexaris",
@@ -2629,8 +3019,8 @@
                 "hero.discover":
                     "Conheça o RETS",
 
-                "hero.about":
-                    "Sobre a Nexaris",
+                "hero.download":
+                    "Baixar RETS",
 
                 "hero.mainProduct":
                     "Produto principal",
@@ -2687,6 +3077,40 @@
 
                 "feature.optimization":
                     "Uma interface e arquitetura focadas em aproveitar ao máximo os recursos disponíveis.",
+
+
+                "downloads.kicker":
+                    "Downloads",
+
+                "downloads.title":
+                    "Obtenha o RETS.",
+
+                "downloads.intro":
+                    "Escolha sua plataforma e prepare-se para a experiência RETS.",
+
+                "download.windows":
+                    "RETS para Windows.",
+
+                "download.android":
+                    "RETS para Android.",
+
+                "download.ios":
+                    "RETS para iPhone e iPad.",
+
+                "download.macos":
+                    "RETS para Mac.",
+
+                "download.button":
+                    "Baixar",
+
+                "download.coming":
+                    "Em breve",
+
+                "download.available":
+                    "Disponível",
+
+                "downloads.note":
+                    "Os links de download ficarão disponíveis conforme cada plataforma for lançada.",
 
 
                 "company.kicker":
@@ -2765,7 +3189,7 @@
                     "Uma nova experiência está prestes a começar.",
 
                 "launch.button":
-                    "Voltar ao topo",
+                    "Ir para downloads",
 
 
                 "footer.tagline":
@@ -2782,9 +3206,9 @@
             },
 
 
-            /* ====================================
+            /* ------------------------------------
                РУССКИЙ
-            ==================================== */
+            ------------------------------------ */
 
             ru: {
 
@@ -2793,6 +3217,9 @@
 
                 "nav.features":
                     "Функции",
+
+                "nav.downloads":
+                    "Загрузки",
 
                 "nav.nexaris":
                     "Nexaris",
@@ -2816,8 +3243,8 @@
                 "hero.discover":
                     "Открыть RETS",
 
-                "hero.about":
-                    "О Nexaris",
+                "hero.download":
+                    "Скачать RETS",
 
                 "hero.mainProduct":
                     "Основной продукт",
@@ -2874,6 +3301,40 @@
 
                 "feature.optimization":
                     "Интерфейс и архитектура, ориентированные на эффективное использование доступных ресурсов.",
+
+
+                "downloads.kicker":
+                    "Загрузки",
+
+                "downloads.title":
+                    "Получить RETS.",
+
+                "downloads.intro":
+                    "Выберите платформу и подготовьтесь к работе с RETS.",
+
+                "download.windows":
+                    "RETS для Windows.",
+
+                "download.android":
+                    "RETS для Android.",
+
+                "download.ios":
+                    "RETS для iPhone и iPad.",
+
+                "download.macos":
+                    "RETS для Mac.",
+
+                "download.button":
+                    "Скачать",
+
+                "download.coming":
+                    "Скоро",
+
+                "download.available":
+                    "Доступно",
+
+                "downloads.note":
+                    "Ссылки для загрузки появятся по мере выхода каждой версии.",
 
 
                 "company.kicker":
@@ -2952,7 +3413,7 @@
                     "Новый опыт уже близко.",
 
                 "launch.button":
-                    "Наверх",
+                    "Перейти к загрузкам",
 
 
                 "footer.tagline":
@@ -2969,9 +3430,9 @@
             },
 
 
-            /* ====================================
+            /* ------------------------------------
                FRANÇAIS
-            ==================================== */
+            ------------------------------------ */
 
             fr: {
 
@@ -2980,6 +3441,9 @@
 
                 "nav.features":
                     "Fonctionnalités",
+
+                "nav.downloads":
+                    "Téléchargements",
 
                 "nav.nexaris":
                     "Nexaris",
@@ -3003,8 +3467,8 @@
                 "hero.discover":
                     "Découvrir RETS",
 
-                "hero.about":
-                    "À propos de Nexaris",
+                "hero.download":
+                    "Télécharger RETS",
 
                 "hero.mainProduct":
                     "Produit principal",
@@ -3061,6 +3525,40 @@
 
                 "feature.optimization":
                     "Une interface et une architecture conçues pour tirer le meilleur parti des ressources disponibles.",
+
+
+                "downloads.kicker":
+                    "Téléchargements",
+
+                "downloads.title":
+                    "Obtenir RETS.",
+
+                "downloads.intro":
+                    "Choisissez votre plateforme et préparez-vous à découvrir RETS.",
+
+                "download.windows":
+                    "RETS pour Windows.",
+
+                "download.android":
+                    "RETS pour Android.",
+
+                "download.ios":
+                    "RETS pour iPhone et iPad.",
+
+                "download.macos":
+                    "RETS pour Mac.",
+
+                "download.button":
+                    "Télécharger",
+
+                "download.coming":
+                    "Bientôt disponible",
+
+                "download.available":
+                    "Disponible",
+
+                "downloads.note":
+                    "Les liens de téléchargement seront disponibles au fur et à mesure de la sortie de chaque plateforme.",
 
 
                 "company.kicker":
@@ -3139,7 +3637,7 @@
                     "Une nouvelle expérience est sur le point de commencer.",
 
                 "launch.button":
-                    "Retour en haut",
+                    "Voir les téléchargements",
 
 
                 "footer.tagline":
@@ -3159,22 +3657,28 @@
 
 
         /* ========================================
-           CHANGE LANGUAGE
+           LANGUAGE
         ======================================== */
 
         function setLanguage(language) {
 
             const dictionary =
-                translations[language] || translations.en;
+                translations[language] ||
+                translations.en;
 
-            document.documentElement.lang = language;
+
+            document.documentElement.lang =
+                language;
+
 
             document
                 .querySelectorAll("[data-i18n]")
                 .forEach((element) => {
 
                     const key =
-                        element.getAttribute("data-i18n");
+                        element.getAttribute(
+                            "data-i18n"
+                        );
 
                     if (
                         Object.prototype.hasOwnProperty.call(
@@ -3191,12 +3695,9 @@
                 });
 
 
-            const languageSelect =
-                document.getElementById(
-                    "languageSelect"
-                );
-
-            languageSelect.value = language;
+            document.getElementById(
+                "languageSelect"
+            ).value = language;
 
 
             localStorage.setItem(
@@ -3206,11 +3707,12 @@
 
 
             updatePageTitle(language);
+            updateDownloadStates(language);
         }
 
 
         /* ========================================
-           PAGE TITLE
+           TITLE
         ======================================== */
 
         function updatePageTitle(language) {
@@ -3233,13 +3735,15 @@
                     "Nexaris — Créé pour vous."
             };
 
+
             document.title =
-                titles[language] || titles.en;
+                titles[language] ||
+                titles.en;
         }
 
 
         /* ========================================
-           AUTO DETECT BROWSER LANGUAGE
+           BROWSER LANGUAGE
         ======================================== */
 
         function detectLanguage() {
@@ -3249,7 +3753,11 @@
                     "nexaris-language"
                 );
 
-            if (saved && translations[saved]) {
+
+            if (
+                saved &&
+                translations[saved]
+            ) {
                 return saved;
             }
 
@@ -3257,24 +3765,31 @@
             const browserLanguage =
                 (
                     navigator.language ||
-                    navigator.userLanguage ||
                     "en"
                 ).toLowerCase();
 
 
-            if (browserLanguage.startsWith("es")) {
+            if (
+                browserLanguage.startsWith("es")
+            ) {
                 return "es";
             }
 
-            if (browserLanguage.startsWith("pt")) {
+            if (
+                browserLanguage.startsWith("pt")
+            ) {
                 return "pt";
             }
 
-            if (browserLanguage.startsWith("ru")) {
+            if (
+                browserLanguage.startsWith("ru")
+            ) {
                 return "ru";
             }
 
-            if (browserLanguage.startsWith("fr")) {
+            if (
+                browserLanguage.startsWith("fr")
+            ) {
                 return "fr";
             }
 
@@ -3283,11 +3798,133 @@
 
 
         /* ========================================
-           LANGUAGE SELECT EVENT
+           DOWNLOAD STATES
+        ======================================== */
+
+        function updateDownloadStates(
+            language
+        ) {
+
+            const dictionary =
+                translations[language] ||
+                translations.en;
+
+
+            document
+                .querySelectorAll(
+                    ".download-button"
+                )
+                .forEach((button) => {
+
+                    const platform =
+                        button.dataset.platform;
+
+                    const url =
+                        downloadLinks[platform];
+
+
+                    if (url) {
+
+                        button.href = url;
+
+                        button.classList.remove(
+                            "disabled"
+                        );
+
+                        button.removeAttribute(
+                            "aria-disabled"
+                        );
+
+                    } else {
+
+                        button.href = "#";
+
+                        button.classList.add(
+                            "disabled"
+                        );
+
+                        button.setAttribute(
+                            "aria-disabled",
+                            "true"
+                        );
+
+                    }
+
+                });
+
+
+            document
+                .querySelectorAll(
+                    ".platform-status"
+                )
+                .forEach((status) => {
+
+                    const platform =
+                        status.dataset.status;
+
+
+                    if (
+                        downloadLinks[platform]
+                    ) {
+
+                        status.textContent =
+                            dictionary[
+                                "download.available"
+                            ];
+
+                    } else {
+
+                        status.textContent =
+                            dictionary[
+                                "download.coming"
+                            ];
+
+                    }
+
+                });
+
+        }
+
+
+        /* ========================================
+           DOWNLOAD BUTTONS
         ======================================== */
 
         document
-            .getElementById("languageSelect")
+            .querySelectorAll(
+                ".download-button"
+            )
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    (event) => {
+
+                        const platform =
+                            button.dataset.platform;
+
+                        if (
+                            !downloadLinks[platform]
+                        ) {
+
+                            event.preventDefault();
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        /* ========================================
+           LANGUAGE SELECT
+        ======================================== */
+
+        document
+            .getElementById(
+                "languageSelect"
+            )
             .addEventListener(
                 "change",
                 (event) => {
@@ -3304,36 +3941,45 @@
            YEAR
         ======================================== */
 
-        document.getElementById("year").textContent =
+        document.getElementById(
+            "year"
+        ).textContent =
             new Date().getFullYear();
 
 
         /* ========================================
-           SCROLL REVEAL
+           REVEAL
         ======================================== */
 
         const revealElements =
-            document.querySelectorAll(".reveal");
+            document.querySelectorAll(
+                ".reveal"
+            );
 
 
         const revealObserver =
             new IntersectionObserver(
                 (entries) => {
 
-                    entries.forEach((entry) => {
+                    entries.forEach(
+                        (entry) => {
 
-                        if (entry.isIntersecting) {
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-                            entry.target.classList.add(
-                                "visible"
-                            );
+                                entry.target.classList.add(
+                                    "visible"
+                                );
 
-                            revealObserver.unobserve(
-                                entry.target
-                            );
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
                         }
-
-                    });
+                    );
 
                 },
                 {
@@ -3342,21 +3988,28 @@
             );
 
 
-        revealElements.forEach((element) => {
+        revealElements.forEach(
+            (element) => {
 
-            revealObserver.observe(element);
+                revealObserver.observe(
+                    element
+                );
 
-        });
+            }
+        );
 
 
         /* ========================================
-           INITIALIZE LANGUAGE
+           INITIALIZE
         ======================================== */
 
         const initialLanguage =
             detectLanguage();
 
-        setLanguage(initialLanguage);
+
+        setLanguage(
+            initialLanguage
+        );
 
     </script>
 
