@@ -11,7 +11,8 @@
   <meta property="og:description" content="Conoce RETS, el proyecto principal de NEXARIS. Lanzamiento previsto: 12 de noviembre de 2026.">
   <meta property="og:locale" content="es_ES">
   <title>NEXARIS — Tecnología que se adapta a ti</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23080b10'/%3E%3Cpath d='M10 36V12h7l14 17V12h7v24h-7L17 19v17z' fill='%2347e6df'/%3E%3C/svg%3E">
+  <!-- Keep nexaris.ico next to index.html when publishing to GitHub Pages/Workers. -->
+  <link rel="icon" href="nexaris.ico" type="image/x-icon">
   <style>
     :root {
       --bg: #080b10;
@@ -61,10 +62,11 @@
       background: rgba(8, 11, 16, .79); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     }
     .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
-    .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; }
-    .brand-mark { width: 32px; height: 32px; color: var(--cyan); filter: drop-shadow(0 0 12px rgba(84, 228, 222, .18)); }
-    .brand-word { font-size: 15px; font-weight: 800; letter-spacing: .2em; }
-    .brand-word span { color: var(--cyan); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-mark { width: 34px; height: 34px; flex: 0 0 auto; object-fit: contain; mix-blend-mode: lighten; }
+    .brand-word-svg { display: block; width: 136px; height: auto; flex: 0 0 auto; overflow: visible; }
+    .brand-word-svg .letter { fill: none; stroke: #f0f3f4; stroke-width: 3.15; stroke-linecap: square; stroke-linejoin: miter; }
+    .brand-word-svg .letter-a { stroke: #00dce8; stroke-width: 3.15; }
     .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 27px); color: #b8c3d0; font-size: 13px; }
     .nav-links a { transition: color .2s ease; white-space: nowrap; }
     .nav-links a:hover { color: var(--cyan-bright); }
@@ -96,7 +98,11 @@
     .visual-ring::after { inset: 18%; transform: rotateX(67deg) rotateZ(38deg); border-color: rgba(84,228,222,.18); }
     .orbit { position: absolute; width: 88%; height: 40%; border: 1px solid rgba(84,228,222,.26); border-radius: 50%; transform: rotate(-31deg); }
     .orbit-dot { position: absolute; top: 5%; right: 13%; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 18px var(--cyan); }
-    .logo-display { width: min(60%, 235px); color: var(--cyan); filter: drop-shadow(0 0 32px rgba(84,228,222,.23)); }
+    .logo-lockup { position: relative; z-index: 2; width: min(100%, 340px); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .logo-display { display: block; width: min(62%, 218px); height: auto; object-fit: contain; mix-blend-mode: lighten; }
+    .display-wordmark { display: block; width: min(88%, 286px); height: auto; overflow: visible; }
+    .display-wordmark .letter { fill: none; stroke: #f0f3f4; stroke-width: 3.1; stroke-linecap: square; stroke-linejoin: miter; }
+    .display-wordmark .letter-a { stroke: #00dce8; stroke-width: 3.1; }
     .visual-caption { position: absolute; bottom: 4px; display: flex; gap: 10px; align-items: center; color: var(--subtle); font-size: 10px; letter-spacing: .23em; text-transform: uppercase; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
     .section { padding: 95px 0; }
@@ -144,8 +150,9 @@
     .note { color: var(--subtle); font-size: 12px; margin-top: 19px; }
     .footer { border-top: 1px solid var(--border); padding: 30px 0; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 22px; flex-wrap: wrap; }
-    .footer-brand { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: .17em; }
-    .footer-brand svg { width: 25px; height: 25px; color: var(--cyan); }
+    .footer-brand { display: flex; align-items: center; gap: 9px; }
+    .footer-brand .brand-mark { width: 26px; height: 26px; }
+    .footer-brand .brand-word-svg { width: 104px; height: auto; }
     .footer-copy { color: var(--subtle); font-size: 11px; margin: 0; }
     .footer-links { display: flex; flex-wrap: wrap; gap: 18px; color: #a4b0bd; font-size: 11px; }
     .footer-links a:hover { color: var(--cyan); }
@@ -174,7 +181,8 @@
       .hero h1 { max-width: 560px; }
       .hero-visual { min-height: 300px; margin-top: 8px; }
       .visual-ring { width: min(85%, 330px); }
-      .logo-display { width: min(47%, 170px); }
+      .logo-display { width: min(58%, 190px); }
+      .display-wordmark { width: min(90%, 275px); }
       .section { padding: 70px 0; }
       .principles, .timeline-grid { grid-template-columns: 1fr; }
       .principle { min-height: auto; }
@@ -188,8 +196,8 @@
       .footer-inner { align-items: flex-start; flex-direction: column; }
     }
     @media (max-width: 390px) {
-      .brand-word { font-size: 13px; letter-spacing: .16em; }
-      .brand-mark { width: 29px; height: 29px; }
+      .brand-word-svg { width: 118px; }
+      .brand-mark { width: 30px; height: 30px; }
       .hero-actions { flex-direction: column; align-items: stretch; }
       .button { width: 100%; }
       .countdown { gap: 6px; }
@@ -207,8 +215,8 @@
   <header class="header">
     <div class="container nav">
       <a class="brand" href="#inicio" aria-label="NEXARIS, inicio">
-        <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label=""><path d="M7 39V9h8l18 21V9h8v30h-8L15 18v21z" fill="currentColor"/><path d="M31 9h10v8H31z" fill="#88f4ed" opacity=".8"/></svg>
-        <span class="brand-word">NEXARIS<span>.</span></span>
+        <img class="brand-mark" src="nexaris.ico" alt="" width="34" height="34">
+        <svg class="brand-word-svg" viewBox="0 0 244 36" role="img" aria-label="NEXARIS"><path class="letter" d="M3 31V5L22 31V5M42 5H60M42 5V31H60M42 18H57M82 5L102 31M102 5L82 31"/><path class="letter-a" d="M120 31L131 5L142 31M124 22H138"/><path class="letter" d="M162 31V5H173C185 5 185 18 173 18H162M173 18L185 31M205 5V31M239 8C235 3 220 3 220 10C220 16 239 15 239 24C239 32 222 33 219 27"/></svg>
       </a>
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -241,13 +249,12 @@
             <div><strong>NEXARIS</strong>Creado con propósito</div>
           </div>
         </div>
-        <div class="hero-visual reveal" aria-label="Símbolo geométrico de NEXARIS">
+        <div class="hero-visual reveal" aria-label="Logo oficial de NEXARIS">
           <div class="visual-ring"></div><div class="orbit"><span class="orbit-dot"></span></div>
-          <svg class="logo-display" viewBox="0 0 100 100" role="img" aria-label="Símbolo NEXARIS">
-            <defs><linearGradient id="nex-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9af8f0"/><stop offset=".55" stop-color="#4bdcd8"/><stop offset="1" stop-color="#7daeff"/></linearGradient></defs>
-            <path d="M17 80V20h15l36 42V20h15v60H68L32 38v42z" fill="url(#nex-gradient)"/>
-            <path d="M68 20h15v15H68z" fill="#d0fffa" opacity=".8"/>
-          </svg>
+          <div class="logo-lockup" role="img" aria-label="NEXARIS: símbolo N geométrico cian y nombre en letras blancas espaciadas">
+            <img class="logo-display" src="nexaris.ico" alt="" width="256" height="256" decoding="async">
+            <svg class="display-wordmark" viewBox="0 0 244 36" aria-hidden="true"><path class="letter" d="M3 31V5L22 31V5M42 5H60M42 5V31H60M42 18H57M82 5L102 31M102 5L82 31"/><path class="letter-a" d="M120 31L131 5L142 31M124 22H138"/><path class="letter" d="M162 31V5H173C185 5 185 18 173 18H162M173 18L185 31M205 5V31M239 8C235 3 220 3 220 10C220 16 239 15 239 24C239 32 222 33 219 27"/></svg>
+          </div>
           <div class="visual-caption"><span class="status-dot"></span> NEXARIS / DIGITAL EXPERIENCE</div>
         </div>
       </div>
@@ -350,8 +357,8 @@
   <footer class="footer">
     <div class="container footer-inner">
       <a class="footer-brand" href="#inicio" aria-label="NEXARIS, volver al inicio">
-        <svg viewBox="0 0 48 48" role="img" aria-label=""><path d="M7 39V9h8l18 21V9h8v30h-8L15 18v21z" fill="currentColor"/></svg>
-        <span>NEXARIS</span>
+        <img class="brand-mark" src="nexaris.ico" alt="" width="26" height="26" loading="lazy">
+        <svg class="brand-word-svg" viewBox="0 0 244 36" role="img" aria-label="NEXARIS"><path class="letter" d="M3 31V5L22 31V5M42 5H60M42 5V31H60M42 18H57M82 5L102 31M102 5L82 31"/><path class="letter-a" d="M120 31L131 5L142 31M124 22H138"/><path class="letter" d="M162 31V5H173C185 5 185 18 173 18H162M173 18L185 31M205 5V31M239 8C235 3 220 3 220 10C220 16 239 15 239 24C239 32 222 33 219 27"/></svg>
       </a>
       <p class="footer-copy">© <span id="year">2026</span> NEXARIS. Proyecto independiente.</p>
       <nav class="footer-links" aria-label="Enlaces del pie de página">
