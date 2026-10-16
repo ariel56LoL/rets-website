@@ -874,6 +874,14 @@
             gap: 18px;
         }
 
+        /* Center the fifth platform card on wide screens. */
+        .download-card:last-child {
+            grid-column: 1 / -1;
+            width: 100%;
+            max-width: calc(50% - 9px);
+            justify-self: center;
+        }
+
         .download-card {
             position: relative;
 
@@ -1334,6 +1342,11 @@
             .feature-grid,
             .download-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .download-card:last-child {
+                grid-column: auto;
+                max-width: none;
             }
 
             .timeline-item {
@@ -2072,6 +2085,45 @@
 
                     </article>
 
+                    <!-- CHROMEOS -->
+
+                    <article class="download-card reveal">
+
+                        <div class="platform-icon" aria-hidden="true">
+                            ▣
+                        </div>
+
+                        <h3>
+                            ChromeOS
+                        </h3>
+
+                        <p
+                            data-i18n="download.chromeos"
+                        >
+                            RETS for ChromeOS and Chromebooks.
+                        </p>
+
+                        <div
+                            class="platform-status"
+                            data-status="chromeos"
+                            data-always-coming-soon="true"
+                        >
+                            Coming soon
+                        </div>
+
+                        <a
+                            href="#"
+                            class="button button-primary download-button disabled"
+                            data-platform="chromeos"
+                            data-always-coming-soon="true"
+                            aria-disabled="true"
+                            data-i18n="download.button"
+                        >
+                            Download
+                        </a>
+
+                    </article>
+
                 </div>
 
 
@@ -2306,8 +2358,11 @@
 
                     <div class="timeline-item reveal">
 
-                        <div class="timeline-date">
-                            31.10.2026
+                        <div
+                            class="timeline-date"
+                            data-i18n="timeline.launchDate"
+                        >
+                            26 OCT 2026
                         </div>
 
                         <div>
@@ -2357,8 +2412,11 @@
                         RETS v1.0
                     </h2>
 
-                    <div class="launch-date">
-                        31 OCTOBER 2026
+                    <div
+                        class="launch-date"
+                        data-i18n="launch.date"
+                    >
+                        26 OCTOBER 2026
                     </div>
 
                     <p
@@ -2523,7 +2581,9 @@
 
             ios: "",
 
-            macos: ""
+            macos: "",
+
+            chromeos: ""
 
         };
 
@@ -2652,6 +2712,9 @@
                 "download.macos":
                     "RETS for Mac.",
 
+
+                "download.chromeos":
+                    "RETS for ChromeOS and Chromebooks.",
                 "download.button":
                     "Download",
 
@@ -2730,12 +2793,18 @@
                 "timeline.testingText":
                     "Bug fixing, device testing and preparation for the final version.",
 
+                "timeline.launchDate":
+                    "26 OCT 2026",
+
                 "timeline.launchText":
                     "Official launch of the first public version of RETS.",
 
 
                 "launch.kicker":
                     "Launch",
+
+                "launch.date":
+                    "26 OCTOBER 2026",
 
                 "launch.text":
                     "A new experience is about to begin.",
@@ -2876,6 +2945,9 @@
                 "download.macos":
                     "RETS para Mac.",
 
+
+                "download.chromeos":
+                    "RETS para ChromeOS y Chromebooks.",
                 "download.button":
                     "Descargar",
 
@@ -2954,12 +3026,18 @@
                 "timeline.testingText":
                     "Corrección de errores, pruebas en dispositivos y preparación de la versión final.",
 
+                "timeline.launchDate":
+                    "26 OCT 2026",
+
                 "timeline.launchText":
                     "Lanzamiento oficial de la primera versión pública de RETS.",
 
 
                 "launch.kicker":
                     "Lanzamiento",
+
+                "launch.date":
+                    "26 DE OCTUBRE DE 2026",
 
                 "launch.text":
                     "Una nueva experiencia está a punto de comenzar.",
@@ -3100,6 +3178,9 @@
                 "download.macos":
                     "RETS para Mac.",
 
+
+                "download.chromeos":
+                    "RETS para ChromeOS e Chromebooks.",
                 "download.button":
                     "Baixar",
 
@@ -3178,12 +3259,18 @@
                 "timeline.testingText":
                     "Correção de erros, testes em dispositivos e preparação para a versão final.",
 
+                "timeline.launchDate":
+                    "26 OUT 2026",
+
                 "timeline.launchText":
                     "Lançamento oficial da primeira versão pública do RETS.",
 
 
                 "launch.kicker":
                     "Lançamento",
+
+                "launch.date":
+                    "26 DE OUTUBRO DE 2026",
 
                 "launch.text":
                     "Uma nova experiência está prestes a começar.",
@@ -3324,6 +3411,9 @@
                 "download.macos":
                     "RETS для Mac.",
 
+
+                "download.chromeos":
+                    "RETS для ChromeOS и Chromebook.",
                 "download.button":
                     "Скачать",
 
@@ -3402,12 +3492,18 @@
                 "timeline.testingText":
                     "Исправление ошибок, тестирование на устройствах и подготовка финальной версии.",
 
+                "timeline.launchDate":
+                    "26 ОКТ 2026",
+
                 "timeline.launchText":
                     "Официальный запуск первой публичной версии RETS.",
 
 
                 "launch.kicker":
                     "Запуск",
+
+                "launch.date":
+                    "26 ОКТЯБРЯ 2026",
 
                 "launch.text":
                     "Новый опыт уже близко.",
@@ -3548,6 +3644,9 @@
                 "download.macos":
                     "RETS pour Mac.",
 
+
+                "download.chromeos":
+                    "RETS pour ChromeOS et les Chromebooks.",
                 "download.button":
                     "Télécharger",
 
@@ -3626,12 +3725,18 @@
                 "timeline.testingText":
                     "Correction des bugs, tests sur différents appareils et préparation de la version finale.",
 
+                "timeline.launchDate":
+                    "26 OCT. 2026",
+
                 "timeline.launchText":
                     "Lancement officiel de la première version publique de RETS.",
 
 
                 "launch.kicker":
                     "Lancement",
+
+                "launch.date":
+                    "26 OCTOBRE 2026",
 
                 "launch.text":
                     "Une nouvelle expérience est sur le point de commencer.",
@@ -3819,8 +3924,13 @@
                     const platform =
                         button.dataset.platform;
 
+                    const alwaysComingSoon =
+                        button.dataset.alwaysComingSoon === "true";
+
                     const url =
-                        downloadLinks[platform];
+                        alwaysComingSoon
+                            ? ""
+                            : downloadLinks[platform];
 
 
                     if (url) {
@@ -3863,7 +3973,11 @@
                         status.dataset.status;
 
 
+                    const alwaysComingSoon =
+                        status.dataset.alwaysComingSoon === "true";
+
                     if (
+                        !alwaysComingSoon &&
                         downloadLinks[platform]
                     ) {
 
@@ -3904,6 +4018,7 @@
                             button.dataset.platform;
 
                         if (
+                            button.dataset.alwaysComingSoon === "true" ||
                             !downloadLinks[platform]
                         ) {
 
