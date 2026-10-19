@@ -1290,22 +1290,20 @@
            REVEAL
         ======================================== */
 
+        /*
+           ROBUST REVEAL FALLBACK
+           Keep page content visible by default. Animations must never
+           hide the whole site if a browser blocks or fails to run JavaScript.
+        */
         .reveal {
-            opacity: 0;
-
-            transform:
-                translateY(24px);
-
-            transition:
-                opacity 0.7s ease,
-                transform 0.7s ease;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
 
         .reveal.visible {
             opacity: 1;
-
-            transform:
-                translateY(0);
+            transform: translateY(0);
         }
 
         /* ========================================
@@ -1430,7 +1428,7 @@
                 class="brand"
             >
                 <img
-                    src="image.png"
+                    src="imagen.png"
                     alt="Nexaris"
                     class="brand-mark"
                 >
@@ -1636,7 +1634,7 @@
                         ></div>
 
                         <img
-                            src="image.png"
+                            src="imagen.png"
                             alt="RETS"
                             class="hero-logo"
                         >
@@ -1694,7 +1692,7 @@
                     <div class="rets-brand">
 
                         <img
-                            src="image.png"
+                            src="imagen.png"
                             alt="RETS"
                         >
 
@@ -1959,12 +1957,13 @@
                         <div
                             class="platform-status"
                             data-status="windows"
+                            data-status-key="download.testing"
                         >
                             Available for testing
                         </div>
 
                         <a
-                            href="href="https://github.com/ariel56LoL/rets-website/releases/download/v0.1.3/RETS-Portable-0.1.3-x64.exe""
+                            href="https://github.com/ariel56LoL/rets-website/releases/download/v0.1.3/RETS-Portable-0.1.3-x64.exe"
                             class="button button-primary download-button"
                             data-platform="windows"
                             data-i18n="download.button"
@@ -2461,7 +2460,7 @@
                     >
 
                         <img
-                            src="image.png"
+                            src="imagen.png"
                             alt="Nexaris"
                             class="brand-mark"
                         >
@@ -2573,15 +2572,10 @@
            Leave "" while a platform is unavailable.
         ======================================== */
 
-        const downloadLinks = const downloadLinks = {
-    windows: "https://github.com/ariel56LoL/rets-website/releases/download/v0.1.3/RETS-Portable-0.1.3-x64.exe",
-    android: "",
-    ios: "",
-    macos: "",
-    chromeos: ""
-};
+        const downloadLinks = {
 
-            windows: "",
+            // Version-specific GitHub Release asset. Keep the tag and filename in sync.
+            windows: "https://github.com/ariel56LoL/rets-website/releases/download/v0.1.3/RETS-Portable-0.1.3-x64.exe",
 
             android: "",
 
@@ -2707,7 +2701,7 @@
                     "Choose your platform and get ready for the RETS experience.",
 
                 "download.windows":
-                    "RETS for Windows.",
+                    "Early testing build 0.1.3 for Windows. This is an older preview and may contain bugs.",
 
                 "download.android":
                     "RETS for Android.",
@@ -2730,8 +2724,11 @@
                 "download.available":
                     "Available",
 
+                "download.testing":
+                    "Available for testing",
+
                 "downloads.note":
-                    "Download links will become available as each platform is released.",
+                    "Windows build 0.1.3 is an older testing version and may contain bugs. Other platforms will be published later.",
 
 
                 "company.kicker":
@@ -2940,7 +2937,7 @@
                     "Elige tu plataforma y prepárate para la experiencia RETS.",
 
                 "download.windows":
-                    "RETS para Windows.",
+                    "Versión de prueba 0.1.3 para Windows. Es una compilación antigua y puede contener errores.",
 
                 "download.android":
                     "RETS para Android.",
@@ -2963,8 +2960,11 @@
                 "download.available":
                     "Disponible",
 
+                "download.testing":
+                    "Disponible para pruebas",
+
                 "downloads.note":
-                    "Los enlaces de descarga estarán disponibles a medida que se publique cada plataforma.",
+                    "La versión de Windows 0.1.3 es una compilación de prueba antigua y puede contener errores. Otras plataformas se publicarán más adelante.",
 
 
                 "company.kicker":
@@ -3173,7 +3173,7 @@
                     "Escolha sua plataforma e prepare-se para a experiência RETS.",
 
                 "download.windows":
-                    "RETS para Windows.",
+                    "Versão de teste 0.1.3 para Windows. Esta é uma compilação antiga e pode conter erros.",
 
                 "download.android":
                     "RETS para Android.",
@@ -3196,8 +3196,11 @@
                 "download.available":
                     "Disponível",
 
+                "download.testing":
+                    "Disponível para testes",
+
                 "downloads.note":
-                    "Os links de download ficarão disponíveis conforme cada plataforma for lançada.",
+                    "A versão 0.1.3 para Windows é uma compilação de teste antiga e pode conter erros. Outras plataformas serão publicadas depois.",
 
 
                 "company.kicker":
@@ -3406,7 +3409,7 @@
                     "Выберите платформу и подготовьтесь к работе с RETS.",
 
                 "download.windows":
-                    "RETS для Windows.",
+                    "Тестовая сборка RETS 0.1.3 для Windows. Это старая предварительная версия, в ней могут быть ошибки.",
 
                 "download.android":
                     "RETS для Android.",
@@ -3429,8 +3432,11 @@
                 "download.available":
                     "Доступно",
 
+                "download.testing":
+                    "Доступно для тестирования",
+
                 "downloads.note":
-                    "Ссылки для загрузки появятся по мере выхода каждой версии.",
+                    "Сборка Windows 0.1.3 — старая тестовая версия, в ней могут быть ошибки. Другие платформы будут опубликованы позже.",
 
 
                 "company.kicker":
@@ -3639,7 +3645,7 @@
                     "Choisissez votre plateforme et préparez-vous à découvrir RETS.",
 
                 "download.windows":
-                    "RETS pour Windows.",
+                    "Version de test 0.1.3 de RETS pour Windows. Cette ancienne version peut contenir des bugs.",
 
                 "download.android":
                     "RETS pour Android.",
@@ -3662,8 +3668,11 @@
                 "download.available":
                     "Disponible",
 
+                "download.testing":
+                    "Disponible pour les tests",
+
                 "downloads.note":
-                    "Les liens de téléchargement seront disponibles au fur et à mesure de la sortie de chaque plateforme.",
+                    "La version Windows 0.1.3 est une ancienne version de test qui peut contenir des bugs. Les autres plateformes seront publiées plus tard.",
 
 
                 "company.kicker":
@@ -3811,10 +3820,11 @@
             ).value = language;
 
 
-            localStorage.setItem(
-                "nexaris-language",
-                language
-            );
+            try {
+                localStorage.setItem("nexaris-language", language);
+            } catch (error) {
+                // Continue normally when browser storage is unavailable.
+            }
 
 
             updatePageTitle(language);
@@ -3859,10 +3869,12 @@
 
         function detectLanguage() {
 
-            const saved =
-                localStorage.getItem(
-                    "nexaris-language"
-                );
+            let saved = null;
+            try {
+                saved = localStorage.getItem("nexaris-language");
+            } catch (error) {
+                // Fall back to the browser language when storage is unavailable.
+            }
 
 
             if (
@@ -3987,10 +3999,13 @@
                         downloadLinks[platform]
                     ) {
 
+                        const statusKey =
+                            status.dataset.statusKey ||
+                            "download.available";
+
                         status.textContent =
-                            dictionary[
-                                "download.available"
-                            ];
+                            dictionary[statusKey] ||
+                            dictionary["download.available"];
 
                     } else {
 
@@ -4079,7 +4094,8 @@
 
 
         const revealObserver =
-            new IntersectionObserver(
+            typeof IntersectionObserver !== "undefined"
+                ? new IntersectionObserver(
                 (entries) => {
 
                     entries.forEach(
@@ -4106,18 +4122,18 @@
                 {
                     threshold: 0.12
                 }
-            );
+            )
+                : null;
 
-
-        revealElements.forEach(
-            (element) => {
-
-                revealObserver.observe(
-                    element
-                );
-
-            }
-        );
+        if (revealObserver) {
+            revealElements.forEach((element) => {
+                revealObserver.observe(element);
+            });
+        } else {
+            revealElements.forEach((element) => {
+                element.classList.add("visible");
+            });
+        }
 
 
         /* ========================================
